@@ -4609,9 +4609,20 @@ void s_random_opt_group::apply( struct item& item ){
 
 			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
 
+			/*
 			if ( rnd_chance<uint16>(option->chance, 10000) ){
 				apply_sub( item.option[i], option );
 			}
+			*/
+
+			option = util::vector_random(this->random_options);
+
+			int random_number = rand() % 100;
+			if (random_number <= 50) {
+				apply_sub(item.option[i], option);
+			}
+			else
+				break;			
 		}
 	}
 
