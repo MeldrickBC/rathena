@@ -679,6 +679,13 @@ public:
 		int16 critical_rangeatk;
 		int16 weapon_atk_rate, weapon_matk_rate;
 		int32 skill_ratio;
+		int32 ammo_efficiency;
+		int32 buff_duration;
+		int32 buff_efficiency;
+		int32 basic_atk;
+		int32 basic_atk_rate;
+		int32 dot_damage_rate;
+		int32 summon_power;
 	} bonus;
 	// zeroed vars end here.
 

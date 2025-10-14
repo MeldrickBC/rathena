@@ -10215,6 +10215,107 @@ bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 ra
 
 	int32 tick = (int32)duration;
 
+	map_session_data* sd = BL_CAST(BL_PC, bl);
+	view_data* vd = status_get_viewdata(bl);
+
+	map_session_data* s_sd = BL_CAST(BL_PC, src);
+	if (s_sd && s_sd->bonus.buff_duration > 0) {
+		switch (type) {
+			//Swordsman
+		case SC_ENDURE:
+			//Magician
+		case SC_ENERGYCOAT:
+			//Archer
+		case SC_CONCENTRATE:
+			//Acolyte
+		case SC_BLESSING:
+		case SC_INCREASEAGI:
+		case SC_ANGELUS:
+			//Thief
+			//Merchant
+		case SC_LOUD:
+			//Knight
+		case SC_TWOHANDQUICKEN:
+			//Priest
+		case SC_KYRIE:
+		case SC_GLORIA:
+		case SC_MAGNIFICAT:
+		case SC_IMPOSITIO:
+		case SC_SUFFRAGIUM:
+		case SC_ASPERSIO:
+			//Hunter
+			//Assassin
+		case SC_ENCPOISON:
+			//Blacksmith
+		case SC_ADRENALINE:
+		case SC_WEAPONPERFECTION:
+		case SC_OVERTHRUST:
+			//Crusader
+		case SC_AUTOGUARD:
+		case SC_REFLECTSHIELD:
+		case SC_DEFENDER:
+		case SC_SPEARQUICKEN:
+		case SC_SHRINK:
+		case SC_PROVIDENCE:
+			//Sage
+		case SC_EARTHWEAPON:
+		case SC_WATERWEAPON:
+		case SC_WINDWEAPON:
+		case SC_FIREWEAPON:
+			//Bard
+		case SC_WHISTLE:
+		case SC_ASSNCROS:
+		case SC_POEMBRAGI:
+		case SC_APPLEIDUN:
+			//Dancer
+		case SC_HUMMING:
+		case SC_SERVICE4U:
+		case SC_FORTUNE:
+			//Ensemble
+		case SC_SIEGFRIED:
+		case SC_DRUMBATTLE:
+		case SC_INTOABYSS:
+		case SC_RICHMANKIM:
+		case SC_NIBELUNGEN:
+			//Monk
+			//case SC_SPIRIT:
+		case SC_EXPLOSIONSPIRITS:
+		case SC_STEELBODY:
+			//Rogue
+			//Alchemist
+		case SC_CP_HELM:
+		case SC_CP_SHIELD:
+		case SC_CP_ARMOR:
+		case SC_CP_WEAPON:
+			//Lord Knight
+		case SC_PARRYING:
+		case SC_AURABLADE:
+		case SC_CONCENTRATION:
+			//High Wizard
+		case SC_MAGICPOWER:
+			//Sniper
+		case SC_WINDWALK:
+		case SC_TRUESIGHT:
+			//High Priest
+		case SC_ASSUMPTIO:
+			//Assassin Cross
+		case SC_EDP:
+			//Whitesmith
+		case SC_CARTBOOST:
+		case SC_MELTDOWN:
+			//Paladin
+		case SC_DEVOTION:
+			//Professor
+		case SC_DOUBLECAST:
+			//Clown
+			//Gypsy
+			//Champion			
+			//Stalker
+			//Creator
+			tick += tick * s_sd->bonus.buff_duration / 100;
+		}
+	}
+
 	// Type-specific checks that need to happen before the delay
 	switch (type) {
 		case SC_STONE:
@@ -10289,6 +10390,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 	status_change* sc = status_get_sc(bl);
 	status_data* status = status_get_status_data(*bl);
 	int32 undead_flag = battle_check_undead(status->race,status->def_ele);
+	map_session_data* s_sd = BL_CAST(BL_PC, src);
 
 	// Check for immunities / sc fails
 	switch (type) {
@@ -13064,6 +13166,103 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 	if (sd && current_equip_combo_pos > 0 && tick == INFINITE_TICK) {
 		ShowWarning("sc_start: Item combo of item #%u contains an INFINITE_TICK duration. Skipping bonus.\n", sd->inventory_data[pc_checkequip(sd, current_equip_combo_pos)]->nameid);
 		return false;
+	}
+
+	if (s_sd && s_sd->bonus.buff_efficiency > 0) {
+		switch (type) {
+			//Novice
+		case NV_FIRSTAID:
+			//Swordsman
+			//Magician
+			//Archer
+		case SC_CONCENTRATE:
+			//Acolyte
+		case SC_BLESSING:
+		case SC_INCREASEAGI:
+		case SC_ANGELUS:
+			//Thief
+			//Merchant
+		case SC_LOUD:
+			//Knight
+		case SC_TWOHANDQUICKEN:
+			//Priest
+		case SC_KYRIE:
+		case SC_GLORIA:
+		case SC_MAGNIFICAT:
+		case SC_IMPOSITIO:
+		case SC_SUFFRAGIUM:
+			//Hunter
+			//Assassin
+			//Blacksmith
+		case SC_ADRENALINE:
+		case SC_OVERTHRUST:
+			//Crusader
+		case SC_AUTOGUARD:
+		case SC_REFLECTSHIELD:
+		case SC_DEFENDER:
+		case SC_SPEARQUICKEN:
+		case SC_SHRINK:
+		case SC_PROVIDENCE:
+			//Sage
+		case SC_EARTHWEAPON:
+		case SC_WATERWEAPON:
+		case SC_WINDWEAPON:
+		case SC_FIREWEAPON:
+			//Bard
+		case SC_WHISTLE:
+		case SC_ASSNCROS:
+		case SC_POEMBRAGI:
+		case SC_APPLEIDUN:
+			//Dancer
+		case SC_HUMMING:
+		case SC_SERVICE4U:
+		case SC_FORTUNE:
+			//Ensemble
+		case SC_SIEGFRIED:
+		case SC_DRUMBATTLE:
+		case SC_INTOABYSS:
+		case SC_RICHMANKIM:
+		case SC_NIBELUNGEN:
+			//Monk
+			//case SC_SPIRIT:
+		case SC_EXPLOSIONSPIRITS:
+		case SC_STEELBODY:
+			//Rogue
+			//Alchemist
+		case SC_CP_HELM:
+		case SC_CP_SHIELD:
+		case SC_CP_ARMOR:
+		case SC_CP_WEAPON:
+			//Lord Knight
+		case SC_PARRYING:
+		case SC_AURABLADE:
+		case SC_CONCENTRATION:
+			//High Wizard
+		case SC_MAGICPOWER:
+			//Sniper
+		case SC_WINDWALK:
+		case SC_TRUESIGHT:
+			//High Priest
+		case SC_ASSUMPTIO:
+			//Assassin Cross
+		case SC_EDP:
+			//Whitesmith
+		case SC_CARTBOOST:
+		case SC_MELTDOWN:
+			//Paladin
+		case SC_DEVOTION:
+			//Professor
+		case SC_DOUBLECAST:
+		//Clown
+		//Gypsy
+		//Champion			
+		//Stalker
+		//Creator
+			if (val2 > 0)
+				val2 += val2 * s_sd->bonus.buff_efficiency / 100;
+			if (val3 > 0)
+				val3 += val3 * s_sd->bonus.buff_efficiency / 100;
+		}
 	}
 
 	/* [Ind] */

@@ -844,6 +844,16 @@
 	export_constant2("bAddItemGroupSPHealRate", SP_ADD_ITEMGROUP_SPHEAL_RATE);
 	export_constant2("bWeaponSubSize", SP_WEAPON_SUBSIZE);
 
+	export_constant2("bAmmoEfficiency", SP_AMMO_EFFICIENCY);
+	export_constant2("bBuffDuration", SP_BUFF_DURATION);
+	export_constant2("bBuffEfficiency", SP_BUFF_EFFICIENCY);
+	export_constant2("bBasicAtk", SP_BASIC_ATK);
+	export_constant2("bBasicAtkRate", SP_BASIC_ATK_RATE);
+	export_constant2("bDotDamageRate", SP_DOT_DAMAGE_RATE);
+	export_constant2("bPhysAtkEle", SP_PHYS_ATK_ELE);
+	export_constant2("bMiscAtkEle", SP_MISC_ATK_ELE);
+	export_constant2("bSummonPower", SP_SUMMON_POWER);
+
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);
 	export_constant(EQI_HEAD_TOP);

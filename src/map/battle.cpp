@@ -2652,6 +2652,15 @@ void battle_consume_ammo(map_session_data*sd, int32 skill, int32 lv)
 	}
 
 	if (sd->equip_index[EQI_AMMO] >= 0) //Qty check should have been done in skill_check_condition
+		if (sd->bonus.ammo_efficiency > 0) {
+			if (qty == 1) {
+				if (rand() % 100 <= min(sd->bonus.ammo_efficiency, 100))
+					return;
+			}
+			else {
+				qty -= qty * min(sd->bonus.ammo_efficiency, 100) / 100;
+			}
+		}
 		pc_delitem(sd,sd->equip_index[EQI_AMMO],qty,0,1,LOG_TYPE_CONSUME);
 
 	sd->state.arrow_atk = 0;
@@ -7860,6 +7869,23 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 #endif
 			battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv); // base skill damage
 
+		else {
+			if (sd && wd.damage > 0) { //Check if player and no miss
+				int basicatk = 0;
+				if (sd->bonus.basic_atk_rate != 0) {
+					basicatk = sd->bonus.basic_atk_rate;
+					wd.damage += wd.damage * basicatk / 100;
+					if (wd.damage2 > 0)
+						wd.damage2 += wd.damage2 * basicatk / 100;
+				}
+				if (sd->bonus.basic_atk != 0) {
+					basicatk = sd->bonus.basic_atk;
+					wd.damage += basicatk;
+					if (wd.damage2 > 0)
+						wd.damage2 += basicatk;
+				}
+			}
+		}
 #ifndef RENEWAL
 		// Skill ratio
 		ATK_RATE(wd.damage, wd.damage2, battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv));

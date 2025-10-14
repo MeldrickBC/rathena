@@ -4460,6 +4460,35 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.itemsphealrate2 += val;
 			break;
+
+		case SP_AMMO_EFFICIENCY:
+			if (sd->state.lr_flag != 2)
+				sd->bonus.ammo_efficiency += val;
+			break;
+		case SP_BUFF_DURATION:
+			if (sd->state.lr_flag != 2)
+				sd->bonus.buff_duration += val;
+			break;
+		case SP_BUFF_EFFICIENCY:
+			if (sd->state.lr_flag != 2)
+				sd->bonus.buff_efficiency += val;
+			break;
+		case SP_BASIC_ATK:
+			if (sd->state.lr_flag != 2)
+				sd->bonus.basic_atk += val;
+			break;
+		case SP_BASIC_ATK_RATE:
+			if (sd->state.lr_flag != 2)
+				sd->bonus.basic_atk_rate += val;
+			break;
+		case SP_DOT_DAMAGE_RATE:
+			if (sd->state.lr_flag != 2)
+				sd->bonus.dot_damage_rate += val;
+			break;
+		case SP_SUMMON_POWER:
+			if (sd->state.lr_flag != 2)
+				sd->bonus.summon_power += val;
+			break;
 		default:
 			if (current_equip_combo_pos > 0) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in a combo with item #%u\n", type, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
@@ -10365,6 +10394,14 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 #endif
 		case SP_CRIT_DEF_RATE: val = sd->bonus.crit_def_rate; break;
 		case SP_ADD_ITEM_SPHEAL_RATE: val = sd->bonus.itemsphealrate2; break;
+
+		case SP_AMMO_EFFICIENCY: val = sd->bonus.ammo_efficiency; break;
+		case SP_BUFF_DURATION: val = sd->bonus.buff_duration; break;
+		case SP_BUFF_EFFICIENCY: val = sd->bonus.buff_efficiency; break;
+		case SP_BASIC_ATK: val = sd->bonus.basic_atk; break;
+		case SP_BASIC_ATK_RATE: val = sd->bonus.basic_atk_rate; break;
+		case SP_DOT_DAMAGE_RATE: val = sd->bonus.dot_damage_rate; break;
+		case SP_SUMMON_POWER: val = sd->bonus.summon_power; break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
 			return -1;
