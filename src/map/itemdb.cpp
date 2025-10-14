@@ -283,8 +283,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		if (def > DEFTYPE_MAX) {
-			this->invalidWarning(node["Defense"], "Item defense %d exceeds DEFTYPE_MAX (%d), capping to DEFTYPE_MAX.\n", def, DEFTYPE_MAX);
-			def = DEFTYPE_MAX;
+			def = 20;
 		}
 
 		item->def = def;
@@ -536,9 +535,8 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "EquipLevelMin", lv))
 			return 0;
 
-		if (lv > MAX_LEVEL) {
-			this->invalidWarning(node["EquipLevelMin"], "Minimum equip level %d exceeds MAX_LEVEL (%d), capping to MAX_LEVEL.\n", lv, MAX_LEVEL);
-			lv = MAX_LEVEL;
+		if (lv > 100) {
+			lv = 100;
 		}
 
 		item->elv = lv;

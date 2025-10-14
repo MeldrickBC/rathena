@@ -5119,8 +5119,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
-			this->invalidWarning(node["Defense"], "Invalid monster defense %d, capping...\n", def);
-			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
+			def = 50;
 		}
 
 		mob->status.def = static_cast<defType>(def);
@@ -5133,8 +5132,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
-			this->invalidWarning(node["MagicDefense"], "Invalid monster magic defense %d, capping...\n", def);
-			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
+			def = 20;
 		}
 
 		mob->status.mdef = static_cast<defType>(def);
