@@ -4444,6 +4444,9 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	if (sd->patk_rate != 100)
 		base_status->patk = base_status->patk * sd->patk_rate / 100;
 
+	if (sd->bonus.atk_rate != 0)
+		base_status->batk += (base_status->batk * sd->bonus.atk_rate) / 100;
+
 	if (sd->smatk_rate < 0)
 		sd->smatk_rate = 0;
 	if (sd->smatk_rate != 100)
