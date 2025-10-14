@@ -398,10 +398,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			column.append("`weight`,");
 		if (appendEntry(input["Attack"], value))
 			column.append("`attack`,");
-#ifdef RENEWAL
 		if (appendEntry(input["MagicAttack"], value))
 			column.append("`magic_attack`,");
-#endif
 		if (appendEntry(input["Defense"], value))
 			column.append("`defense`,");
 		if (appendEntry(input["Range"], value))

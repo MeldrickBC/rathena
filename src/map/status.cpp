@@ -3955,6 +3955,12 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				}
 #endif
 			}
+
+			wa->matk += sd->inventory_data[index]->matk;
+
+			if (info != nullptr) {				
+				wa->matk += info->bonus / 200;
+			}
 #ifdef RENEWAL
 			if (sd->bonus.weapon_atk_rate)
 				wa->atk += wa->atk * sd->bonus.weapon_atk_rate / 100;
@@ -6267,6 +6273,15 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 
 		status->matk_min = static_cast<uint16>( cap_value(matk_min,0,USHRT_MAX) );
 		status->matk_max = static_cast<uint16>( cap_value(matk_max,0,USHRT_MAX) );
+
+		if (b_status->lhw.matk > 0) {
+			status->matk_min += b_status->lhw.matk;
+			status->matk_max += b_status->lhw.matk;
+		}
+		if (b_status->rhw.matk > 0) {
+			status->matk_min += b_status->rhw.matk;
+			status->matk_max += b_status->rhw.matk;
+		}
 #else
 		// MATK = StatusMATK + WeaponMATK + ExtraMATK
 		int32 lv = status_get_lv(&bl);

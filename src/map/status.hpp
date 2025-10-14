@@ -3351,8 +3351,8 @@ struct weapon_atk {
 	uint16 atk, atk2;
 	uint16 range;
 	unsigned char ele;
-#ifdef RENEWAL
 	uint16 matk;
+#ifdef RENEWAL
 	unsigned char wlv;
 #endif
 };

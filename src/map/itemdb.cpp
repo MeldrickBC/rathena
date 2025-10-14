@@ -252,7 +252,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 	if (this->nodeExists(node, "Attack")) {
 		uint32 atk;
-
+		
 		if (!this->asUInt32(node, "Attack", atk))
 			return 0;
 
@@ -262,7 +262,6 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			item->atk = 0;
 	}
 
-#ifdef RENEWAL
 	if (this->nodeExists(node, "MagicAttack")) {
 		uint32 matk;
 
@@ -274,7 +273,6 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!exists)
 			item->matk = 0;
 	}
-#endif
 
 	if (this->nodeExists(node, "Defense")) {
 		uint32 def;
@@ -1167,14 +1165,13 @@ void ItemDatabase::loadingFinished(){
 		}
 
 		if (item->type != IT_WEAPON) {
-#ifdef RENEWAL
 			if (item->matk > 0) {
-				ShowWarning( "Item %s is not a weapon. Defaulting MagicAttack to 0.\n", item->name.c_str() );
+				ShowWarning("Item %s is not a weapon. Defaulting MagicAttack to 0.\n", item->name.c_str());
 				item->matk = 0;
 			}
-#endif
+
 			if (item->range > 0) {
-				ShowWarning( "Item %s is not a weapon. Defaulting Range to 0.\n", item->name.c_str() );
+				ShowWarning("Item %s is not a weapon. Defaulting Range to 0.\n", item->name.c_str());
 				item->range = 0;
 			}
 		}
@@ -4227,10 +4224,9 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		rootNode["EquipScript"] << str[index];
 	if (!str[++index].empty())
 		rootNode["UnEquipScript"] << str[index];
-
-#ifdef RENEWAL
 	if (!str[++index].empty())
 		rootNode["MagicAttack"] << str[index];
+#ifdef RENEWAL
 	if (!str[++index].empty())
 		classes["Third"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
