@@ -9641,6 +9641,8 @@ t_tick status_get_sc_def(block_list *src, block_list *bl, sc_type type, int32 ra
 #endif
 
 	switch (type) {
+		case SC_SIEGFRIED:
+			break;
 		case SC_POISON:
 		case SC_DPOISON:
 #ifndef RENEWAL
