@@ -4735,7 +4735,11 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += 10 * skill_lv; //Outer 5x5 circle takes 100%+10%*level damage [Playtester]
 			break;
 		case HT_POWER:
-			skillratio += -50 + 8 * sstatus->str;
+			skillratio += 50 + 20 * skill_lv;
+			skillratio += (skillratio)*sstatus->str / 200;
+			if (tstatus && (tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT || tstatus->race == RC_DRAGON)) {
+				skillratio += skillratio * 0.2;
+			}
 			break;
 		case MA_DOUBLE:
 			skillratio += 10 * (skill_lv - 1);
@@ -9868,8 +9872,10 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 				md.damage = skill_lv * 20 + skill * 6 + ((sstatus->agi / 2) *2) + ((sstatus->dex / 10) *2);
 #else
 				md.damage = (sstatus->dex / 10 + sstatus->int_ / 2 + skill * 3 + 40) * 2;
-				if(mflag > 1) //Autocasted Blitz
-					nk.set(NK_SPLASHSPLIT);
+
+				if (sd && ssc && ssc->getSCE(SC_FALCONTACTICS)) {
+					md.damage += md.damage * 0.1;
+				}
 #endif
 				if (skill_id == SN_FALCONASSAULT) {
 					//Div fix of Blitzbeat

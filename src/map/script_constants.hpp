@@ -1997,6 +1997,7 @@
 	export_constant(SC_OVERCOMING_CRISIS);
 	export_constant(SC_CHASING);
 	export_constant(SC_FIRSTAID);
+	export_constant(SC_FALCONTACTICS);
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
 	export_constant(EFST_BLANK);

@@ -1442,7 +1442,7 @@ enum sc_type : int16 {
 	// Level 275 New Skills
 	SC_CHASING,
 	SC_FIRSTAID,
-
+	SC_FALCONTACTICS,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

@@ -1350,18 +1350,19 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 				if( attack_type&BF_SKILL )
 					break; // If a normal attack is a skill, it's splash damage. [Inkfish]
 				if(sd) {
-					int32 skill;
-
 					// Automatic trigger of Blitz Beat
-					if (pc_isfalcon(sd) && sd->status.weapon == W_BOW && (skill = pc_checkskill(sd, HT_BLITZBEAT)) > 0 && rnd() % 1000 <= sstatus->luk * 10 / 3 + 1) {
-						int32 rate;
+					int skill = pc_checkskill(sd, HT_BLITZBEAT);
+					int rate = 5;
+					if (pc_isfalcon(sd) && (skill > 0)) {
+						int blitzrand = rnd() % 1000;
+						int skillm = pc_checkskill(sd, HT_FALCON);
+						if (sd->status.weapon == W_BOW && (blitzrand <= sstatus->luk * 10 / 3 + 1 + (skillm * 10))) {
+							skill_castend_damage_id(src, bl, HT_BLITZBEAT, (skill < rate) ? skill : rate, tick, SD_LEVEL);
+						}
+						if (sd->status.weapon == W_DAGGER && (blitzrand <= sstatus->luk * 10 / 2 + 1 + (skillm * 10))) {
+							skill_castend_damage_id(src, bl, HT_BLITZBEAT, (skill < rate) ? skill : rate, tick, SD_LEVEL);
+						}
 
-						if ((sd->class_ & MAPID_THIRDMASK) == MAPID_RANGER)
-							rate = 5;
-						else
-							rate = (sd->status.job_level + 9) / 10;
-
-						skill_castend_damage_id(src, bl, HT_BLITZBEAT, (skill < rate) ? skill : rate, tick, SD_LEVEL);
 					}
 					// Automatic trigger of Warg Strike
 					if (pc_iswug(sd) && (skill = pc_checkskill(sd, RA_WUGSTRIKE)) > 0) {
@@ -5660,10 +5661,10 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case HT_POWER:
-		if( tstatus->race == RC_BRUTE || tstatus->race == RC_PLAYER_DORAM || tstatus->race == RC_INSECT )
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+	case HT_POWER: {
+		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
+	}
 
 	case SU_PICKYPECK:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
@@ -6159,6 +6160,15 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				// If there are no characters in the area, then it always counts as if there was one target
 				// This happens when targetting skill units such as icewall
 				skill_area_temp[0] = std::max(1, skill_area_temp[0]);
+			}
+
+			if (sd) {
+				if (skill_id == HT_BLITZBEAT) {
+					if (sc && sc->getSCE(SC_FALCONTACTICS)) {
+						skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+						break;
+					}
+				}
 			}
 
 			// recursive invocation of skill_castend_damage_id() with flag|1
@@ -8254,6 +8264,13 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case ALL_RAY_OF_PROTECTION:
 		clif_skill_nodamage(bl,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+		break;
+	case HT_FALCON:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		if (sc->getSCE(SC_FALCONTACTICS))
+			status_change_end(src, SC_FALCONTACTICS);
+		else
+			sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	//Passive Magnum, should had been casted on yourself.
 	case MS_MAGNUM:
