@@ -9569,8 +9569,11 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 
 	case NV_FIRSTAID:
-		clif_skill_nodamage(src,*bl,skill_id,5);
-		status_heal(bl,5,0,0);
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		clif_specialeffect(src, EF_HPTIME, AREA);
+		if (sd && sd->sc.getSCE(SC_FIRSTAID))
+			status_change_end(src, SC_FIRSTAID);
+		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 
 	case PR_STRECOVERY:
@@ -10139,6 +10142,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
+	case NV_COLLECT:
 	case BS_GREED:
 		if(sd){
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);

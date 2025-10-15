@@ -1710,8 +1710,16 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 
 			return damage; //These skills bypass everything else.
 	}
-
+	
 	status_change* tsc = status_get_sc(bl); //check target status
+	status_change* ssc = status_get_sc(src); //check caster status
+
+	if (ssc && (ssc->getSCE(SC_FIRSTAID))) {
+		status_change_end(src, SC_FIRSTAID);
+	}
+	if (tsc && (tsc->getSCE(SC_FIRSTAID))) {
+		status_change_end(bl, SC_FIRSTAID);
+	}
 
 	// Nothing can reduce the damage, but Safety Wall and Millennium Shield can block it completely.
 	// So can defense sphere's but what the heck is that??? [Rytech]

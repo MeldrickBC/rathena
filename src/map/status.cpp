@@ -5432,6 +5432,14 @@ void status_calc_regen_rate(block_list *bl, struct regen_data *regen, status_cha
 		}
 	}
 
+	if (sc && !sc->empty()) {
+		if (sc->getSCE(SC_FIRSTAID)) {
+			const struct status_change_entry* sce = sc->getSCE(SC_FIRSTAID);
+			int firstaid = sce->val2 + sce->val3 / (150 - 10 * sce->val1);
+			regen->hp += firstaid;
+		}
+	}
+
 	if (sc->getSCE(SC_MAGNIFICAT))
 		regen->rate.sp += 100;
 
@@ -13144,7 +13152,13 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			val2 = 3 * val1;
 			val3 = 15000 * val1;
 			break;
-
+		case SC_FIRSTAID: {
+			val2 = val1;
+			if (sd) {
+				val3 = sd->status.max_hp;
+			}
+			break;
+		}
 		default:
 			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->endonstart.empty() && scdb->endreturn.empty() && scdb->fail.empty() && scdb->endonend.empty()) {
 				// Status change with no calc, no icon, and no skill associated...?
@@ -13742,6 +13756,12 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 	status_data* status = status_get_status_data(*bl);
 
 	switch(type) {
+		case SC_FIRSTAID: {
+			regen_data* rg = status_get_regen_data(bl);
+			rg->hp -= val2 + val3 / (150 - 10 * val1);
+			status_calc_regen_rate(bl, rg, sc);
+			break;
+		}
 		case SC_KEEPING:
 		case SC_BARRIER:
 			if (unit_data* ud = unit_bl2ud(bl); ud != nullptr) {
