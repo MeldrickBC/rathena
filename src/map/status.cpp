@@ -4649,10 +4649,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	status_calc_weight(sd, CALCWT_MAXBONUS);
 	status_calc_cart_weight(sd, CALCWT_MAXBONUS);
 
-	if (pc_checkskill(sd, SM_MOVINGRECOVERY) > 0 || pc_ismadogear(sd))
-		sd->regen.state.walk = 1;
-	else
-		sd->regen.state.walk = 0;
+	sd->regen.state.walk = 1;
 
 	// Skill SP cost
 	if((skill=pc_checkskill(sd,HP_MANARECHARGE))>0 )
