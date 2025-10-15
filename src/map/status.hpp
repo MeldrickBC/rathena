@@ -1443,6 +1443,7 @@ enum sc_type : int16 {
 	SC_CHASING,
 	SC_FIRSTAID,
 	SC_FALCONTACTICS,
+	SC_GANGSTER,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 

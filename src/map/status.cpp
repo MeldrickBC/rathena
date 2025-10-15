@@ -10931,6 +10931,8 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_DAILYSENDMAILCNT:
 		case SC_SOULATTACK:
 		case SC_FALCONTACTICS:
+		case SC_GANGSTER:
+		case SC_PRESERVE:
 			tick = INFINITE_TICK;
 			break;
 

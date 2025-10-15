@@ -4847,10 +4847,10 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 400 + 200 * skill_lv;
 			break;
 		case RG_BACKSTAP:
-			if(sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty)
-				skillratio += (200 + 40 * skill_lv) / 2;
+			if (sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty)
+				skillratio += (200 + 80 * skill_lv) / 2;
 			else
-				skillratio += 200 + 40 * skill_lv;
+				skillratio += 200 + 80 * skill_lv;
 			break;
 		case RG_RAID:
 #ifdef RENEWAL
@@ -11012,6 +11012,79 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 					ud->canact_tick = i64max(tick + autospell_tick, ud->canact_tick);
 					if (battle_config.display_status_timers && sd)
 						clif_status_change(src, EFST_POSTDELAY, 1, autospell_tick, 0, 0, 0);
+				}
+			}
+		}
+	}
+
+	if (sd) {
+		uint16 r_skill = 0, sk_idx = 0;
+		if (sd->status.skill[sd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED /*&& Check if player has autocast buff*/) {
+			r_skill = sd->status.skill[sd->cloneskill_idx].id;
+			sk_idx = sd->status.skill[sd->cloneskill_idx].lv;
+			int type = skill_get_casttype(r_skill);
+			int procchance = (type == CAST_GROUND) ? 20 : 30;
+
+			if (rnd() % 100 < procchance) {
+				if (skill_get_type(r_skill) == BF_MAGIC &&
+					type != CAST_NODAMAGE &&
+					DIFF_TICK(tick, sd->ud.canact_tick) >= 0
+					//&& util::umap_exists(sd, r_skill)
+					//&& skill_blockpc_get(sd, r_skill) == -1)
+					) {
+					int sp = skill_get_sp(r_skill, sk_idx);
+
+					if (sd->battle_status.sp >= sp) {
+						if (/*r_skill != AL_HOLYLIGHT && r_skill != PR_MAGNUS*/ 1) {
+							int r_lv = sk_idx;
+
+							if (type == CAST_GROUND) {
+								int maxcount = 0;
+								std::shared_ptr<s_skill_db> skill = skill_db.find(r_skill);
+
+								if (!(BL_PC & battle_config.skill_reiteration) && skill->unit_flag[UF_NOREITERATION])
+									type = -1;
+
+								if (BL_PC & battle_config.skill_nofootset && skill->unit_flag[UF_NOFOOTSET])
+									type = -1;
+
+								if (BL_PC & battle_config.land_skill_limit &&
+									(maxcount = skill_get_maxcount(r_skill, r_lv)) > 0) {
+									unit_skillunit_maxcount(sd->ud, r_skill, maxcount);
+									if (maxcount == 0)
+										type = -1;
+								}
+
+								if (type != CAST_GROUND) {
+									clif_skill_fail(*sd, r_skill);
+									map_freeblock_unlock();
+									return wd.dmg_lv;
+								}
+							}
+
+							if (sd->state.autocast == 0) {
+								sd->state.autocast = 1;
+								skill_consume_requirement(sd, r_skill, r_lv, 3);
+								switch (type) {
+								case CAST_GROUND:
+									if (!skill_castend_pos2(src, target->x, target->y, r_skill, r_lv, tick, flag)) {
+										status_charge(src, 0, sp);
+										clif_specialeffect_value(src, EF_DARKCASTING, 0, AREA);
+									}
+									break;
+								case CAST_DAMAGE:
+									if (!skill_castend_damage_id(src, target, r_skill, r_lv, tick, flag)) {
+										status_charge(src, 0, sp);
+										clif_specialeffect_value(src, EF_DARKCASTING, 0, AREA);
+									}
+									break;
+								}
+							}
+							sd->state.autocast = 0;
+							sd->ud.canact_tick = i64max(tick + skill_delayfix(src, r_skill, r_lv), sd->ud.canact_tick);
+							clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
+						}
+					}
 				}
 			}
 		}

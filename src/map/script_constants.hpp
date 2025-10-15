@@ -1998,6 +1998,7 @@
 	export_constant(SC_CHASING);
 	export_constant(SC_FIRSTAID);
 	export_constant(SC_FALCONTACTICS);
+	export_constant(SC_GANGSTER);
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
 	export_constant(EFST_BLANK);

@@ -8272,6 +8272,13 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		else
 			sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
+	case RG_GANGSTER:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		if (sc->getSCE(SC_GANGSTER))
+			status_change_end(src, SC_GANGSTER);
+		else
+			sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		break;
 	//Passive Magnum, should had been casted on yourself.
 	case MS_MAGNUM:
 		skill_area_temp[1] = 0;
@@ -8368,7 +8375,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case NJ_NEN:
 	case NPC_DEFENDER:
 	case NPC_MAGICMIRROR:
-	case ST_PRESERVE:
 	case NPC_KEEPING:
 	case NPC_WEAPONBRAKER:
 	case NPC_BARRIER:
@@ -8449,7 +8455,15 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
-
+	case ST_PRESERVE: {
+		if (sc->getSCE(SC_PRESERVE))
+			status_change_end(src, SC_PRESERVE);
+		else {
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv,
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+		}
+		break;
+	}
 	case NPC_GRADUAL_GRAVITY:
 	case NPC_DEADLYCURSE:
 		status_change_start(src, bl, type, 10000, skill_lv, 0, 0, 0, skill_get_time(skill_id, skill_lv), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);

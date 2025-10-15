@@ -1333,9 +1333,18 @@ static int32 mob_ai_sub_hard_activesearch(block_list *bl,va_list ap)
 	if(battle_check_target(md,bl,BCT_ENEMY)<=0)
 		return 0;
 
-	if (bl->type == BL_PC && BL_CAST(BL_PC, bl)->state.gangsterparadise &&
-		!status_has_mode(&md->status,MD_STATUSIMMUNE))
-		return 0; //Gangster paradise protection.
+	TBL_PC* sd = BL_CAST(BL_PC, bl);
+	if (sd) {
+		status_change* tsc;
+		int gangsterlv = 0;
+		tsc = status_get_sc(bl);
+
+		if (tsc && tsc->getSCE(SC_GANGSTER))
+			gangsterlv = tsc->getSCE(SC_GANGSTER)->val1;
+		if (gangsterlv > 0 && !status_has_mode(&md->status, MD_STATUSIMMUNE))
+			if (distance_bl(md, bl) > 10 - gangsterlv)
+				return 0; //New Gangster paradise (Sneak) protection.
+	}
 
 	if (battle_config.hom_setting&HOMSET_FIRST_TARGET &&
 		(*target) != nullptr && (*target)->type == BL_HOM && bl->type != BL_HOM)
