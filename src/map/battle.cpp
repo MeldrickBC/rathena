@@ -3707,14 +3707,17 @@ int32 battle_get_magic_element(block_list* src, block_list* target, uint16 skill
 		case IG_IMPERIAL_PRESSURE:
 			if (sc != nullptr && sc->hasSCE(SC_GUARD_STANCE))
 				element = ELE_HOLY;
-			break;
-		case WM_REVERBERATION:
+			break;		
 		case TR_METALIC_FURY:
 		case TR_SOUNDBLEND:
 		case TR_RHYTHMICAL_WAVE:
 			if (sd)
 				element = sd->bonus.arrow_ele;
 			break;
+		case WM_REVERBERATION: {
+			element = ELE_NEUTRAL;
+			break;
+		}
 		case SU_CN_METEOR:
 		case SU_CN_METEOR2:
 		case SH_HYUN_ROKS_BREEZE:
@@ -4930,7 +4933,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 #ifdef RENEWAL
 			skillratio += 10 + 40 * skill_lv;
 #else
-			skillratio += -40 + 40 * skill_lv;
+			skillratio += 25 + 25 * skill_lv;
 #endif
 			break;
 		case CH_TIGERFIST:
@@ -7019,7 +7022,7 @@ static void battle_calc_defense_reduction(struct Damage* wd, block_list *src,blo
 		i = min(i,100); //cap it to 100 for 0 def min
 		def1 = (def1*(100-i))/100;
 		def2 = (def2*(100-i))/100;
-	}
+	}	
 
 	if (tsc) {
 		if (tsc->getSCE(SC_FORCEOFVANGUARD)) {
@@ -8735,19 +8738,10 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += -100 + 200 * skill_lv;
 						break;
 					case WM_METALICSOUND:
-						skillratio += -100 + 120 * skill_lv + 60 * ((sd) ? pc_checkskill(sd, WM_LESSON) : 1);
-						if (tsc && tsc->getSCE(SC_SLEEP))
-							skillratio += 100; // !TODO: Confirm target sleeping bonus
-						RE_LVL_DMOD(100);
-						if (tsc && tsc->getSCE(SC_SOUNDBLEND))
-							skillratio += skillratio * 50 / 100;
+						skillratio += -100 + 100 + 20 * skill_lv;
 						break;
 					case WM_REVERBERATION:
-						// MATK [{(Skill Level x 300) + 400} x Casters Base Level / 100] %
-						skillratio += -100 + 700 + 300 * skill_lv;
-						RE_LVL_DMOD(100);
-						if (tsc && tsc->getSCE(SC_SOUNDBLEND))
-							skillratio += skillratio * 50 / 100;
+						skillratio += -100 + 300 + 90 * skill_lv;
 						break;
 					case SO_FIREWALK:
 						skillratio += -100 + 60 * skill_lv;
@@ -9560,6 +9554,10 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 			if (sc != nullptr && sc->getSCE(SC_EXPIATIO))
 				i += 5 * sc->getSCE(SC_EXPIATIO)->val1;
+
+			if (sc->getSCE(SC_NIBELUNGEN)) {
+				i += sc->getSCE(SC_NIBELUNGEN)->val2;
+			}
 
 			if (sd != nullptr) {
 				i += sd->indexed_bonus.ignore_mdef_by_race[tstatus->race] + sd->indexed_bonus.ignore_mdef_by_race[RC_ALL] +

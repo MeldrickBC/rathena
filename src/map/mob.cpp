@@ -3078,13 +3078,10 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 	) { //Experience calculation.
 		int32 bonus = 100; //Bonus on top of your share (common to all attackers).
 		int32 pnum = 0;
-#ifndef RENEWAL
-		if (md->sc.getSCE(SC_RICHMANKIM))
-			bonus += md->sc.getSCE(SC_RICHMANKIM)->val2;
-#else
+
 		if (sd && sd->sc.getSCE(SC_RICHMANKIM))
 			bonus += sd->sc.getSCE(SC_RICHMANKIM)->val2;
-#endif
+
 		if(sd) {
 			temp = status_get_class(md);
 			if(sd->sc.getSCE(SC_MIRACLE)) i = 2; //All mobs are Star Targets

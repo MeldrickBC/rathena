@@ -3349,6 +3349,8 @@ static int32 status_get_spbonus(block_list *bl, enum e_status_bonus type) {
 			if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_SPRATE)
 				bonus += 30;
 #endif
+			if ((i = pc_checkskill(sd, BA_MUSICALLESSON)) > 0)
+				bonus += i;
 		}
 
 		//Bonus by SC
@@ -4857,10 +4859,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		}
 		if (sc->getSCE(SC_LAUDARAMUS))
 			sd->bonus.crit_atk_rate += 5 * sc->getSCE(SC_LAUDARAMUS)->val1;
-#ifdef RENEWAL
+
 		if (sc->getSCE(SC_FORTUNE))
-			sd->bonus.crit_atk_rate += 2 * sc->getSCE(SC_FORTUNE)->val1;
-#endif
+			sd->bonus.crit_atk_rate += sc->getSCE(SC_FORTUNE)->val3;
+
 		if (sc->getSCE(SC_SYMPHONYOFLOVER)) {
 			sd->indexed_bonus.subele[ELE_GHOST] += sc->getSCE(SC_SYMPHONYOFLOVER)->val1 * 3;
 			sd->indexed_bonus.subele[ELE_HOLY] += sc->getSCE(SC_SYMPHONYOFLOVER)->val1 * 3;
@@ -6818,7 +6820,8 @@ static uint16 status_calc_str(block_list *bl, status_change *sc, int32 str)
 		str += sc->getSCE(SC_UNIVERSESTANCE)->val2;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		str -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
-
+	if (sc->getSCE(SC_ENSEMBLEFATIGUE))
+		str -= 10;
 	//TODO: Stat points should be able to be decreased below 0
 	return (uint16)cap_value(str,0,USHRT_MAX);
 }
@@ -6891,7 +6894,8 @@ static uint16 status_calc_agi(block_list *bl, status_change *sc, int32 agi)
 		agi += sc->getSCE(SC_UNIVERSESTANCE)->val2;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		agi -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
-
+	if (sc->getSCE(SC_ENSEMBLEFATIGUE))
+		agi -= 10;
 	//TODO: Stat points should be able to be decreased below 0
 	return (uint16)cap_value(agi,0,USHRT_MAX);
 }
@@ -6952,7 +6956,8 @@ static uint16 status_calc_vit(block_list *bl, status_change *sc, int32 vit)
 		vit += sc->getSCE(SC_UNIVERSESTANCE)->val2;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		vit -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
-
+	if (sc->getSCE(SC_ENSEMBLEFATIGUE))
+		vit -= 10;
 	//TODO: Stat points should be able to be decreased below 0
 	return (uint16)cap_value(vit,0,USHRT_MAX);
 }
@@ -7030,7 +7035,8 @@ static uint16 status_calc_int(block_list *bl, status_change *sc, int32 int_)
 #endif
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		int_ -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
-
+	if (sc->getSCE(SC_ENSEMBLEFATIGUE))
+		int_ -= 10;
 	//TODO: Stat points should be able to be decreased below 0
 	return (uint16)cap_value(int_,0,USHRT_MAX);
 }
@@ -7105,7 +7111,8 @@ static uint16 status_calc_dex(block_list *bl, status_change *sc, int32 dex)
 		dex += sc->getSCE(SC_UNIVERSESTANCE)->val2;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		dex -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
-
+	if (sc->getSCE(SC_ENSEMBLEFATIGUE))
+		dex -= 10;
 	//TODO: Stat points should be able to be decreased below 0
 	return (uint16)cap_value(dex,0,USHRT_MAX);
 }
@@ -7166,7 +7173,8 @@ static uint16 status_calc_luk(block_list *bl, status_change *sc, int32 luk)
 		luk += sc->getSCE(SC_UNIVERSESTANCE)->val2;
 	if (sc->getSCE(SC_ALL_STAT_DOWN))
 		luk -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
-
+	if (sc->getSCE(SC_ENSEMBLEFATIGUE))
+		luk -= 10;
 	//TODO: Stat points should be able to be decreased below 0
 	return (uint16)cap_value(luk,0,USHRT_MAX);
 }
@@ -7423,7 +7431,8 @@ static uint16 status_calc_watk(block_list *bl, status_change *sc, int32 watk)
 		watk += sc->getSCE(SC_POWERFUL_FAITH)->val2;
 	if (sc->getSCE(SC_GUARD_STANCE))
 		watk -= sc->getSCE(SC_GUARD_STANCE)->val3;
-
+	if (sc->getSCE(SC_ENSEMBLEFATIGUE))
+		watk -= watk / 10;
 	return (uint16)cap_value(watk,0,USHRT_MAX);
 }
 
@@ -7481,7 +7490,8 @@ uint16 status_calc_pseudobuff_matk( map_session_data* sd, status_change *sc, int
 		matk += 50;
 	if (sc->getSCE(SC_CLIMAX_DES_HU))
 		matk += 100;
-
+	if (sc->getSCE(SC_ENSEMBLEFATIGUE))
+		matk -= matk / 10;
 	return static_cast<uint16>( cap_value(matk,0,USHRT_MAX) );
 }
 
@@ -8541,6 +8551,12 @@ static int16 status_calc_aspd_rate(block_list *bl, status_change *sc, int32 aspd
 	if (sc->getSCE(SC_STARSTANCE))
 		aspd_rate -= 10 * sc->getSCE(SC_STARSTANCE)->val2;
 
+	map_session_data* sd = BL_CAST(BL_PC, bl);
+	uint8 skill_lv;
+	if (sd) {
+		if ((skill_lv = pc_checkskill(sd, DC_DANCINGLESSON)) > 0)
+			aspd_rate -= skill_lv * 10;
+	}
 	return (int16)cap_value(aspd_rate,0,SHRT_MAX);
 }
 
@@ -11152,58 +11168,111 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			val3 = tick/1000; // Tick duration
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
-#ifndef RENEWAL
 		case SC_LONGING:
 			val2 = 500-100*val1; // Aspd penalty.
 			break;
-#else
 		case SC_ENSEMBLEFATIGUE:
 			val2 = 30; // Speed and ASPD penalty
 			break;
 		case SC_RICHMANKIM:
-			val2 = 10 + 10 * val1; // Exp increase bonus
+			val2 = 5 * val1; // Exp increase bonus
 			break;
 		case SC_DRUMBATTLE:
-			val2 = 15 + val1 * 5; // Atk increase
-			val3 = val1 * 15; // Def increase
+			val2 = 25 + val1 * 5; // Atk increase
+			val3 = val1 * 1; // Def increase
 			break;
 		case SC_NIBELUNGEN:
-			val2 = rnd() % RINGNBL_MAX; // See e_nibelungen_status
+			val2 = 5 * val1; // MDEF Pierce Percentage
 			break;
 		case SC_SIEGFRIED:
 			val2 = val1 * 3; // Elemental Resistance
 			val3 = val1 * 5; // Status ailment resistance
 			break;
 		case SC_WHISTLE:
-			val2 = 18 + 2 * val1; // Flee increase
+			val2 = val1; // Flee increase
 			val3 = (val1 + 1) / 2; // Perfect dodge increase
+
+			if (src->type == BL_PC) {
+				map_session_data* s_sd = BL_CAST(BL_PC, src);
+				val2 += (status_get_base_status(src)->agi / 10) + pc_checkskill(s_sd, BA_MUSICALLESSON) / 2;
+				val3 += (status_get_base_status(src)->luk / 30) + pc_checkskill(s_sd, BA_MUSICALLESSON) / 5;
+			}
 			break;
 		case SC_ASSNCROS:
-			val2 = val1 < 10 ? val1 * 2 - 1 : 20; // ASPD increase
+			val2 = 10 + val1; // ASPD increase			
+
+			if (src->type == BL_PC) {
+				map_session_data* s_sd = BL_CAST(BL_PC, src);
+				val2 += (status_get_base_status(src)->agi / 20) + pc_checkskill(s_sd, BA_MUSICALLESSON) / 2;
+			}
+			val2 *= 10;
 			break;
 		case SC_POEMBRAGI:
-			val2 = 2 * val1; // Cast time reduction
-			val3 = 3 * val1; // After-cast delay reduction
+			val2 = 3 * val1; // Cast time reduction
+			val3 = val2; // After-cast delay reduction
+
+			if (src->type == BL_PC) {
+				map_session_data* s_sd = BL_CAST(BL_PC, src);
+				val2 += (status_get_base_status(src)->dex / 10) + pc_checkskill(s_sd, BA_MUSICALLESSON);
+				val3 += (status_get_base_status(src)->int_ / 5) + 2 * pc_checkskill(s_sd, BA_MUSICALLESSON);
+			}
 			break;
 		case SC_APPLEIDUN:
-			val2 = val1 < 10 ? 9 + val1 : 20; // HP rate increase
-			val3 = 2 * val1; // Potion recovery rate
+			val2 = 5 + 2 * val1; // HP rate increase			
+			val3 = 100 + 10 * val1; //CUSTOM
+			val4 = tick / 5000;
+			tick_time = 5000;
+
+			if (src->type == BL_PC) {
+				map_session_data* s_sd = BL_CAST(BL_PC, src);
+				val2 += (status_get_base_status(src)->vit / 10) + pc_checkskill(s_sd, BA_MUSICALLESSON) / 2;
+				val3 += (status_get_base_status(src)->vit * 2) + 10 * pc_checkskill(s_sd, BA_MUSICALLESSON); //CUSTOM
+			}
+
+			if (sd)
+				val3 = max(100 + 10 * val1, static_cast<int>(round(val3 * sd->status.base_level / 100)));
 			break;
 		case SC_HUMMING:
-			val2 = 4 * val1; // Hit increase
+			val2 = 2 * val1; // Hit increase
+
+			if (src->type == BL_PC) {
+				map_session_data* s_sd = BL_CAST(BL_PC, src);
+				val2 += status_get_base_status(src)->dex / 10 + pc_checkskill(s_sd, DC_DANCINGLESSON);
+			}
 			break;
 		case SC_DONTFORGETME:
-			val2 = 1 + 30 * val1; // ASPD decrease
-			val3 = 5 + 2 * val1; // Movement speed adjustment.
+			val2 = 3 * val1; // ASPD decrease
+			val3 = 2 * val1; // Movement speed adjustment.
+
+			if (src->type == BL_PC) {
+				map_session_data* s_sd = BL_CAST(BL_PC, src);
+				val2 += status_get_base_status(src)->dex / 10 + pc_checkskill(s_sd, DC_DANCINGLESSON);
+				val3 += status_get_base_status(src)->agi / 10 + pc_checkskill(s_sd, DC_DANCINGLESSON);
+			}
+
+			if (bl->type != BL_PC)
+				clif_specialeffect(bl, EF_DECAGILITY, AREA);
 			break;
 		case SC_FORTUNE:
 			val2 = val1 * 10; // Critical increase
+			val3 = val1;
+			if (src->type == BL_PC) {
+				map_session_data* s_sd = BL_CAST(BL_PC, src);
+				val2 += (status_get_base_status(src)->luk) + (pc_checkskill(s_sd, DC_DANCINGLESSON) * 5);
+				val3 += (status_get_base_status(src)->luk / 20) + (pc_checkskill(s_sd, DC_DANCINGLESSON) / 2);
+			}
 			break;
 		case SC_SERVICE4U:
-			val2 = val1 < 10 ? 9 + val1 : 20; // MaxSP percent increase
-			val3 = 5 + val1; // SP cost reduction
+			val2 = 15 + val1; // MaxSP percent increase
+			val3 = 20 + val1 * 3; // SP cost reduction
+
+			if (src->type == BL_PC) {
+				map_session_data* s_sd = BL_CAST(BL_PC, src);
+				val2 += (status_get_base_status(src)->int_ / 10) + (pc_checkskill(s_sd, DC_DANCINGLESSON) / 2);
+				val3 += (status_get_base_status(src)->int_ / 10) + (pc_checkskill(s_sd, DC_DANCINGLESSON) / 2);
+			}
 			break;
-#endif
+
 		case SC_EXPLOSIONSPIRITS:
 			val2 = 75 + 25*val1; // Cri bonus
 			break;
@@ -12576,28 +12645,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			if( !mobdb_checkid(val1) )
 				val1 = MOBID_PORING; // Default poring
 			break;
-#ifndef RENEWAL
-		case SC_APPLEIDUN:
-		{
-			map_session_data * s_sd = BL_CAST(BL_PC, src);
-
-			val2 = (5 + 2 * val1) + (status_get_vit(src) / 10); //HP Rate: (5 + 2 * skill_lv) + (vit/10) + (BA_MUSICALLESSON level)
-			if (s_sd)
-				val2 += pc_checkskill(s_sd, BA_MUSICALLESSON) / 2;
-		}
-		[[fallthrough]];
-		case SC_WHISTLE:
-		case SC_ASSNCROS:
-		case SC_POEMBRAGI:
-		case SC_HUMMING:
-		case SC_DONTFORGETME:
-		case SC_FORTUNE:
-		case SC_SERVICE4U:
-			// Display icon as infinite
-			tick_time = tick;
-			tick = INFINITE_TICK;
-			break;
-#endif
 		case SC_EPICLESIS:
 			val2 = 5 * val1; //HP rate bonus
 			break;

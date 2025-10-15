@@ -7681,7 +7681,7 @@ static int32 skill_castend_song(block_list* src, uint16 skill_id, uint16 skill_l
 	sd->skill_lv_dance = skill_lv;
 
 	if (skill_get_inf2(skill_id, INF2_ISENSEMBLE))
-		skill_check_pc_partner(sd, skill_id, &skill_lv, 3, 1);
+		skill_check_pc_partner(sd, skill_id, &skill_lv, 4, 1);
 
 	return map_foreachinrange(skill_apply_songs, src, skill_get_splash(skill_id, skill_lv), splash_target(src), flag, src, skill_id, skill_lv, tick);
 }
@@ -9421,14 +9421,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		else if( sd )
 			clif_skill_fail( *sd, skill_id,  USESKILL_FAIL_LEVEL );
 		break;
-
-	case CG_SPECIALSINGER:
-		if (tsc && tsc->getSCE(SC_ENSEMBLEFATIGUE)) {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_change_end(bl, SC_ENSEMBLEFATIGUE);
-		}
-		break;
-
 	case BD_ADAPTATION:
 #ifdef RENEWAL
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
@@ -9490,28 +9482,47 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
-#ifdef RENEWAL
+	case DC_UGLYDANCE:
+	case BA_DISSONANCE:
+	case DC_DONTFORGETME:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		break;
+	case BA_POEMBRAGI:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		break;
+	case BA_WHISTLE:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		clif_soundeffect(*sd, "whistle.wav", 0, AREA);
+		break;
+	case BA_ASSASSINCROSS:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		break;
+	case BA_APPLEIDUN:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		break;
+	case DC_HUMMING:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		break;
+	case DC_FORTUNEKISS:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		break;
+	case DC_SERVICEFORYOU:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		break;
 	case BD_LULLABY:
-	case BD_RICHMANKIM:
 	case BD_ETERNALCHAOS:
 	case BD_DRUMBATTLEFIELD:
 	case BD_RINGNIBELUNGEN:
 	case BD_ROKISWEIL:
 	case BD_INTOABYSS:
 	case BD_SIEGFRIED:
-	case BA_DISSONANCE:
-	case BA_POEMBRAGI:
-	case BA_WHISTLE:
-	case BA_ASSASSINCROSS:
-	case BA_APPLEIDUN:
-	case DC_UGLYDANCE:
-	case DC_HUMMING:
-	case DC_DONTFORGETME:
-	case DC_FORTUNEKISS:
-	case DC_SERVICEFORYOU:
+	case BD_RICHMANKIM:
+		if (sd && sd->sc.getSCE(SC_ENSEMBLEFATIGUE)) {
+			clif_skill_fail(*sd, skill_id, USESKILL_FAIL);
+			break;
+		}
 		skill_castend_song(src, skill_id, skill_lv, tick);
 		break;
-#endif
 
 	case RG_STEALCOIN:
 		if(sd) {
@@ -10713,7 +10724,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				//Target currently has the SUN tarot card effect and is immune to any other effect
 				return 0;
 			}
-			if( rnd() % 100 > skill_lv * 8 ||
+			if (rnd() % 100 > 40 ||
 #ifndef RENEWAL
 			(tsc && tsc->getSCE(SC_BASILICA)) ||
 #endif
@@ -14490,26 +14501,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
 	case SA_LANDPROTECTOR:
-#ifndef RENEWAL
-	case BD_LULLABY:
-	case BD_RICHMANKIM:
-	case BD_ETERNALCHAOS:
-	case BD_DRUMBATTLEFIELD:
-	case BD_RINGNIBELUNGEN:
-	case BD_ROKISWEIL:
-	case BD_INTOABYSS:
-	case BD_SIEGFRIED:
-	case BA_DISSONANCE:
-	case BA_POEMBRAGI:
-	case BA_WHISTLE:
-	case BA_ASSASSINCROSS:
-	case BA_APPLEIDUN:
-	case DC_UGLYDANCE:
-	case DC_HUMMING:
-	case DC_DONTFORGETME:
-	case DC_FORTUNEKISS:
-	case DC_SERVICEFORYOU:
-#endif
 	case CG_MOONLIT:
 	case GS_DESPERADO:
 	case NJ_KAENSIN:
@@ -18018,6 +18009,7 @@ int32 skill_check_condition_char_sub (block_list *bl, va_list ap)
 	skill_id = va_arg(ap,int32);
 
 	bool is_chorus = skill_get_inf2(skill_id, INF2_ISCHORUS);
+	bool is_ensemble = skill_get_inf2(skill_id, INF2_ISENSEMBLE);
 
 	if (skill_id == PR_BENEDICTIO) {
 		if (*c >= 2) // Check for two companions for Benedictio. [Skotlex]
@@ -18045,6 +18037,16 @@ int32 skill_check_condition_char_sub (block_list *bl, va_list ap)
 				(tsd->class_&MAPID_THIRDMASK) == MAPID_MINSTRELWANDERER )
 			p_sd[(*c)++] = tsd->id;
 		return 1;
+
+	} else if (is_ensemble) {
+			if (tsd->status.party_id && sd->status.party_id &&
+				tsd->status.party_id == sd->status.party_id &&
+				(tsd->class_ & MAPID_UPPERMASK) == MAPID_BARDDANCER &&
+				tsd->status.sex != sd->status.sex &&
+				!tsd->duel_group) {
+				p_sd[(*c)++] = tsd->id;
+				return 1;
+			}
 	} else {
 
 		switch(skill_id) {
@@ -18138,19 +18140,20 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 				if( is_chorus )
 					break;//Chorus skills are not to be parsed as ensembles
 				if (skill_get_inf2(skill_id, INF2_ISENSEMBLE)) {
-					if (c > 0 && (tsd = map_id2sd(p_sd[0])) != nullptr) {
-#ifndef RENEWAL
-						if (sd->sc.hasSCE(SC_DANCING)) {
-							sd->sc.getSCE(SC_DANCING)->val4 = tsd->id;
-							sc_start4(sd, tsd, SC_DANCING, 100, skill_id, sd->sc.getSCE(SC_DANCING)->val2, *skill_lv, sd->id, skill_get_time(skill_id, *skill_lv) + 1000);
-							clif_skill_nodamage(tsd, *sd, skill_id, *skill_lv);
-							tsd->skill_id_dance = skill_id;
-							tsd->skill_lv_dance = *skill_lv;
+					c = 0;
+					memset(p_sd, 0, sizeof(p_sd));
+					i = map_foreachinallrange(skill_check_condition_char_sub, sd, range, BL_PC, sd, &c, &p_sd, skill_id);
+
+					if (i == 1 && (tsd = map_id2sd(p_sd[0])) != nullptr) {
+						clif_skill_nodamage(tsd, *sd, skill_id, *skill_lv);
+						tsd->skill_id_dance = skill_id;
+						tsd->skill_lv_dance = *skill_lv;
+					}
+					else {
+						if (pc_checkskill(sd, CG_SPECIALSINGER) == 0) {
+							sc_start(sd, sd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(skill_id, *skill_lv) / 2);
+							clif_specialeffect(sd, 1209, AREA);
 						}
-#else
-						sc_start(sd, sd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
-						sc_start(sd, tsd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
-#endif
 					}
 				}
 				return c;
@@ -18449,12 +18452,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			return false;
 		}
 	}
-	else if(inf2[INF2_ISENSEMBLE]) {
-		if (skill_check_pc_partner(&sd, skill_id, &skill_lv, 1, 0) < 1 && !(sc && sc->getSCE(SC_KVASIR_SONATA))) {
-			clif_skill_fail( sd, skill_id );
-			return false;
-		}
-	}
+
 	// perform skill-specific checks (and actions)
 	switch( skill_id ) {
 		case RG_GRAFFITI:
@@ -19856,7 +19854,7 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 
 	req.sp = skill->require.sp[skill_lv-1];
 	if((sd->skill_id_old == BD_ENCORE) && skill_id == sd->skill_id_dance)
-		req.sp /= 2;
+		req.sp = 0;
 	if ((sd->skill_id_old == TR_RETROSPECTION) && skill_id == sd->skill_id_song)
 		req.sp -= req.sp * 30 / 100;
 	sp_rate = skill->require.sp_rate[skill_lv-1];
