@@ -2909,6 +2909,7 @@ int32 status_calc_mob_(mob_data* md, uint8 opt)
 
 	if (flag&16 && mbl) { // Max HP setting from Summon Flora/marine Sphere
 		struct unit_data *ud = unit_bl2ud(mbl);
+		map_session_data* msd = BL_CAST(BL_PC, mbl);
 		// Remove special AI when this is used by regular mobs.
 		if (mbl->type == BL_MOB && !((TBL_MOB*)mbl)->special_state.ai)
 			md->special_state.ai = AI_NONE;
@@ -2949,6 +2950,32 @@ int32 status_calc_mob_(mob_data* md, uint8 opt)
 					status->max_hp = (1000 * ud->skill_lv) + (mstatus->hp / 3) + (status_get_lv(mbl) * 12);
 					status->batk = 200 * ud->skill_lv;
 					break;
+
+					int blvl = status_get_lv(mbl);
+					status->max_hp = (100 * ud->skill_lv) + (mstatus->max_hp / 5) + (blvl * 10);
+					status->batk = ((250 + mstatus->hit) * blvl) / 100;
+					if (msd && msd->bonus.summon_power > 0) {
+						status->max_hp += (status->max_hp * msd->bonus.summon_power) / 100;
+						status->batk += (status->batk * msd->bonus.summon_power) / 100;
+					}
+					status->cri += mstatus->cri;
+					status->speed = mstatus->speed;
+					//Check smith masteries
+
+					if (pc_checkskill(msd, BS_DAGGER) == 4)
+						status->cri += 20;
+					if (pc_checkskill(msd, BS_SWORD) == 4)
+						status->def += 25;
+					if (pc_checkskill(msd, BS_TWOHANDSWORD) == 4)
+						status->batk += 50;
+					if (pc_checkskill(msd, BS_AXE) == 4)
+						status->batk += (status->batk * 20) / 100;
+					if (pc_checkskill(msd, BS_MACE) == 4)
+						status->mdef += 25;
+					if (pc_checkskill(msd, BS_KNUCKLE) == 4)
+						status->adelay -= (status->adelay * 20) / 100;
+					if (pc_checkskill(msd, BS_SPEAR) == 4)
+						status->max_hp *= 2;
 				}
 				case NC_MAGICDECOY:
 				{
@@ -6779,8 +6806,8 @@ static uint16 status_calc_str(block_list *bl, status_change *sc, int32 str)
 		str += 5;
 	if(sc->getSCE(SC_LEADERSHIP))
 		str += sc->getSCE(SC_LEADERSHIP)->val1;
-	if(sc->getSCE(SC_LOUD))
-		str += 4;
+	if (sc->getSCE(SC_LOUD))
+		str += sc->getSCE(SC_LOUD)->val2;
 	if(sc->getSCE(SC_TRUESIGHT))
 		str += 5;
 	if(sc->getSCE(SC_SPURT))
@@ -7334,6 +7361,8 @@ static int32 status_calc_batk(block_list *bl, status_change *sc, int32 batk)
 		batk -= batk * sc->getSCE(SC__ENERVATION)->val2 / 100;
 	if( sc->getSCE(SC_ZANGETSU) )
 		batk += sc->getSCE(SC_ZANGETSU)->val2;
+	if (sc->getSCE(SC_LOUD))
+		batk += sc->getSCE(SC_LOUD)->val3;
 #ifdef RENEWAL
 	if (sc->getSCE(SC_LOUD))
 		batk += 30;
@@ -11758,6 +11787,17 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				}
 				else if (type == SC_ADRENALINE2 || type == SC_ADRENALINE) {
 					val3 = (val2) ? 300 : 200; // Aspd increase
+					if (s_sd) {
+						switch (s_sd->weapontype1) {
+						case W_1HAXE:
+						case W_2HAXE:
+						case W_MACE:
+						case W_2HMACE:
+							break;
+						default:
+							val3 /= 2;
+						}
+					}
 				}
 				if (s_sd && pc_checkskill(s_sd, BS_HILTBINDING) > 0)
 					tick += tick / 10; //If caster has Hilt Binding, duration increases by 10%

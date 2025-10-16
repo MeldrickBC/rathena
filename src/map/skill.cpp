@@ -9375,6 +9375,59 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		}
 		break;
+	case BS_ENCHANTEDSTONE:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		clif_skill_produce_mix_list(*sd, -1, 61);
+		break;
+	case BS_SWORD:
+		// 0~4 Produce List
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		i = 0;
+		clif_skill_produce_mix_list(*sd, -1, skill_lv + i);
+		//clif_skill_produce_mix_list(*sd, skill_id, skill_lv);
+		break;
+	case BS_DAGGER:
+		// 5~8 Produce List
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		i = 4;
+		clif_skill_produce_mix_list(*sd, -1, skill_lv + i);
+		//clif_skill_produce_mix_list(*sd, skill_id, skill_lv);
+		break;
+	case BS_TWOHANDSWORD:
+		// 9~12 Produce List
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		i = 8;
+		clif_skill_produce_mix_list(*sd, -1, skill_lv + i);
+		//clif_skill_produce_mix_list(*sd, skill_id, skill_lv);
+		break;
+	case BS_AXE:
+		// 13~16 Produce List
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		i = 12;
+		clif_skill_produce_mix_list(*sd, -1, skill_lv + i);
+		//clif_skill_produce_mix_list(*sd, skill_id, skill_lv);
+		break;
+	case BS_MACE:
+		// 17~20 Produce List
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		i = 16;
+		clif_skill_produce_mix_list(*sd, -1, skill_lv + i);
+		//clif_skill_produce_mix_list(*sd, skill_id, skill_lv);
+		break;
+	case BS_KNUCKLE:
+		// 21~24 Produce List
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		i = 20;
+		clif_skill_produce_mix_list(*sd, -1, skill_lv + i);
+		//clif_skill_produce_mix_list(*sd, skill_id, skill_lv);
+		break;
+	case BS_SPEAR:
+		// 25~28 Produce List
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		i = 24;
+		clif_skill_produce_mix_list(*sd, -1, skill_lv + i);
+		//clif_skill_produce_mix_list(*sd, skill_id, skill_lv);
+		break;
 	case SL_KAITE:
 	case SL_KAAHI:
 	case SL_KAIZEL:
@@ -19786,6 +19839,10 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 
 		if(require.zeny > 0)
 		{
+			if (skill_id == WS_OVERTHRUSTMAX) {
+				if (pc_checkskill(sd, MC_DISCOUNT) > 0)
+					require.zeny -= require.zeny * pc_checkskill(sd, MC_DISCOUNT) * 5 / 100;
+			}
 			if( skill_id == NJ_ZENYNAGE )
 				require.zeny = 0; //Zeny is reduced on skill_attack.
 			if( sd->status.zeny < require.zeny )
@@ -20077,16 +20134,11 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 	// Check for cost reductions due to skills & SCs
 	switch(skill_id) {
 		case MC_MAMMONITE:
-#ifdef RENEWAL
-		case WS_CARTTERMINATION:
-#endif
-			if(pc_checkskill(sd,BS_UNFAIRLYTRICK)>0)
-#ifdef RENEWAL
-				req.zeny -= req.zeny*20/100;
-#else
-				req.zeny -= req.zeny*10/100;
-#endif
+		case WS_CARTTERMINATION: {
+			if (pc_checkskill(sd, MC_DISCOUNT) > 0)
+				req.zeny -= req.zeny * pc_checkskill(sd, MC_DISCOUNT) * 5 / 100;
 			break;
+		}
 		case SL_SMA:
 		case SL_STUN:
 		case SL_STIN:
