@@ -5650,29 +5650,20 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if( sd ) {
 				switch( sd->itemid ) {
 					case ITEMID_APPLE_BOMB:
-						skillratio += 200 + status_get_str(src) + status_get_dex(src);
+						skillratio = 800;
 						break;
 					case ITEMID_COCONUT_BOMB:
 					case ITEMID_PINEAPPLE_BOMB:
-						skillratio += 700 + status_get_str(src) + status_get_dex(src);
-						break;
 					case ITEMID_MELON_BOMB:
-						skillratio += 400 + status_get_str(src) + status_get_dex(src);
+						skillratio = 500;
 						break;
 					case ITEMID_BANANA_BOMB:
-						skillratio += 777 + status_get_str(src) + status_get_dex(src);
+						skillratio = 200;
 						break;
-					case ITEMID_BLACK_LUMP:
-						skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 3;
-						break;
-					case ITEMID_BLACK_HARD_LUMP:
-						skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 2;
-						break;
-					case ITEMID_VERY_HARD_LUMP:
-						skillratio += -100 + status_get_str(src) + status_get_agi(src) + status_get_dex(src);
+					case ITEMID_BOMB_MUSHROOM_SPORE:
+						skillratio = 50;
 						break;
 				}
-				RE_LVL_DMOD(100);
 			}
 			break;
 		case GN_HELLS_PLANT_ATK:

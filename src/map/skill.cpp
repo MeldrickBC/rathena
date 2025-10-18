@@ -1974,20 +1974,22 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		if( sd ) {
 			switch( sd->itemid ) {	// Starting SCs here instead of do it in skill_additional_effect to simplify the code.
 				case ITEMID_COCONUT_BOMB:
-					sc_start(src,bl, SC_STUN, 5 + sd->status.job_level / 2, skill_lv, 1000 * sd->status.job_level / 3);
-					sc_start2(src,bl, SC_BLEEDING, 3 + sd->status.job_level / 2, skill_lv, src->id, 1000 * status_get_lv(src) / 4 + sd->status.job_level / 3);
+					sc_start(src, bl, SC_STUN, 20, skill_lv, 2000);
+					break;
+				case ITEMID_PINEAPPLE_BOMB:
+					sc_start(src, bl, SC_BLEEDING, 50, skill_lv, 10000);
 					break;
 				case ITEMID_MELON_BOMB:
-					sc_start4(src, bl, SC_MELON_BOMB, 100, skill_lv, 20 + sd->status.job_level, 10 + sd->status.job_level / 2, 0, 1000 * status_get_lv(src) / 4);
-					break;
-				case ITEMID_BANANA_BOMB:
-					{
-						uint16 duration = (battle_config.banana_bomb_duration ? battle_config.banana_bomb_duration : 1000 * sd->status.job_level / 4);
-
-						sc_start(src,bl, SC_BANANA_BOMB_SITDOWN, status_get_lv(src) + sd->status.job_level + sstatus->dex / 6 - status_get_lv(bl) - tstatus->agi / 4 - tstatus->luk / 5, skill_lv, duration);
-						sc_start(src,bl, SC_BANANA_BOMB, 100, skill_lv, 30000);
-						break;
+					if (sc_start4(src, bl, SC_MELON_BOMB, 10, skill_lv, 20, 20, 0, 3000)) {
+						clif_specialeffect(bl, EF_DECAGILITY, AREA);
 					}
+					break;
+				case ITEMID_BANANA_BOMB: {
+					sc_start(src, bl, SC_RUN, 1000, -1, 1000);
+					break;
+				}
+				case ITEMID_BOMB_MUSHROOM_SPORE:
+					break;
 			}
 			sd->itemid = 0;
 		}
@@ -12536,53 +12538,202 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src,*src,skill_id,skill_lv);
 		}
 		break;
+	case AM_SLINGSLIMPOTION: {
+		potion_hp = 0;
+		potion_sp = 0;
+		int healmultiplier = 0;
+		i = sd->equip_index[EQI_AMMO];
+		t_itemid ammo_id = sd->inventory_data[i]->nameid;
+
+		switch (ammo_id) {
+		case ITEMID_RED_SLIM_POTION_TO_THROW:
+			healmultiplier = 50;
+			potion_hp = rnd() % (65 - 45) + 45;
+			break;
+		case ITEMID_YELLOW_SLIM_POTION_TO_THROW:
+			healmultiplier = 90;
+			potion_hp = rnd() % (235 - 175) + 175;
+			break;
+		case ITEMID_WHITE_SLIM_POTION_TO_THROW:
+			healmultiplier = 100;
+			potion_hp = rnd() % (405 - 325) + 325;
+			break;
+		}
+
+		int i_lv = 0;
+		i_lv = skill_lv * 10
+			+ healmultiplier;
+
+		potion_hp = potion_hp * (100 + i_lv) / 100;
+		potion_sp = potion_sp * (100 + i_lv) / 100;
+
+		status_data* sstatus = status_get_status_data(*src);
+
+		if (sstatus && sstatus->hplus > 0) {
+			potion_hp += potion_hp * sstatus->hplus / 100;
+		}
+		if (dstmd && (dstmd->mob_id == MOBID_EMPERIUM || status_get_class_(bl) == CLASS_BATTLEFIELD))
+			break;
+		if (potion_hp) {
+			potion_hp = potion_hp * (100 + (tstatus->vit * 2)) / 100;
+			if (dstsd) {
+				if (potion_hp)
+					potion_hp = potion_hp * (100 + pc_checkskill(dstsd, SM_RECOVERY) * 10 + pc_skillheal2_bonus(dstsd, skill_id)) / 100;
+			}
+			if (tsc != nullptr && tsc->getSCE(type)) {
+				uint8 penalty = 0;
+
+				if (tsc->getSCE(SC_WATER_INSIGNIA) && tsc->getSCE(SC_WATER_INSIGNIA)->val1 == 2) {
+					potion_hp += potion_hp / 10;
+				}
+				if (tsc->getSCE(SC_CRITICALWOUND))
+					penalty += tsc->getSCE(SC_CRITICALWOUND)->val2;
+				if (tsc->getSCE(SC_DEATHHURT) && tsc->getSCE(SC_DEATHHURT)->val3 == 1)
+					penalty += 20;
+				if (tsc->getSCE(SC_NORECOVER_STATE))
+					penalty = 100;
+				if (penalty > 0) {
+					potion_hp -= potion_hp * penalty / 100;
+				}
+			}
+		}
+
+		clif_skill_nodamage(src, *bl, AL_HEAL, potion_hp);
+		status_heal(bl, potion_hp, 0, 0);
+		break;
+	}
 	case GN_SLINGITEM:
 		if( sd ) {
 			i = sd->equip_index[EQI_AMMO];
-			if( i < 0 )
+			if (i < 0)
 				break; // No ammo.
 			t_itemid ammo_id = sd->inventory_data[i]->nameid;
-			if( ammo_id == 0 )
+			if (ammo_id == 0)
 				break;
 			sd->itemid = ammo_id;
-			if( itemdb_group.item_exists(IG_BOMB, ammo_id) ) {
-				if(battle_check_target(src,bl,BCT_ENEMY) > 0) {// Only attack if the target is an enemy.
-					if( ammo_id == ITEMID_PINEAPPLE_BOMB )
-						map_foreachincell(skill_area_sub,bl->m,bl->x,bl->y,BL_CHAR,src,GN_SLINGITEM_RANGEMELEEATK,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-					else
-						skill_attack(BF_WEAPON,src,src,bl,GN_SLINGITEM_RANGEMELEEATK,skill_lv,tick,flag);
-				} else //Otherwise, it fails, shows animation and removes items.
-					clif_skill_fail( *sd, GN_SLINGITEM_RANGEMELEEATK, USESKILL_FAIL );
-			} else if (itemdb_group.item_exists(IG_THROWABLE, ammo_id)) {
+			if (itemdb_group.item_exists(IG_BOMB, ammo_id)) {
+				if (battle_check_target(src, bl, BCT_ENEMY) > 0) {// Only attack if the target is an enemy.
+					if (skill_attack(BF_WEAPON, src, src, bl, GN_SLINGITEM_RANGEMELEEATK, skill_lv, tick, flag)) {
+						if (ammo_id == ITEMID_BOMB_MUSHROOM_SPORE) {
+							clif_specialeffect(bl, EF_SPR_LIGHTPRINT2, AREA);
+							clif_specialeffect(bl, EF_SPR_LIGHTPRINT3, AREA);
+							int splashsize = skill_get_splash(AM_SPORE_EXPLOSION, skill_lv);
+							map_foreachinarea(skill_area_sub, bl->m, bl->x - splashsize, bl->y - splashsize, bl->x + splashsize, bl->y + splashsize, BL_CHAR, src, AM_SPORE_EXPLOSION, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
+							/*if (dstsd)
+								clif_soundeffect(dstsd.id, "explosion1.wav", 0, AREA);
+							else if (dstmd)
+								clif_soundeffect(dstmd->bl, "explosion1.wav", 0, AREA);*/
+						}
+					}
+				}
+				else //Otherwise, it fails, shows animation and removes items.
+					clif_skill_fail(*sd, GN_SLINGITEM_RANGEMELEEATK, USESKILL_FAIL);
+			}
+			else if (itemdb_group.item_exists(IG_THROWABLE, ammo_id)) {
+				if (battle_check_target(src, bl, BCT_ENEMY) > 0) {
+					clif_skill_fail(*sd, GN_SLINGITEM_RANGEMELEEATK, USESKILL_FAIL);
+					break;
+				}
+				int healmultiplier = 0;
 				switch (ammo_id) {
-					case ITEMID_HP_INC_POTS_TO_THROW: // MaxHP +(500 + Thrower BaseLv * 10 / 3) and heals 1% MaxHP
-						sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 1, 500000);
-						status_percent_heal(bl, 1, 0);
+				case ITEMID_RED_SLIM_POTION_TO_THROW: {
+					clif_specialeffect(bl, EF_SLIM, AREA);
+					skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, flag);
+					break;
+				}
+				case ITEMID_YELLOW_SLIM_POTION_TO_THROW: {
+					clif_specialeffect(bl, EF_SLIM2, AREA);
+					skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, flag);
+					break;
+				}
+				case ITEMID_WHITE_SLIM_POTION_TO_THROW: {
+					clif_specialeffect(bl, EF_SLIM3, AREA);
+					skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, flag);
+					break;
+				}
+				case ITEMID_RED_POTION_TO_THROW:
+				case ITEMID_ORANGE_POTION_TO_THROW:
+				case ITEMID_YELLOW_POTION_TO_THROW:
+				case ITEMID_WHITE_POTION_TO_THROW:
+				case ITEMID_GREEN_POTION_TO_THROW:
+				case ITEMID_BLUE_POTION_TO_THROW: {
+					potion_hp = 0;
+					potion_sp = 0;
+					switch (ammo_id) {
+					case ITEMID_RED_POTION_TO_THROW:
+						potion_hp = rnd() % (65 - 45) + 45;
 						break;
-					case ITEMID_HP_INC_POTM_TO_THROW: // MaxHP +(1500 + Thrower BaseLv * 10 / 3) and heals 2% MaxHP
-						sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 2, 500000);
-						status_percent_heal(bl, 2, 0);
+					case ITEMID_ORANGE_POTION_TO_THROW:
+						potion_hp = rnd() % (145 - 105) + 145;
 						break;
-					case ITEMID_HP_INC_POTL_TO_THROW: // MaxHP +(2500 + Thrower BaseLv * 10 / 3) and heals 5% MaxHP
-						sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 3, 500000);
-						status_percent_heal(bl, 5, 0);
+					case ITEMID_YELLOW_POTION_TO_THROW:
+						potion_hp = rnd() % (235 - 175) + 175;
 						break;
-					case ITEMID_SP_INC_POTS_TO_THROW: // MaxSP +(Thrower BaseLv / 10 - 5)% and recovers 2% MaxSP
-						sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 1, 500000);
-						status_percent_heal(bl, 0, 2);
+					case ITEMID_WHITE_POTION_TO_THROW:
+						potion_hp = rnd() % (405 - 325) + 325;
 						break;
-					case ITEMID_SP_INC_POTM_TO_THROW: // MaxSP +(Thrower BaseLv / 10)% and recovers 4% MaxSP
-						sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 2, 500000);
-						status_percent_heal(bl, 0, 4);
+					case ITEMID_GREEN_POTION_TO_THROW:
+						potion_sp = rnd() % (20 - 10) + 10;
 						break;
-					case ITEMID_SP_INC_POTL_TO_THROW: // MaxSP +(Thrower BaseLv / 10 + 5)% and recovers 8% MaxSP
-						sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 3, 500000);
-						status_percent_heal(bl, 0, 8);
+					case ITEMID_BLUE_POTION_TO_THROW:
+						potion_sp = rnd() % (60 - 20) + 20;
 						break;
-					default:
-						if (dstsd)
-							run_script(sd->inventory_data[i]->script, 0, dstsd->id, fake_nd->id);
-						break;
+					}
+
+					int i_lv = 0;
+					i_lv = pc_checkskill(sd, GN_SLINGITEM) * 10
+						+ pc_skillheal_bonus(sd, skill_id);
+
+					potion_hp = potion_hp * (100 + i_lv) / 100;
+					potion_sp = potion_sp * (100 + i_lv) / 100;
+
+					status_data* sstatus = status_get_status_data(*src);
+
+					if (sstatus && sstatus->hplus > 0) {
+						potion_hp += potion_hp * sstatus->hplus / 100;
+						potion_sp += potion_sp * sstatus->hplus / 100;
+					}
+
+
+					if (potion_hp > 0 || potion_sp > 0) {
+						status_heal(bl, potion_hp, potion_sp, 0);
+						if (potion_hp)
+							clif_skill_nodamage(nullptr, *bl, AL_HEAL, potion_hp, 1);
+						if (potion_sp) {
+							clif_specialeffect(bl, EF_ABSORBSPIRITS, AREA);
+							clif_skill_nodamage(nullptr, *bl, MG_SRECOVERY, potion_sp, 1);
+						}
+					}
+				}
+												break;
+				case ITEMID_HP_INC_POTS_TO_THROW: // MaxHP +(500 + Thrower BaseLv * 10 / 3) and heals 1% MaxHP
+					sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 1, 500000);
+					status_percent_heal(bl, 1, 0);
+					break;
+				case ITEMID_HP_INC_POTM_TO_THROW: // MaxHP +(1500 + Thrower BaseLv * 10 / 3) and heals 2% MaxHP
+					sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 2, 500000);
+					status_percent_heal(bl, 2, 0);
+					break;
+				case ITEMID_HP_INC_POTL_TO_THROW: // MaxHP +(2500 + Thrower BaseLv * 10 / 3) and heals 5% MaxHP
+					sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 3, 500000);
+					status_percent_heal(bl, 5, 0);
+					break;
+				case ITEMID_SP_INC_POTS_TO_THROW: // MaxSP +(Thrower BaseLv / 10 - 5)% and recovers 2% MaxSP
+					sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 1, 500000);
+					status_percent_heal(bl, 0, 2);
+					break;
+				case ITEMID_SP_INC_POTM_TO_THROW: // MaxSP +(Thrower BaseLv / 10)% and recovers 4% MaxSP
+					sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 2, 500000);
+					status_percent_heal(bl, 0, 4);
+					break;
+				case ITEMID_SP_INC_POTL_TO_THROW: // MaxSP +(Thrower BaseLv / 10 + 5)% and recovers 8% MaxSP
+					sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 3, 500000);
+					status_percent_heal(bl, 0, 8);
+					break;
+				default:
+					/*if (dstsd)
+						run_script(sd->inventory_data[i]->script, 0, dstsd.id, fake_nd.id);*/
+					break;
 				}
 			}
 		}
@@ -14483,6 +14634,18 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 
 	switch(skill_id)
 	{
+	case GN_SLINGITEM: {
+		if (sd) {
+			t_itemid ammo_id = sd->inventory_data[sd->equip_index[EQI_AMMO]]->nameid;
+			if (ammo_id >= ITEMID_RED_SLIM_POTION_TO_THROW && ammo_id <= ITEMID_WHITE_SLIM_POTION_TO_THROW) {
+				map_foreachinallarea(skill_area_sub,
+					src->m, x - 3, y - 3, x + 3, y + 3, BL_CHAR,
+					src, AM_SLINGSLIMPOTION, skill_lv, tick, flag | BCT_PARTY | BCT_GUILD | 1,
+					skill_castend_nodamage_id);
+			}
+		}
+		break;
+	}
 	case PR_BENEDICTIO:
 		skill_area_temp[1] = src->id;
 		i = skill_get_splash(skill_id, skill_lv);

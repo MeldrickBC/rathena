@@ -2368,6 +2368,38 @@ int32 unit_skilluse_id2(block_list *src, int32 target_id, uint16 skill_id, uint1
 	combo = 0;
 
 	switch(skill_id) {
+		case GN_SLINGITEM:
+			if (sd && sd->inventory_data[sd->equip_index[EQI_AMMO]]->nameid) {
+				switch (sd->inventory_data[sd->equip_index[EQI_AMMO]]->nameid) {
+				case ITEMID_RED_POTION_TO_THROW:
+				case ITEMID_ORANGE_POTION_TO_THROW:
+				case ITEMID_YELLOW_POTION_TO_THROW:
+				case ITEMID_WHITE_POTION_TO_THROW:
+				case ITEMID_GREEN_POTION_TO_THROW:
+				case ITEMID_BLUE_POTION_TO_THROW:
+					casttime = 0;
+					break;
+				case ITEMID_APPLE_BOMB:
+				case ITEMID_COCONUT_BOMB:
+				case ITEMID_MELON_BOMB:
+				case ITEMID_PINEAPPLE_BOMB:
+				case ITEMID_BANANA_BOMB:
+					casttime = 100;
+					break;
+				case ITEMID_RED_SLIM_POTION_TO_THROW:
+				case ITEMID_YELLOW_SLIM_POTION_TO_THROW:
+				case ITEMID_WHITE_SLIM_POTION_TO_THROW:
+					casttime = skill_castfix(src, AM_SLINGSLIMPOTION, skill_lv);
+					break;
+				case ITEMID_BOMB_MUSHROOM_SPORE:
+					casttime = 1000;
+					break;
+				default:
+					casttime = 0;
+					break;
+				}
+			}
+			break;
 		case ALL_RESURRECTION:
 			if(battle_check_undead(tstatus->race,tstatus->def_ele))
 				combo = 1;
