@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2024 rAthena Development Team
+#   Copyright(C) 2023 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
 # - Group                      Group name of the item.
 #   SubGroups:
 #     - SubGroup:              SubGroup number associated with the list of item. See doc/item_group.txt for more information.
-#       Algorithm:             Type of algorithm associated with SubGroup. (Default: SharedPool)
+#       Algorithm:             Type of algorithm associated with SubGroup. (Default: SharedPool)  
 #       List:                  List of item(s) for the SubGroup.
 #        - Index               Unique number that can be used to add the same Item with different data in the list.
 #          Item                AegisName of item that will be obtained from this item group.
@@ -2237,7 +2237,7 @@ Body:
             Item: Adventure_Suit
             Rate: 3
           - Index: 671
-            Item: Adventurere's_Suit_
+            Item: Adventure_Suit_
             Rate: 3
           - Index: 672
             Item: Mantle
@@ -3310,13 +3310,7 @@ Body:
             Item: Banana_Bomb
             Rate: 1
           - Index: 5
-            Item: Black_Lump
-            Rate: 1
-          - Index: 6
-            Item: Black_Hard_Lump
-            Rate: 1
-          - Index: 7
-            Item: Very_Hard_Lump
+            Item: Bomb_Mushroom_Spore
             Rate: 1
   - Group: BOX
     SubGroups:
@@ -4660,6 +4654,70 @@ Body:
           - Index: 3
             Item: Lime_Green_Pts
             Rate: 1
+  - Group: FINDINGORE
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: Emperium
+            Rate: 3
+          - Index: 1
+            Item: Oridecon_Stone
+            Rate: 20
+          - Index: 2
+            Item: Elunium_Stone
+            Rate: 20
+          - Index: 3
+            Item: Gold
+            Rate: 2
+          - Index: 4
+            Item: Oridecon
+            Rate: 10
+          - Index: 5
+            Item: Elunium
+            Rate: 10
+          - Index: 6
+            Item: Boody_Red
+            Rate: 30
+          - Index: 7
+            Item: Crystal_Blue
+            Rate: 30
+          - Index: 8
+            Item: Wind_Of_Verdure
+            Rate: 30
+          - Index: 9
+            Item: Yellow_Live
+            Rate: 30
+          - Index: 10
+            Item: Flame_Heart
+            Rate: 15
+          - Index: 11
+            Item: Mistic_Frozen
+            Rate: 15
+          - Index: 12
+            Item: Rough_Wind
+            Rate: 15
+          - Index: 13
+            Item: Great_Nature
+            Rate: 15
+          - Index: 14
+            Item: Iron
+            Rate: 80
+          - Index: 15
+            Item: Steel
+            Rate: 50
+          - Index: 16
+            Item: Iron_Ore
+            Rate: 100
+          - Index: 17
+            Item: Coal
+            Rate: 60
+          - Index: 18
+            Item: Phracon
+            Rate: 95
+          - Index: 19
+            Item: Emveretarcon
+            Rate: 55
   - Group: FIRSTAID
     SubGroups:
       - SubGroup: 1
@@ -5859,7 +5917,7 @@ Body:
             Item: Leather_Jacket_
             Rate: 1
           - Index: 222
-            Item: Adventurere's_Suit_
+            Item: Adventure_Suit_
             Rate: 1
           - Index: 223
             Item: Mantle_
@@ -6986,7 +7044,7 @@ Body:
             Rate: 3
           - Index: 18
             Item: Crystal_Jewel___
-            Rate: 2
+            Rate: 27
           - Index: 19
             Item: Glass_Bead
             Rate: 50
@@ -9899,7 +9957,7 @@ Body:
             Item: Leather_Jacket_
             Rate: 7
           - Index: 581
-            Item: Adventurere's_Suit_
+            Item: Adventure_Suit_
             Rate: 7
           - Index: 582
             Item: Mantle_
@@ -11078,3 +11136,103 @@ Body:
             Item: E_Giant_Fly_Wing
           - Index: 2
             Item: F_Giant_Fly_Wing
+  - Group: THROWABLE
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: Mysterious_Powder
+            Rate: 1
+          - Index: 1
+            Item: Boost500_To_Throw
+            Rate: 1
+          - Index: 2
+            Item: Full_SwingK_To_Throw
+            Rate: 1
+          - Index: 3
+            Item: Mana_Plus_To_Throw
+            Rate: 1
+          - Index: 4
+            Item: Cure_Free_To_Throw
+            Rate: 1
+          - Index: 5
+            Item: Stamina_Up_M_To_Throw
+            Rate: 1
+          - Index: 6
+            Item: Digestive_F_To_Throw
+            Rate: 1
+          - Index: 7
+            Item: HP_Inc_PotS_To_Throw
+            Rate: 1
+          - Index: 8
+            Item: HP_Inc_PotM_To_Throw
+            Rate: 1
+          - Index: 9
+            Item: HP_Inc_PotL_To_Throw
+            Rate: 1
+          - Index: 10
+            Item: SP_Inc_PotS_To_Throw
+            Rate: 1
+          - Index: 11
+            Item: SP_Inc_PotM_To_Throw
+            Rate: 1
+          - Index: 12
+            Item: SP_Inc_PotL_To_Throw
+            Rate: 1
+          - Index: 13
+            Item: En_White_PotZ_To_Throw
+            Rate: 1
+          - Index: 14
+            Item: Vitata500_To_Throw
+            Rate: 1
+          - Index: 15
+            Item: En_Cel_Juice_To_Throw
+            Rate: 1
+          - Index: 16
+            Item: Savage_BBQ_To_Throw
+            Rate: 1
+          - Index: 17
+            Item: Wug_Cocktail_To_Throw
+            Rate: 1
+          - Index: 18
+            Item: M_Brisket_To_Throw
+            Rate: 1
+          - Index: 19
+            Item: Siroma_Icetea_To_Throw
+            Rate: 1
+          - Index: 20
+            Item: Drocera_Stew_To_Throw
+            Rate: 1
+          - Index: 21
+            Item: Petti_Noodle_To_Throw
+            Rate: 1
+          - Index: 22
+            Item: Black_Thing_To_Throw
+            Rate: 1
+          - Index: 23
+            Item: Red_Potion_To_Throw
+            Rate: 1
+          - Index: 24
+            Item: Orange_Potion_To_Throw
+            Rate: 1
+          - Index: 25
+            Item: Yellow_Potion_To_Throw
+            Rate: 1
+          - Index: 26
+            Item: White_Potion_To_Throw
+            Rate: 1
+          - Index: 27
+            Item: Green_Potion_To_Throw
+            Rate: 1
+          - Index: 28
+            Item: Blue_Potion_To_Throw
+            Rate: 1
+          - Index: 29
+            Item: Red_Slim_Potion_To_Throw
+            Rate: 1
+          - Index: 30
+            Item: Yellow_Slim_Potion_To_Throw
+            Rate: 1
+          - Index: 31
+            Item: White_Slim_Potion_To_Throw
+            Rate: 1

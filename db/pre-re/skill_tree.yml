@@ -43,13 +43,10 @@ Header:
 Body:
   - Job: Novice
     Tree:
-      - Name: NV_BASIC
-        MaxLevel: 9
       - Name: NV_FIRSTAID
-        MaxLevel: 1
-      - Name: NV_TRICKDEAD
-        MaxLevel: 1
-        Exclude: true
+        MaxLevel: 5
+      - Name: NV_COLLECT
+        MaxLevel: 5
       - Name: WE_CALLBABY
         MaxLevel: 1
   - Job: Swordman
@@ -79,12 +76,6 @@ Body:
         Requires:
           - Name: SM_PROVOKE
             Level: 5
-      - Name: SM_MOVINGRECOVERY
-        MaxLevel: 1
-      - Name: SM_FATALBLOW
-        MaxLevel: 1
-      - Name: SM_AUTOBERSERK
-        MaxLevel: 1
   - Job: Mage
     Inherit:
       Novice: true
@@ -163,9 +154,12 @@ Body:
           - Name: AC_DOUBLE
             Level: 5
       - Name: AC_MAKINGARROW
-        MaxLevel: 1
+        MaxLevel: 5
       - Name: AC_CHARGEARROW
-        MaxLevel: 1
+        MaxLevel: 5
+        Requires:
+          - Name: AC_DOUBLE
+            Level: 5
   - Job: Acolyte
     Inherit:
       Novice: true
@@ -251,8 +245,6 @@ Body:
         Requires:
           - Name: MC_INCCARRY
             Level: 5
-      - Name: MC_IDENTIFY
-        MaxLevel: 1
       - Name: MC_VENDING
         MaxLevel: 10
         Requires:
@@ -261,11 +253,17 @@ Body:
       - Name: MC_MAMMONITE
         MaxLevel: 10
       - Name: MC_CARTREVOLUTION
-        MaxLevel: 1
+        MaxLevel: 5
+        Requires:
+          - Name: MC_MAMMONITE
+            Level: 3
       - Name: MC_CHANGECART
         MaxLevel: 1
       - Name: MC_LOUD
-        MaxLevel: 1
+        MaxLevel: 5
+        Requires:
+          - Name: MC_MAMMONITE
+            Level: 3
       - Name: ALL_BUYING_STORE
         MaxLevel: 1
         Requires:
@@ -296,13 +294,14 @@ Body:
           - Name: TF_POISON
             Level: 3
       - Name: TF_SPRINKLESAND
-        MaxLevel: 1
+        MaxLevel: 5
       - Name: TF_BACKSLIDING
-        MaxLevel: 1
-      - Name: TF_PICKSTONE
-        MaxLevel: 1
+        MaxLevel: 5
+        Requires:
+          - Name: TF_MISS
+            Level: 5
       - Name: TF_THROWSTONE
-        MaxLevel: 1
+        MaxLevel: 5
   - Job: Knight
     Inherit:
       Novice: true
@@ -366,12 +365,10 @@ Body:
           - Name: KN_RIDING
             Level: 1
       - Name: KN_CHARGEATK
-        MaxLevel: 1
-      - Name: KN_ONEHAND
-        MaxLevel: 1
+        MaxLevel: 5
         Requires:
-          - Name: KN_TWOHANDQUICKEN
-            Level: 10
+          - Name: KN_BOWLINGBASH
+            Level: 1
   - Job: Priest
     Inherit:
       Novice: true
@@ -557,73 +554,33 @@ Body:
       Novice: true
       Merchant: true
     Tree:
-      - Name: BS_IRON
-        MaxLevel: 5
-      - Name: BS_STEEL
-        MaxLevel: 5
-        Requires:
-          - Name: BS_IRON
-            Level: 1
       - Name: BS_ENCHANTEDSTONE
         MaxLevel: 5
-        Requires:
-          - Name: BS_IRON
-            Level: 1
-      - Name: BS_ORIDEOCON
-        MaxLevel: 5
-        Requires:
-          - Name: BS_ENCHANTEDSTONE
-            Level: 1
       - Name: BS_DAGGER
-        MaxLevel: 3
+        MaxLevel: 4
       - Name: BS_SWORD
-        MaxLevel: 3
-        Requires:
-          - Name: BS_DAGGER
-            Level: 1
+        MaxLevel: 4
       - Name: BS_TWOHANDSWORD
-        MaxLevel: 3
-        Requires:
-          - Name: BS_SWORD
-            Level: 1
+        MaxLevel: 4
       - Name: BS_AXE
-        MaxLevel: 3
-        Requires:
-          - Name: BS_SWORD
-            Level: 2
+        MaxLevel: 4
       - Name: BS_MACE
-        MaxLevel: 3
-        Requires:
-          - Name: BS_KNUCKLE
-            Level: 1
+        MaxLevel: 4
       - Name: BS_KNUCKLE
-        MaxLevel: 3
-        Requires:
-          - Name: BS_DAGGER
-            Level: 1
+        MaxLevel: 4
       - Name: BS_SPEAR
-        MaxLevel: 3
-        Requires:
-          - Name: BS_DAGGER
-            Level: 2
+        MaxLevel: 4
       - Name: BS_HILTBINDING
         MaxLevel: 1
       - Name: BS_FINDINGORE
         MaxLevel: 1
         Requires:
-          - Name: BS_STEEL
-            Level: 1
-          - Name: BS_HILTBINDING
-            Level: 1
+          - Name: BS_ENCHANTEDSTONE
+            Level: 5
       - Name: BS_WEAPONRESEARCH
         MaxLevel: 10
         Requires:
           - Name: BS_HILTBINDING
-            Level: 1
-      - Name: BS_REPAIRWEAPON
-        MaxLevel: 1
-        Requires:
-          - Name: BS_WEAPONRESEARCH
             Level: 1
       - Name: BS_SKINTEMPER
         MaxLevel: 5
@@ -653,15 +610,16 @@ Body:
             Level: 3
           - Name: BS_OVERTHRUST
             Level: 2
-      - Name: BS_UNFAIRLYTRICK
-        MaxLevel: 1
-      - Name: BS_GREED
-        MaxLevel: 1
-      - Name: BS_ADRENALINE2
-        MaxLevel: 1
+      - Name: NC_AXETORNADO
+        MaxLevel: 5
         Requires:
-          - Name: BS_ADRENALINE
+          - Name: BS_WEAPONRESEARCH
             Level: 5
+      - Name: NC_SILVERSNIPER
+        MaxLevel: 5
+        Requires:
+          - Name: BS_ENCHANTEDSTONE
+            Level: 2
   - Job: Hunter
     Inherit:
       Novice: true
@@ -727,7 +685,7 @@ Body:
       - Name: HT_BEASTBANE
         MaxLevel: 10
       - Name: HT_FALCON
-        MaxLevel: 1
+        MaxLevel: 5
         Requires:
           - Name: HT_BEASTBANE
             Level: 1
@@ -755,10 +713,8 @@ Body:
             Level: 1
           - Name: HT_FALCON
             Level: 1
-      - Name: HT_PHANTASMIC
-        MaxLevel: 1
       - Name: HT_POWER
-        MaxLevel: 1
+        MaxLevel: 5
         Requires:
           - Name: AC_DOUBLE
             Level: 10
@@ -816,9 +772,9 @@ Body:
           - Name: AS_VENOMDUST
             Level: 5
       - Name: AS_SONICACCEL
-        MaxLevel: 1
+        MaxLevel: 5
       - Name: AS_VENOMKNIFE
-        MaxLevel: 1
+        MaxLevel: 5
   - Job: Knight2
     Inherit:
       Novice: true
@@ -919,7 +875,10 @@ Body:
           - Name: KN_SPEARMASTERY
             Level: 10
       - Name: CR_SHRINK
-        MaxLevel: 1
+        MaxLevel: 5
+        Requires:
+          - Name: CR_AUTOGUARD
+            Level: 5
   - Job: Monk
     Inherit:
       Novice: true
@@ -1169,7 +1128,7 @@ Body:
           - Name: RG_SNATCHER
             Level: 4
       - Name: RG_BACKSTAP
-        MaxLevel: 10
+        MaxLevel: 5
         Requires:
           - Name: RG_STEALCOIN
             Level: 4
@@ -1215,11 +1174,6 @@ Body:
       - Name: RG_GRAFFITI
         MaxLevel: 1
         Requires:
-          - Name: RG_FLAGGRAFFITI
-            Level: 5
-      - Name: RG_FLAGGRAFFITI
-        MaxLevel: 5
-        Requires:
           - Name: RG_CLEANER
             Level: 1
       - Name: RG_CLEANER
@@ -1228,29 +1182,35 @@ Body:
           - Name: RG_GANGSTER
             Level: 1
       - Name: RG_GANGSTER
-        MaxLevel: 1
+        MaxLevel: 5
         Requires:
           - Name: RG_STRIPSHIELD
             Level: 3
-      - Name: RG_COMPULSION
-        MaxLevel: 5
-        Requires:
-          - Name: RG_GANGSTER
-            Level: 1
       - Name: RG_PLAGIARISM
         MaxLevel: 10
         Requires:
           - Name: RG_INTIMIDATE
             Level: 5
       - Name: RG_CLOSECONFINE
-        MaxLevel: 1
+        MaxLevel: 5
+        Requires:
+          - Name: RG_BACKSTAP
+            Level: 1
   - Job: Alchemist
     Inherit:
       Novice: true
       Merchant: true
     Tree:
-      - Name: AM_AXEMASTERY
+      - Name: GN_REMODELING_CART
+        MaxLevel: 5
+        Requires:
+          - Name: MC_PUSHCART
+            Level: 10        
+      - Name: GN_CARTCANNON
         MaxLevel: 10
+        Requires:
+          - Name: GN_REMODELING_CART
+            Level: 2
       - Name: AM_LEARNINGPOTION
         MaxLevel: 10
       - Name: AM_PHARMACY
@@ -1268,8 +1228,8 @@ Body:
         Requires:
           - Name: AM_PHARMACY
             Level: 5
-      - Name: AM_POTIONPITCHER
-        MaxLevel: 5
+      - Name: GN_SLINGITEM
+        MaxLevel: 10
         Requires:
           - Name: AM_PHARMACY
             Level: 3
@@ -1320,23 +1280,23 @@ Body:
         Requires:
           - Name: AM_CALLHOMUN
             Level: 1
-      - Name: AM_BERSERKPITCHER
-        MaxLevel: 1
-      - Name: AM_TWILIGHT1
-        MaxLevel: 1
-        Requires:
-          - Name: AM_PHARMACY
-            Level: 10
-      - Name: AM_TWILIGHT2
-        MaxLevel: 1
-        Requires:
-          - Name: AM_PHARMACY
-            Level: 10
-      - Name: AM_TWILIGHT3
-        MaxLevel: 1
-        Requires:
-          - Name: AM_PHARMACY
-            Level: 10
+      #- Name: AM_BERSERKPITCHER
+      #  MaxLevel: 1
+      #- Name: AM_TWILIGHT1
+      #  MaxLevel: 1
+      #  Requires:
+      #    - Name: AM_PHARMACY
+      #      Level: 10
+      #- Name: AM_TWILIGHT2
+      #  MaxLevel: 1
+      #  Requires:
+      #    - Name: AM_PHARMACY
+      #      Level: 10
+      #- Name: AM_TWILIGHT3
+      #  MaxLevel: 1
+      #  Requires:
+      #    - Name: AM_PHARMACY
+      #      Level: 10
      # - Name: AM_TWILIGHT4
        # MaxLevel: 1
        # Requires:
@@ -1354,12 +1314,12 @@ Body:
         Requires:
           - Name: BA_MUSICALLESSON
             Level: 3
-      - Name: BA_DISSONANCE
+      - Name: WM_REVERBERATION
         MaxLevel: 5
         Requires:
           - Name: BA_MUSICALLESSON
             Level: 1
-          - Name: BD_ADAPTATION
+          - Name: BD_ENCORE
             Level: 1
       - Name: BA_FROSTJOKER
         MaxLevel: 5
@@ -1369,30 +1329,25 @@ Body:
       - Name: BA_WHISTLE
         MaxLevel: 10
         Requires:
-          - Name: BA_DISSONANCE
-            Level: 3
+          - Name: BA_MUSICALLESSON
+            Level: 1
       - Name: BA_ASSASSINCROSS
         MaxLevel: 10
         Requires:
-          - Name: BA_DISSONANCE
-            Level: 3
+          - Name: BA_MUSICALLESSON
+            Level: 1
       - Name: BA_POEMBRAGI
         MaxLevel: 10
         Requires:
-          - Name: BA_DISSONANCE
-            Level: 3
+          - Name: BA_MUSICALLESSON
+            Level: 1
       - Name: BA_APPLEIDUN
         MaxLevel: 10
         Requires:
-          - Name: BA_DISSONANCE
-            Level: 3
-      - Name: BD_ADAPTATION
-        MaxLevel: 1
+          - Name: BA_MUSICALLESSON
+            Level: 1
       - Name: BD_ENCORE
         MaxLevel: 1
-        Requires:
-          - Name: BD_ADAPTATION
-            Level: 1
       - Name: BD_LULLABY
         MaxLevel: 1
         Requires:
@@ -1402,7 +1357,7 @@ Body:
         MaxLevel: 5
         Requires:
           - Name: BD_SIEGFRIED
-            Level: 3
+            Level: 1
       - Name: BD_ETERNALCHAOS
         MaxLevel: 1
         Requires:
@@ -1417,7 +1372,7 @@ Body:
         MaxLevel: 5
         Requires:
           - Name: BD_DRUMBATTLEFIELD
-            Level: 3
+            Level: 1
       - Name: BD_ROKISWEIL
         MaxLevel: 1
         Requires:
@@ -1447,12 +1402,12 @@ Body:
         Requires:
           - Name: DC_DANCINGLESSON
             Level: 3
-      - Name: DC_UGLYDANCE
+      - Name: WM_REVERBERATION
         MaxLevel: 5
         Requires:
           - Name: DC_DANCINGLESSON
             Level: 1
-          - Name: BD_ADAPTATION
+          - Name: BD_ENCORE
             Level: 1
       - Name: DC_SCREAM
         MaxLevel: 5
@@ -1462,30 +1417,25 @@ Body:
       - Name: DC_HUMMING
         MaxLevel: 10
         Requires:
-          - Name: DC_UGLYDANCE
-            Level: 3
+          - Name: DC_DANCINGLESSON
+            Level: 1
       - Name: DC_DONTFORGETME
         MaxLevel: 10
         Requires:
-          - Name: DC_UGLYDANCE
-            Level: 3
+          - Name: DC_DANCINGLESSON
+            Level: 1
       - Name: DC_FORTUNEKISS
         MaxLevel: 10
         Requires:
-          - Name: DC_UGLYDANCE
-            Level: 3
+          - Name: DC_DANCINGLESSON
+            Level: 1
       - Name: DC_SERVICEFORYOU
         MaxLevel: 10
         Requires:
-          - Name: DC_UGLYDANCE
-            Level: 3
-      - Name: BD_ADAPTATION
-        MaxLevel: 1
+          - Name: DC_DANCINGLESSON
+            Level: 1
       - Name: BD_ENCORE
         MaxLevel: 1
-        Requires:
-          - Name: BD_ADAPTATION
-            Level: 1
       - Name: BD_LULLABY
         MaxLevel: 1
         Requires:
@@ -1495,7 +1445,7 @@ Body:
         MaxLevel: 5
         Requires:
           - Name: BD_SIEGFRIED
-            Level: 3
+            Level: 1
       - Name: BD_ETERNALCHAOS
         MaxLevel: 1
         Requires:
@@ -1510,7 +1460,7 @@ Body:
         MaxLevel: 5
         Requires:
           - Name: BD_DRUMBATTLEFIELD
-            Level: 3
+            Level: 1
       - Name: BD_ROKISWEIL
         MaxLevel: 1
         Requires:
@@ -1974,7 +1924,7 @@ Body:
       Novice: true
     Tree:
       - Name: NV_TRICKDEAD
-        MaxLevel: 1
+        MaxLevel: 5
         Exclude: true
   - Job: Swordman_High
     Inherit:
@@ -2044,7 +1994,7 @@ Body:
             Level: 3
       - Name: LK_BERSERK   # Requires Job Level 50
         MaxLevel: 1
-        JobLevel: 50
+        #JobLevel: 50
       - Name: LK_SPIRALPIERCE
         MaxLevel: 5
         Requires:
@@ -2202,8 +2152,6 @@ Body:
             Level: 5
           - Name: MC_CARTREVOLUTION
             Level: 1
-          - Name: MC_CHANGECART
-            Level: 1
           - Name: BS_HILTBINDING
             Level: 1
      # - Name: WS_SYSTEMCREATE
@@ -2213,11 +2161,6 @@ Body:
            # Level: 10
          # - Name: BS_WEAPONPERFECT
            # Level: 3
-      - Name: WS_WEAPONREFINE
-        MaxLevel: 10
-        Requires:
-          - Name: BS_WEAPONRESEARCH
-            Level: 10
       - Name: WS_CARTTERMINATION
         MaxLevel: 10
         Requires:
@@ -2521,11 +2464,11 @@ Body:
            # Level: 6
          # - Name: ST_REJECTSWORD
            # Level: 2
-      - Name: CR_SLIMPITCHER
-        MaxLevel: 10
-        Requires:
-          - Name: AM_POTIONPITCHER
-            Level: 5
+      #- Name: CR_SLIMPITCHER
+      #  MaxLevel: 10
+      #  Requires:
+      #    - Name: AM_POTIONPITCHER
+      #      Level: 5
       - Name: CR_FULLPROTECTION
         MaxLevel: 5
         Requires:
@@ -2544,8 +2487,6 @@ Body:
             Level: 5
           - Name: AM_ACIDTERROR
             Level: 5
-      - Name: CR_CULTIVATION
-        MaxLevel: 2
      # - Name: AM_TWILIGHT4
        # MaxLevel: 1
        # Requires:
@@ -2557,6 +2498,13 @@ Body:
       Archer: true
       Bard: true
     Tree:
+      - Name: CG_TAROTCARD
+        MaxLevel: 1
+        Requires:
+          - Name: AC_CONCENTRATION
+            Level: 10
+          - Name: BA_FROSTJOKER
+            Level: 3
       - Name: CG_ARROWVULCAN
         MaxLevel: 10
         Requires:
@@ -2564,13 +2512,11 @@ Body:
             Level: 5
           - Name: BA_MUSICALSTRIKE
             Level: 1
-      - Name: CG_MOONLIT
-        MaxLevel: 5
+      - Name: WM_METALICSOUND
+        MaxLevel: 10
         Requires:
-          - Name: AC_CONCENTRATION
+          - Name: WM_REVERBERATION
             Level: 5
-          - Name: BA_MUSICALLESSON
-            Level: 7
       - Name: CG_MARIONETTE
         MaxLevel: 1
         Requires:
@@ -2578,33 +2524,32 @@ Body:
             Level: 5
           - Name: BA_MUSICALLESSON
             Level: 5
-      - Name: CG_LONGINGFREEDOM
-        MaxLevel: 5
+      - Name: CG_SPECIALSINGER
+        MaxLevel: 1
         Requires:
           - Name: BA_MUSICALLESSON
             Level: 10
-          - Name: CG_MARIONETTE
-            Level: 1
-      - Name: CG_HERMODE
-        MaxLevel: 5
-        Requires:
-          - Name: AC_CONCENTRATION
-            Level: 10
-          - Name: BA_MUSICALLESSON
-            Level: 10
-      - Name: CG_TAROTCARD
-        MaxLevel: 5
-        Requires:
-          - Name: AC_CONCENTRATION
-            Level: 10
-          - Name: BA_DISSONANCE
-            Level: 3
+          - Name: BD_INTOABYSS
+            Level: 1 
+          - Name: BD_ETERNALCHAOS
+            Level: 1 
+          - Name: BD_RICHMANKIM
+            Level: 1 
+          - Name: BD_RINGNIBELUNGEN
+            Level: 1 
   - Job: Gypsy
     Inherit:
       Novice: true
       Archer: true
       Dancer: true
     Tree:
+      - Name: CG_TAROTCARD
+        MaxLevel: 1
+        Requires:
+          - Name: AC_CONCENTRATION
+            Level: 10
+          - Name: DC_SCREAM
+            Level: 3
       - Name: CG_ARROWVULCAN
         MaxLevel: 10
         Requires:
@@ -2612,41 +2557,33 @@ Body:
             Level: 5
           - Name: DC_THROWARROW
             Level: 1
-      - Name: CG_MOONLIT
-        MaxLevel: 5
+      - Name: WM_METALICSOUND
+        MaxLevel: 10
         Requires:
-          - Name: AC_CONCENTRATION
+          - Name: WM_REVERBERATION
             Level: 5
-          - Name: DC_DANCINGLESSON
-            Level: 7
       - Name: CG_MARIONETTE
         MaxLevel: 1
         Requires:
           - Name: AC_CONCENTRATION
             Level: 5
+          - Name: WM_REVERBERATION
+            Level: 3
           - Name: DC_DANCINGLESSON
             Level: 5
-      - Name: CG_LONGINGFREEDOM
-        MaxLevel: 5
+      - Name: CG_SPECIALSINGER
+        MaxLevel: 1
         Requires:
           - Name: DC_DANCINGLESSON
             Level: 10
-          - Name: CG_MARIONETTE
-            Level: 1
-      - Name: CG_HERMODE
-        MaxLevel: 5
-        Requires:
-          - Name: AC_CONCENTRATION
-            Level: 10
-          - Name: DC_DANCINGLESSON
-            Level: 10
-      - Name: CG_TAROTCARD
-        MaxLevel: 5
-        Requires:
-          - Name: AC_CONCENTRATION
-            Level: 10
-          - Name: DC_UGLYDANCE
-            Level: 3
+          - Name: BD_INTOABYSS
+            Level: 1 
+          - Name: BD_ETERNALCHAOS
+            Level: 1 
+          - Name: BD_RICHMANKIM
+            Level: 1 
+          - Name: BD_RINGNIBELUNGEN
+            Level: 1 
   - Job: Paladin2
     Inherit:
       Novice: true
@@ -2668,9 +2605,9 @@ Body:
       - Name: NV_BASIC
         MaxLevel: 9
       - Name: NV_FIRSTAID
-        MaxLevel: 1
+        MaxLevel: 5
       - Name: NV_TRICKDEAD
-        MaxLevel: 1
+        MaxLevel: 5
         Exclude: true
       - Name: WE_BABY
         MaxLevel: 1

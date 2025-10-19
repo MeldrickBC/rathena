@@ -48,6 +48,16 @@ Body:
       bonus2 bAddRace,RC_Dragon,5;
   - Combos:
       - Combo:
+          - Twilight_Desert
+          - Sandstorm
+    Script: |
+      bonus bMaxSP,20;
+      bonus bMaxHPRate,5;
+      bonus bHit,10;
+      bonus2 bAddSize,Size_Large,30;
+      autobonus "{ bonus bAspdRate,100; }",1,7000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
+  - Combos:
+      - Combo:
           - Long_Horn
           - Valkyrja's_Shield
       - Combo:
@@ -172,10 +182,10 @@ Body:
       bonus bMaxHP,300;
       bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R)-5;
       if (getequiprefinerycnt(EQI_GARMENT) > 10) {
-         bonus2 bSubEle,Ele_Neutral,30;
+        bonus2 bSubEle,Ele_Neutral,30;
       }
       else {
-         bonus2 bSubEle,Ele_Neutral,getequiprefinerycnt(EQI_GARMENT)*3;
+        bonus2 bSubEle,Ele_Neutral,getequiprefinerycnt(EQI_GARMENT)*3;
       }
   - Combos:
       - Combo:
@@ -224,8 +234,7 @@ Body:
     Script: |
       bonus bLongAtkRate,25;
       bonus3 bAutoSpell,"NJ_HUUJIN",5,100;
-      if (readparam(bInt) > 39)
-         bonus3 bAutoSpell,"NJ_HUUJIN",5,200;
+      if (readparam(bInt) > 39) bonus3 bAutoSpell,"NJ_HUUJIN",5,200;
   - Combos:
       - Combo:
           - Orc_Archer_Bow
@@ -239,6 +248,15 @@ Body:
     Script: |
       bonus bAtk,25;
       bonus3 bAddEff,Eff_Curse,200,ATF_WEAPON|ATF_LONG|ATF_TARGET;
+  - Combos:
+      - Combo:
+          - Elven_Ears_
+          - Skull_Cap
+      - Combo:
+          - Elven_Ears
+          - Skull_Cap
+    Script: |
+      bonus bUseSPrate,-3;
   - Combos:
       - Combo:
           - Divine_Cross
@@ -267,22 +285,21 @@ Body:
   - Combos:
       - Combo:
           - Stone_Buckler
-          - Odin's_Blessing
+          - Odins_Blessing
           - Magni_Cap
     Script: |
       bonus bStr,2;
       bonus bDef,5;
       bonus bMdef,5;
-      if (BaseClass == Job_Swordman)
-         bonus bDef,6;
+      if (BaseClass == Job_Swordman) bonus bDef,6;
   - Combos:
       - Combo:
           - Valkyrja's_Shield
-          - Odin's_Blessing
+          - Odins_Blessing
           - Fricca_Circlet
       - Combo:
           - Valkyrja's_Shield_C
-          - Odin's_Blessing
+          - Odins_Blessing
           - Fricca_Circlet
     Script: |
       bonus bDef,2-getequiprefinerycnt(EQI_HAND_L)-getequiprefinerycnt(EQI_HEAD_TOP);
@@ -290,7 +307,7 @@ Body:
   - Combos:
       - Combo:
           - Angel's_Safeguard
-          - Angel's_Protection
+          - Angels_Protection
           - Angel's_Arrival
           - Angel's_Warmth
           - Kiss_Of_Angel
@@ -333,15 +350,6 @@ Body:
       bonus2 bAddEff,Eff_Stun,1000;
   - Combos:
       - Combo:
-          - Elven_Ears
-          - Skull_Cap
-      - Combo:
-          - Elven_Ears_
-          - Skull_Cap
-    Script: |
-      bonus bUseSPrate,-3;
-  - Combos:
-      - Combo:
           - Padded_Armor
           - Hyper_Changer
       - Combo:
@@ -378,7 +386,7 @@ Body:
       bonus bFlee,10;
   - Combos:
       - Combo:
-          - Odin's_Blessing
+          - Odins_Blessing
           - Fricco_Shoes
           - Falcon_Robe
     Script: |
@@ -387,7 +395,7 @@ Body:
       bonus bMaxSPrate,5;
   - Combos:
       - Combo:
-          - Odin's_Blessing
+          - Odins_Blessing
           - Vidar's_Boots
           - Vali's_Manteau
     Script: |
@@ -396,17 +404,16 @@ Body:
       bonus bSPrecovRate,10;
   - Combos:
       - Combo:
-          - Odin's_Blessing
+          - Odins_Blessing
           - Ulle_Cap
       - Combo:
-          - Odin's_Blessing
+          - Odins_Blessing
           - Ulle_Cap_I
     Script: |
-      if (readparam(bDex) > 69)
-         bonus bUseSPrate,-10;
+      if (readparam(bDex) > 69) bonus bUseSPrate,-10;
   - Combos:
       - Combo:
-          - Goibne's_Armor
+          - Goibnes_Armor
           - Goibne's_Combat_Boots
           - Goibne's_Shoulder_Arms
           - Goibne's_Helmet
@@ -770,6 +777,12 @@ Body:
       bonus2 bSubRace,RC_Angel,10;
   - Combos:
       - Combo:
+          - Aferde_Card
+          - Timbers_Card
+    Script: |
+      bonus bLongAtkRate,3;
+  - Combos:
+      - Combo:
           - Poring_Card
           - Mastering_Card
       - Combo:
@@ -789,6 +802,12 @@ Body:
           - Vagabond_Wolf_Card
     Script: |
       bonus bFlee,18;
+  - Combos:
+      - Combo:
+          - Drops_Card
+          - Poring_Card
+    Script: |
+      bonus bMaxSP,10000;
   - Combos:
       - Combo:
           - Skeleton_Card
@@ -822,9 +841,9 @@ Body:
       bonus2 bSkillAtk,"MC_MAMMONITE",20;
       bonus bSPDrainValue,1;
       if (BaseJob == Job_Alchemist) {
-         bonus3 bAutoSpell,"BS_ADRENALINE",1,10;
-         bonus2 bAddMonsterDropItem,7139,3;
-         bonus2 bAddMonsterDropItem,905,10;
+        bonus3 bAutoSpell,"BS_ADRENALINE",1,10;
+        bonus2 bAddMonsterDropItem,7139,3;
+        bonus2 bAddMonsterDropItem,905,10;
       }
   - Combos:
       - Combo:
@@ -837,12 +856,11 @@ Body:
       bonus bStr,6;
       bonus bAgi,4;
       bonus2 bSkillAtk,"RG_BACKSTAP",10;
-      if (getskilllv("RG_STRIPARMOR") == 5)
-         bonus3 bAutoSpell,"RG_STRIPARMOR",5,50;
-         if (BaseJob == Job_Rogue) {
-            bonus bUseSPrate,-20;
-            bonus3 bAutoSpell,"RG_INTIMIDATE",1,-20;
-         }
+      if (getskilllv("RG_STRIPARMOR") == 5) bonus3 bAutoSpell,"RG_STRIPARMOR",5,50;
+      if (BaseJob == Job_Rogue) {
+        bonus bUseSPrate,-20;
+        bonus3 bAutoSpell,"RG_INTIMIDATE",1,-20;
+      }
   - Combos:
       - Combo:
           - BigFoot_Card
@@ -890,8 +908,7 @@ Body:
       bonus bAspdRate,5;
       bonus bSpeedRate,25;
       bonus bSPDrainValue,1;
-      if (BaseClass == Job_Thief)
-         bonus bNoGemStone;
+      if (BaseClass == Job_Thief) bonus bNoGemStone;
   - Combos:
       - Combo:
           - Dragon_Tail_Card
@@ -905,9 +922,9 @@ Body:
       bonus bLongAtkRate,20;
       bonus bPerfectHitAddRate,20;
       if (BaseClass == Job_Archer) {
-         bonus2 bExpAddRace,RC_Brute,5;
-         bonus2 bComaRace,RC_Brute,100;
-         bonus2 bComaRace,RC_Player_Doram,100;
+        bonus2 bExpAddRace,RC_Brute,5;
+        bonus2 bComaRace,RC_Brute,100;
+        bonus2 bComaRace,RC_Player_Doram,100;
       }
   - Combos:
       - Combo:
@@ -921,8 +938,7 @@ Body:
       bonus2 bSkillAtk,"CG_ARROWVULCAN",5;
       bonus2 bSkillAtk,"DC_THROWARROW",10;
       bonus2 bSkillAtk,"BA_MUSICALSTRIKE",10;
-      if (BaseJob == Job_Bard || BaseJob == Job_Dancer)
-         bonus3 bAutoSpellWhenHit,"CG_TAROTCARD",2,50;
+      if (BaseJob == Job_Bard || BaseJob == Job_Dancer) bonus3 bAutoSpellWhenHit,"CG_TAROTCARD",2,50;
   - Combos:
       - Combo:
           - Rideword_Card
@@ -935,10 +951,10 @@ Body:
       bonus bCastrate,-10;
       bonus bUseSPRate,-10;
       if (BaseClass == Job_Acolyte) {
-         bonus2 bExpAddRace,RC_Undead,5;
-         bonus2 bExpAddRace,RC_Demon,5;
-         bonus2 bSubRace,RC_Undead,30;
-         bonus2 bSubRace,RC_Demon,30;
+        bonus2 bExpAddRace,RC_Undead,5;
+        bonus2 bExpAddRace,RC_Demon,5;
+        bonus2 bSubRace,RC_Undead,30;
+        bonus2 bSubRace,RC_Demon,30;
       }
   - Combos:
       - Combo:
@@ -953,8 +969,8 @@ Body:
       bonus3 bAutoSpell,"AL_CRUCIS",5,10;
       bonus2 bSkillAtk,"MO_EXTREMITYFIST",10;
       if (BaseJob == Job_Monk) {
-         bonus bUseSPrate,-10;
-         bonus bNoCastCancel;
+        bonus bUseSPrate,-10;
+        bonus bNoCastCancel;
       }
   - Combos:
       - Combo:
@@ -968,8 +984,8 @@ Body:
       bonus bSPDrainValue,2;
       bonus2 bSkillAtk,42,20;
       if (BaseClass == Job_Merchant) {
-         bonus2 bAddMonsterDropItem,617,5;
-         bonus bMagicDamageReturn,20;
+        bonus2 bAddMonsterDropItem,617,5;
+        bonus bMagicDamageReturn,20;
       }
   - Combos:
       - Combo:
@@ -987,8 +1003,8 @@ Body:
       bonus2 bSkillAtk,19,10;
       bonus2 bSkillAtk,20,10;
       if (BaseClass == Job_Mage) {
-         bonus bMatkRate,3;
-         bonus bCastrate,-15;
+        bonus bMatkRate,3;
+        bonus bCastrate,-15;
       }
   - Combos:
       - Combo:
@@ -1009,10 +1025,10 @@ Body:
       bonus2 bSkillAtk,"WZ_HEAVENDRIVE",10;
       bonus2 bSkillAtk,"MG_THUNDERSTORM",10;
       if (BaseJob == Job_Sage) {
-         bonus bMagicDamageReturn,20;
-         bonus2 bAddMonsterDropItem,716,100;
-         bonus2 bAddMonsterDropItem,715,100;
-         bonus bCastrate,-20;
+        bonus bMagicDamageReturn,20;
+        bonus2 bAddMonsterDropItem,716,100;
+        bonus2 bAddMonsterDropItem,715,100;
+        bonus bCastrate,-20;
       }
   - Combos:
       - Combo:
@@ -1036,8 +1052,7 @@ Body:
       bonus bHPrecovRate,50;
       bonus3 bAutoSpell,"BS_WEAPONPERFECT",1,3;
       bonus2 bAddMonsterDropItem,501,500;
-      if (BaseClass == Job_Swordman)
-         bonus2 bAddItemGroupHealRate,IG_Potion,50;
+      if (BaseClass == Job_Swordman) bonus2 bAddItemGroupHealRate,IG_Potion,50;
   - Combos:
       - Combo:
           - C_Tower_Manager_Card
@@ -1074,8 +1089,7 @@ Body:
       bonus2 bSkillAtk,"PA_SHIELDCHAIN",10;
       bonus2 bSkillAtk,"PA_SACRIFICE",10;
       bonus bCastrate,-10;
-      if (BaseJob == Job_Crusader)
-         bonus bDefEle,Ele_Holy;
+      if (BaseJob == Job_Crusader) bonus bDefEle,Ele_Holy;
   - Combos:
       - Combo:
           - Garm_Baby_Card
@@ -1140,13 +1154,3 @@ Body:
     Script: |
       bonus bInt,1;
       bonus bMatkRate,2;
-  - Combos:
-      - Combo:
-          - Twilight_Desert
-          - Sandstorm
-    Script: |
-      bonus bMaxSP,20;
-      bonus bMaxHPRate,5;
-      bonus bHit,10;
-      bonus2 bAddSize,Size_Large,30;
-      autobonus "{ bonus bAspdRate,100; }",1,7000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
