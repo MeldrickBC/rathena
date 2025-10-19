@@ -152,3 +152,14 @@ Thumbs.db
 
 # generated files
 generated
+/db/pre-re/BKPitem_db_equip.yml
+/db/pre-re/BKPitem_db_etc.yml
+/db/pre-re/BKPitem_db_usable.yml
+/db/pre-re/BKPmob_db.yml
+/db/pre-re/BKPmob_skill_db.txt
+/db/pre-re/job_exp_error.yml
+/db/pre-re/job_exp_OLD.yml
+/db/pre-re/map_cache - Copia.dat
+/db/pre-re/mob_drop.txt
+/db/pre-re/skill_db - Copia.yml
+/db/pre-re/skill_dbOldSongs.yml
