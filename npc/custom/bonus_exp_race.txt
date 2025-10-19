@@ -1,0 +1,211 @@
+prontera,154,182,0	script	Anomaly Crack	4_CRACK,{
+OnClick:
+	end;
+OnInit:
+	initnpctimer;
+	specialeffect EF_DRAGONSMOKE;
+	sleep 1000;
+	specialeffect EF_DRAGONSMOKE;
+	end;
+OnTimer600000:
+	$@anomalyportalcounter = 0;
+	end;
+OnTimer3000:
+	specialeffect EF_ENTRY;
+	specialeffect EF_ENTRY2;
+	end;
+}
+prontera,138,179,7	script	Anomaly Hunting Board	4_BOARD3,{
+set .@gmlevel,getgmlevel();
+
+if (.@gmlevel >= .gm_level) {
+	do{
+		set .@menu,select("^4EEE94ROTD Information^000000",
+					( .@gmlevel < .gm_level )?"":"^FF0000[GM]^000000Set a New Monster's Race",
+					( .@gmlevel < .gm_level )?"":"^FF0000[GM]^000000Set EXP Bonus",		
+					( .@gmlevel <
+					.gm_level )?"":"^FF0000[GM]^000000Set Item / Zeny Bonus",
+					"Close" );
+					
+		switch( .@menu ) {
+			Case 1:
+				mes "^FF0000ROTD^000000 refer to ^0000FFRace of the Day^000000";
+				mes "In another word, it mean that the ^FF0000Monster's Race^000000 that you killed by day will grant you ^FF0000Extra Bonus EXP / Item / Zeny ^000000.";
+				next;
+				mes "[ ^FF0000Today's ROTD^000000 ]";
+				mes "^0000FF"+.race$[.today_race]+"^000000 Race";
+				if ( .race_bonus ) mes " ~ ^777777"+.race_bonus+"% more exp^000000";
+				if ( ( .rotd_item_amount && .rotd_item_rate ) || .rotd_zeny || .race_bonus ) {
+					mes " ";
+					mes "Reward : "+( ( .rotd_item_rate )? .rotd_item_rate+"%":"" )+" : ";
+					if ( .rotd_item_amount && .rotd_item_rate ) mes " ~ ^777777"+.rotd_item_amount+" x "+getitemname( .rotd_item_id )+"^000000";
+					if ( .rotd_zeny ) mes " ~ ^777777"+.rotd_zeny+" Zeny^000000";
+					mes " ";
+					mes "Amount are random...";
+				}
+				break;
+			Case 2:
+				mes "Select new race.";
+				set .today_race,select( .rotd_menu$ ) - 1;
+				if ( .today_race >= .rotd_size ) set .today_race,rand( .rotd_size );
+				mes "New Race : ^777777"+.race$[.today_race]+"^000000";
+				delwaitingroom;
+				waitingroom "[ROTD]:"+.race$[.today_race]+" ",0;
+				break;
+			Case 3:
+				mes "Set new exp bonus. (%)";
+				input .race_bonus,0,100;
+				if ( .race_bonus ) mes "ROTD EXP : "+.race_bonus+" %";
+				break;
+			Case 4:
+				mes "Set Rotd bonus";
+				mes "Inset Zeny Bonus";
+				input .@zeny;
+				mes "Insert Item ID";
+				do{
+					input .@item,0,32767; 
+					if ( !.@item ) close;
+				}while( getitemname( .@item ) == "null" );
+				mes "Enter amount.";
+				input .@amount,0,30000;
+				mes "Enter Rate to gain.";
+				input .@rate,0,100;
+				if ( .@amount && .@rate ) {
+					next;
+					mes "Updated item bonus : ( "+.@rate+"% )";
+					mes "^777777"+.@amount+" x "+getitemname( .@item )+"^000000";
+					mes "^777777"+.@zeny+" Zeny^000000";
+					if ( select( "Confirm","Cancel" ) == 1 ) {
+						set .rotd_item_id,.@item;	
+						set .rotd_item_amount,.@amount;
+						set .rotd_item_rate,.@rate;
+						set .rotd_zeny,.@zeny;
+						mes "Updated.";
+					}
+				}
+			default: close;
+		}
+		next;
+	}while( .@menu != 5 );
+}
+close;
+
+OnInit:
+	initnpctimer;
+	set .count,0;
+	set .size_text$,"";
+	// min gm level
+	set .gm_level,80;
+
+	// monster race list
+	setarray .race$[0],
+		"Formless",
+		"Undead",
+		"Brute",
+		"Plant",
+		"Insect",
+		"Fish",
+		"Demon",
+		"Demi Human",
+		"Angel",
+		"Dragon"/*,
+		"Boss",
+		"Non-Boss"*/;
+	set .rotd_size,getarraysize( .race$ );
+	for( set .@i,0; .@i < .rotd_size; set .@i,.@i + 1 )
+		set .rotd_menu$,.rotd_menu$ + .race$[.@i] +":";	
+	set .rotd_menu$,.rotd_menu$ + "^0055FFRandom Race^000000";
+
+	// monster race list
+	setarray .element$[0],
+	    "Neutral",
+		"Water",
+		"Earth",
+		"Fire",
+		"Wind",
+		"Poison",
+		"Holy",
+		"Shadow",
+		"Ghost",
+		"Undead";
+		
+	// min party member lv to gain exp
+	set .party_level_range,10;
+
+// daily reset
+OnClock0000:
+	set .today_race,rand( .rotd_size );
+	set .today_size,rand(0,2); //0 = Small, 1 = Medium, 2 = Large
+	if (.today_size == 0) {
+		.size_text$ = "Small";
+	}
+	else if (.today_size == 1){
+		.size_text$ = "Medium";
+	}
+	else {
+		.size_text$ = "Large";
+	}
+	set .today_element,rand( getarraysize( .element$ ) );
+	set .race_bonus,rand( 1,4 )*5;
+	set .size_bonus,rand( 1,2 )*5;
+	set .element_bonus,rand( 1,4 )*5;
+	delwaitingroom;
+	waitingroom .race$[.today_race]+" [+"+.race_bonus+"%]",0;
+	end;
+
+OnTimer3000:
+	if (.count == 0) {
+		delwaitingroom;
+		waitingroom .size_text$+" [+"+.size_bonus+"%]",0;		
+		.count += 1;
+	}
+	else if (.count == 1) {		
+		delwaitingroom;
+		waitingroom .element$[.today_element]+" [+"+.size_bonus+"%]",0;
+		.count += 1;
+	}
+	else {
+		delwaitingroom;		
+		waitingroom .race$[.today_race]+" [+"+.race_bonus+"%]",0;
+		.count = 0;
+	}	
+	setnpctimer 0;
+	end;
+	
+OnNPCKillEvent:
+	getunitdata killedgid, .@unitdata;
+	set .@chance,0;
+
+	if ( getmonsterinfo( killedrid,MOB_RACE ) == .today_race ) {
+		.@chance += .race_bonus;
+	}
+	if ( getmonsterinfo( killedrid,MOB_SIZE ) == .today_size ) {
+		.@chance += .size_bonus;
+	}
+	if ( getmonsterinfo( killedrid,MOB_ELEMENT ) == .today_element ) {
+		.@chance += .element_bonus;
+	}
+
+	//.@chance = 100;
+
+	if (rand(1,100) <= .@chance) {			
+		set .@mapname$, mapid2name(.@unitdata[5]);
+		$@anomalyportalcounter += 1;
+		duplicate("Anomaly Crack",.@mapname$,.@unitdata[6],.@unitdata[7],"Anomaly Crack#"+$@anomalyportalcounter);
+		sleep2 3000;
+		set .spawnsize, rand(0,2);		
+		monster(.@mapname$,.@unitdata[6],.@unitdata[7],"Anomaly "+getmonsterinfo(killedrid,MOB_NAME),killedrid,1,strnpcinfo(0)+"::OnMyMobDead",.spawnsize);
+	}
+	end;
+
+	OnMyMobDead:
+		//unloadnpc "Anomaly Crack#"+2;
+		if (!playerattached()) end;
+		if (rand(1,100) <= 25) {
+			getunitdata killedgid, .@unitdata;
+			.@x = .@unitdata[6];
+			.@y = .@unitdata[7];
+			makeitem(3000000, 1, .@mapname$, .@x + rand(2) - 1, .@y + rand(2) - 1);
+		}
+		end;
+}

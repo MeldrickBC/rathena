@@ -1,0 +1,25 @@
+//===== rAthena Script =======================================
+//= Direction of Prayer
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//--- Main quest NPCs for Episode 18
+//
+// Notes:
+// - The last value of ep18_main is 57
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+prontera,182,215,3	script	Juicy Lucy#custom	10504,{
+	disable_items;
+	mes "[Lucy]";
+	mes "Welcome.";
+	mes "Are you interested in processing some fruit?";
+	close2;
+	callshop "juice_barter",1;
+}
+
+
+prontera,183,214,3	script	Hat Craftsman#custom	10485,{
+	disable_items;
+	callshop "official_hat_trader",1;
+}

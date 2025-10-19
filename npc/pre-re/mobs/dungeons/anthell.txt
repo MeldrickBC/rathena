@@ -114,7 +114,8 @@ anthell01,105,124	monster	Ant Egg	1097,1,60000,30000
 //==================================================
 anthell02,0,0	monster	Ant Egg	1097,15
 anthell02,0,0	monster	Familiar	1005,20
-anthell02,0,0	monster	Andre	1095,50
+anthell02,0,0	monster	Andre	1095,30
+anthell02,0,0	monster	Soldier Andre	1171,20
 anthell02,0,0	monster	Piere	1160,15
 anthell02,0,0	monster	Deniro	1105,15
 anthell02,0,0	monster	Vitata	1176,30

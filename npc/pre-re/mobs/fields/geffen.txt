@@ -55,6 +55,7 @@ gef_fild02,164,194,1,1	monster	Shining Plant	1083,1,1800000,900000
 gef_fild03,0,0	monster	Orc Warrior	1023,60
 gef_fild03,0,0	monster	High Orc	1213,1
 gef_fild03,0,0	monster	Savage	1166,40
+gef_fild03,0,0	monster	Orc Archer	1189,40
 gef_fild03,0,0	monster	Poporing	1031,20
 gef_fild03,45,350,3,3	monster	Green Plant	1080,1,180000,90000
 gef_fild03,66,300,3,3	monster	Green Plant	1080,1,180000,90000
@@ -225,6 +226,7 @@ gef_fild13,0,0	monster	Ambernite	1094,30
 //==================================================
 gef_fild14,0,0	monster	Orc Lady	1273,20
 gef_fild14,0,0,0,0	boss_monster	Orc Hero	1087,1,3600000,600000,1
-gef_fild14,0,0	monster	Orc Warrior	1023,10
-gef_fild14,0,0	monster	Orc Archer	1189,30
+//gef_fild14,0,0	monster	Orc Archer	1189,30
+gef_fild14,0,0	monster	High Orc Archer	31004,30
+gef_fild14,0,0	monster	Orc Archer	1189,10
 gef_fild14,0,0	monster	High Orc	1213,70

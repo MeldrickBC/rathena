@@ -1,0 +1,12 @@
+prontera,145,172,6	script	Stats Debugger	94,{
+	mes "bSTR: "+readparam(bSTR);
+	mes "bAGI: "+readparam(bAGI);
+	mes "bVIT: "+readparam(bVIT);
+	mes "bINT: "+readparam(bINT);
+	mes "bDEX: "+readparam(bDEX);
+	mes "bLUK: "+readparam(bLUK);
+	mes "bCritical: "+readparam(bCritical);
+	mes "bMaxHP: "+readparam(bMaxHP);
+	mes "bMaxHPrate: "+readparam(bMaxHPrate);
+	close;
+}

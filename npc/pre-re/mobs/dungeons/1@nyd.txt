@@ -1,0 +1,12 @@
+1@nyd,0,0,0,0	monster	Dark Pinguicula	2015,30
+1@nyd,0,0,0,0	monster	Aqua Elemental	2016,30
+1@nyd,0,0,0,0	monster	Ancient Tree	2019,40
+1@nyd,0,0,0,0	monster	Ryncho	2020,36
+1@nyd,0,0,0,0	monster	Phylla	2021,36
+
+2@nyd,199,80,192,77	monster	Dark Pinguicula	2015,40
+2@nyd,199,80,192,77	monster	Ryncho	2020,52
+2@nyd,199,80,192,77	monster	Phylla	2021,48
+2@nyd,199,80,192,77	monster	Dark Shadow	2023,40
+
+2@nyd,199,328,0,0	monster	Nidhoggr's Shadow	2022,1,21600000,600000,1

@@ -1,0 +1,5 @@
+prontera,145,172,6	script	Platinum Skill NPC	94,{
+	.@s = getskilllv("AL_HOLYLIGHT");
+	mes .@s;
+	close;
+}

@@ -45,3 +45,10 @@ ra_fild07,168,353,0	warp	ra026	1,1,ra_fild02,171,45
 ra_fild02,168,36,0	warp	ra027	1,1,ra_fild07,168,349
 ra_fild02,373,275,0	warp	ra028	1,1,ra_fild03,28,294
 ra_fild03,23,294,0	warp	ra029	1,1,ra_fild02,367,270
+//==================================================
+// RENEWAL
+//==================================================
+ra_fild10,355,340,3	script	SignRaPol01	2_BULLETIN_BOARD,{
+	warp "ra_pol01",291,108;
+}
+ra_pol01,294,105,0	warp	rac02	1,1,ra_fild10,352,337

@@ -12,32 +12,45 @@
 //= 1.0 Initial script.
 //= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
 //============================================================
+prontera,172,182,1	script	Stylist#custom_stylist	122,{
 
-prontera,170,180,1	script	Stylist#custom_stylist	122,{
+//OnInit:
+    //setunitdata (getnpcid(0), UNPC_GROUP_ID, 100);
+    //setunittitle(getnpcid(0), "Stylist");
+    //end;
+       // mes #Hair2130;
+		//mes #Hair3140;
+		//mes #Hair4150;
+		//mes #Hair5160;
+		//mes #Hair6170;
+		//mes #Hair7180;
 	setarray .@Styles[1],
-		getbattleflag("max_cloth_color"),
+		//getbattleflag("max_cloth_color")
+		3,
 		getbattleflag("max_hair_style"),
-		getbattleflag("max_hair_color");
+		//getbattleflag("max_hair_color");
+		50;
+		
 	setarray .@Look[1],
 		LOOK_CLOTHES_COLOR,
 		LOOK_HAIR,
 		LOOK_HAIR_COLOR;
 	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");
 	set .@Revert, getlook(.@Look[.@s]);
-	set .@Style,1;
+	set .@Style,0;
 	while(1) {
 		setlook .@Look[.@s], .@Style;
 		message strcharinfo(0),"This is style #"+.@Style+".";
 		set .@menu$, " ~ Next (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Previous (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ Jump to...: ~ Revert to original (^0055FF"+.@Revert+"^000000)";
 		switch(select(.@menu$)) {
 		case 1:
-			set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 1);
+			set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 0);
 			break;
 		case 2:
-			set .@Style, ((.@Style != 1) ? .@Style-1 : .@Styles[.@s]);
+			set .@Style, ((.@Style != 0) ? .@Style-1 : .@Styles[.@s]);
 			break;
 		case 3:
-			message strcharinfo(0),"Choose a style between 1 - "+.@Styles[.@s]+".";
+			message strcharinfo(0),"Choose a style between 0 - "+.@Styles[.@s]+".";
 			input .@Style,0,.@Styles[.@s];
 			if (!.@Style)
 				set .@Style, rand(1,.@Styles[.@s]);

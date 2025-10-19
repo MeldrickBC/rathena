@@ -1,0 +1,47 @@
+//================================================================//
+//	Happy Hour Script
+//	Created by PottScilgrim
+//================================================================//
+-	script	HappyHourScript	-1,{
+
+//================================================================//
+//	Hourly Triggers
+//================================================================//
+
+OnInit:
+OnClock0030:
+OnClock2355:
+OnClock0000:
+	setbattleflag "base_exp_rate",600,false;
+	setbattleflag "job_exp_rate",600,false;
+	setbattleflag "item_rate_heal",200,false;
+	setbattleflag "item_rate_use",200,false;
+	setbattleflag "item_rate_equip",200,false;
+	setbattleflag "item_rate_card",200,false;
+	announce "[EVENT]: Happy hour has now begun, exp rates is now 6x! Happy Leveling",bc_all,0xc4ff5e;
+	end;
+
+
+OnClock0031:
+OnClock2358:
+OnClock0003:
+	setbattleflag "base_exp_rate",300,false;
+	setbattleflag "job_exp_rate",300,false;
+	setbattleflag "item_rate_heal",100,false;
+	setbattleflag "item_rate_use",100,false;
+	setbattleflag "item_rate_equip",100,false;
+	setbattleflag "item_rate_card",100,false;
+	announce "[EVENT]: Happy hour has ended, exp rates have returned to normal",bc_all,0xc4ff5e;
+	end;
+}
+
+//Event announcement started for those who enter after startup
+
+-	script	HappyHourStarted	-1,{
+
+OnPCLoginEvent:
+if($HappyHour == 1){
+	announce "Hi, Happy Hour EXP is active! The current rates are: Base "+(getbattleflag("base_exp_rate")/300)+"x, Job "+(getbattleflag("job_exp_rate")/300)+"x",bc_self;	
+	}
+end;
+}

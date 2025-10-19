@@ -10,7 +10,7 @@
 //= One-click automatic mount rentals.
 //============================================================
 
-prontera,124,201,1	script	Universal Rental NPC	726,{
+prontera,146,232,5	script	Universal Rental NPC	726,{
 	if (ismounting()) {
 		message strcharinfo(0),"You must first remove your mount.";
 		end;
@@ -36,4 +36,44 @@ prontera,124,201,1	script	Universal Rental NPC	726,{
 	}
 	specialeffect2 EF_TEIHIT3;
 	end;
+}
+
+prontera,148,232,5	script	Dragon Check NPC	726,{
+	setdragon;
+	if( checkdragon() )    
+		dispbottom "You are mounting!"; 
+	else {
+		dispbottom "You are not mounting";
+	}
+	switch( rand(1,11) ) {
+	case 1:
+		npctalk "(◀▶ω◀▶)";
+		break;
+	case 2:
+		npctalk "☜(^▽^)☞Ξ≡=З";
+		break;
+	case 3:
+		npctalk "(≥▽≤)♥♡♥♡♥♡";
+		break;
+	case 4:
+		npctalk "(⊙ω⊙)";
+		break;
+	case 5:
+		npctalk "(●㉦●)";
+		break;
+	case 6:
+		npctalk "(○ω○)";
+		break;
+	case 7:
+		npctalk "(♡З♡)~♥";
+		break;
+	case 8:
+		npctalk "(◎ω◎)";
+		break;
+	case 9:
+		npctalk "(*'▼'*)b";
+		break;
+	default:
+		break;
+	}	
 }

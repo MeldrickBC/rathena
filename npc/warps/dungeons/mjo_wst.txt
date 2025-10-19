@@ -1,0 +1,21 @@
+//===== rAthena Script ======================================= 
+//= Mjolnir Underground Dungeon warps script
+//===== Changelogs: ==========================================
+//============================================================
+
+mjolnir_08,136,373,0	warp	MjoWst1	1,1,mjo_wst01,204,381
+
+mjo_wst01,204,385,0	warp	MjoWst2	1,1,mjolnir_08,133,369
+
+//amicitia1,149,19,0	script	#wami2	WARPNPC,2,2,{
+//	end;
+//OnTouch:
+//	//if (BaseLevel < 230) {
+	//	mes " - No entry below level 230! - ";
+	//	close;
+	//}
+//	warp "amicitia2",146,274;
+//	end;
+//}
+
+

@@ -1,0 +1,6 @@
+nyd_dun02,100,200,0	warp	1@nyd-1	1,1,1@nyd,32,40
+1@nyd,32,34,0	warp	nyd_dun02-2	1,1,nyd_dun02,96,196
+1@nyd,195,320,0	warp	2@nyd-1	1,1,2@nyd,199,12
+2@nyd,199,8,0	warp	1@nyd-2	1,1,1@nyd,195,315
+2@nyd,199,178,0	warp	2@nyd-2	1,1,2@nyd,199,261
+2@nyd,199,256,0	warp	2@nyd-3	1,1,2@nyd,199,170

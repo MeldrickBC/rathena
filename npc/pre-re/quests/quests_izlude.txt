@@ -13,3 +13,27 @@
 //============================================================
 
 izlude,182,186,2	duplicate(Edgar_izlude)	Edgar#izlude	49
+
+// Item Functions
+//============================================================
+function	script	F_Cat_Hard_Biscuit	{	//11536
+	switch (rand(1,4)) {
+	case 1:
+		heal -100,0;
+		break;
+	case 2:
+		showscript "Huuph...! Yucky..! Wa, Water...!!";
+		sc_start SC_Stun,3000,0,5000,0;
+		break;
+	case 3:
+		showscript "Yeeyuck...!! This is rotten!!";
+		sc_start SC_POISON,50000,0;
+		break;
+	case 4:
+		specialeffect2 EF_HIT4;
+		showscript "Arrrrrgggg...!! Bu, Bu, Bugggggg!!!!!";
+		getitem 11537,1; //Rice_Weevil_Bug
+		break;
+	}
+	return;
+}

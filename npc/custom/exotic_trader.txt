@@ -1,0 +1,385 @@
+//===== Script =======================================
+//= Exotic Trader
+//====================================================
+//======SQL Content======
+/*
+DROP TABLE IF EXISTS rathena_db.`c_exotictrader_card`;
+CREATE TABLE rathena_db.`c_exotictrader_card`(
+	item_id INT(10) NOT NULL,
+	average_price INT(10),
+	PRIMARY KEY (`item_id`)
+) ENGINE=MyISAM;
+INSERT INTO rathena_db.`c_exotictrader_card` (`item_id`, `average_price`) VALUES
+(4001, 1000000),
+(4002, 1000000),
+(4003, 1000000),
+(4004, 1000000),
+(4005, 1000000);
+
+DROP TABLE IF EXISTS rathena_db.`c_exotictrader_consumable`;
+CREATE TABLE rathena_db.`c_exotictrader_consumable`(
+	item_id INT(10) NOT NULL,
+	average_price INT(10),
+	PRIMARY KEY (`item_id`)
+) ENGINE=MyISAM;
+INSERT INTO rathena_db.`c_exotictrader_consumable` (`item_id`, `average_price`) VALUES
+(505, 1000000),
+(664, 1000000);
+
+DROP TABLE IF EXISTS rathena_db.`c_exotictrader_costume`;
+CREATE TABLE rathena_db.`c_exotictrader_costume`(
+	item_id INT(10) NOT NULL,
+	average_price INT(10),
+	PRIMARY KEY (`item_id`)
+) ENGINE=MyISAM;
+INSERT INTO rathena_db.`c_exotictrader_costume` (`item_id`, `average_price`) VALUES
+(5909, 1000000),
+(15881, 1000000),
+(490242, 1000000),
+(480288, 1000000),
+(480096, 1000000),
+(480318, 1000000),
+(480290, 1000000),
+(480286, 1000000),
+(480258, 1000000),
+(480246, 1000000),
+(480236, 1000000),
+(480223, 1000000),
+(480207, 1000000),
+(480203, 1000000),
+(480202, 1000000),
+(480201, 1000000),
+(480200, 1000000),
+(480199, 1000000),
+(480198, 1000000),
+(480177, 1000000),
+(480169, 1000000),
+(480168, 1000000),
+(480167, 1000000),
+(480152, 1000000),
+(480137, 1000000),
+(480131, 1000000),
+(480130, 1000000),
+(480129, 1000000),
+(480127, 1000000),
+(480126, 1000000),
+(480123, 1000000),
+(480122, 1000000),
+(480118, 1000000),
+(480111, 1000000),
+(480110, 1000000),
+(480108, 1000000),
+(480107, 1000000),
+(480097, 1000000),
+(480095, 1000000),
+(480093, 1000000),
+(480071, 1000000),
+(480069, 1000000),
+(480058, 1000000),
+(480056, 1000000),
+(480055, 1000000),
+(440010, 1000000),
+(440009, 1000000),
+(440007, 1000000),
+(440006, 1000000),
+(440003, 1000000),
+(440002, 1000000),
+(440000, 1000000),
+(436010, 1000000),
+(436008, 1000000),
+(436007, 1000000),
+(436006, 1000000),
+(435000, 1000000),
+(430005, 1000000),
+(420304, 1000000),
+(420204, 1000000),
+(420201, 1000000),
+(420165, 1000000),
+(420163, 1000000),
+(420161, 1000000),
+(420156, 1000000),
+(420152, 1000000),
+(420151, 1000000),
+(420150, 1000000),
+(420140, 1000000),
+(420128, 1000000),
+(420127, 1000000),
+(420126, 1000000),
+(420125, 1000000),
+(420124, 1000000),
+(420123, 1000000),
+(420122, 1000000),
+(420121, 1000000),
+(420120, 1000000),
+(420119, 1000000),
+(420118, 1000000),
+(420117, 1000000),
+(420116, 1000000),
+(420115, 1000000),
+(420114, 1000000),
+(420113, 1000000),
+(420109, 1000000),
+(420108, 1000000),
+(420107, 1000000),
+(420104, 1000000),
+(420102, 1000000),
+(420101, 1000000),
+(420100, 1000000),
+(420099, 1000000),
+(420098, 1000000),
+(420097, 1000000),
+(420096, 1000000),
+(420095, 1000000),
+(420092, 1000000),
+(420084, 1000000),
+(420082, 1000000),
+(420081, 1000000),
+(420079, 1000000),
+(420078, 1000000),
+(420077, 1000000),
+(420072, 1000000),
+(420071, 1000000),
+(420067, 1000000),
+(420062, 1000000),
+(420061, 1000000),
+(420060, 1000000),
+(420059, 1000000),
+(420058, 1000000),
+(420057, 1000000),
+(420050, 1000000),
+(420048, 1000000),
+(420047, 1000000),
+(420044, 1000000),
+(420043, 1000000),
+(420042, 1000000),
+(420041, 1000000),
+(420040, 1000000),
+(420039, 1000000),
+(420038, 1000000),
+(420037, 1000000),
+(420036, 1000000),
+(420035, 1000000),
+(420034, 1000000),
+(420029, 1000000),
+(420027, 1000000),
+(420025, 1000000),
+(420016, 1000000),
+(420010, 1000000),
+(410315, 1000000),
+(410290, 1000000),
+(410268, 1000000),
+(410238, 1000000),
+(410231, 1000000),
+(410229, 1000000),
+(410226, 1000000),
+(410223, 1000000),
+(410222, 1000000),
+(410221, 1000000),
+(410218, 1000000),
+(410217, 1000000),
+(410214, 1000000),
+(410206, 1000000),
+(410205, 1000000),
+(410202, 1000000),
+(410201, 1000000),
+(410200, 1000000),
+(410193, 1000000),
+(410192, 1000000),
+(410191, 1000000),
+(410190, 1000000),
+(410189, 1000000);
+
+DROP TABLE IF EXISTS rathena_db.`c_exotictrader_gear`;
+CREATE TABLE rathena_db.`c_exotictrader_gear`(
+	item_id INT(10) NOT NULL,
+	average_price INT(10),
+	PRIMARY KEY (`item_id`)
+) ENGINE=MyISAM;
+INSERT INTO rathena_db.`c_exotictrader_gear` (`item_id`, `average_price`) VALUES
+(1602, 1000000),
+(1109, 1000000),
+(1608, 1000000),
+(2331, 1000000),
+(2313, 1000000),
+(2364, 1000000);
+*/
+//====================================================
+prontera,129,215,5	script	Exotic Trader Sign	4_BULLETIN_BOARD2,{
+	disable_items;
+	mes "[Sign]";
+	mes "I'm out on my weekly hunt~";
+	mes "See you friday!";
+	mes "XOXO, Exotic Trader. ";
+	close;
+}
+
+
+prontera,130,216,5	script	Lunatic#Exotic Trader	E_LUNATIC_2023,{
+	mes "It appears to be a Lunatic, but with black fur.";
+	next;
+	mes "Where would Lydia find such a rare breed?";
+	close;
+	
+OnInit:
+	npcspeed 200;
+	initnpctimer;
+	end;
+	
+OnTimer2000:
+	set .@base_x, 129;
+	set .@base_y, 215;
+	set .@range, 3;
+	set .@new_x, rand(.@base_x - .@range, .@base_x);
+	set .@new_y, rand(.@base_y, .@base_y + .@range);
+	
+	if ((.@new_x != .@base_x) && (.@new_y != .@base_y)) {
+		npcwalkto .@new_x, .@new_y;
+		if (rand(100) < 10 && $IsLunaticHidden == 0) {
+			emotion 2;
+		}
+	}
+	initnpctimer;
+	end;
+}
+
+-	shop	exotic_trader	1,501:50.
+prontera,129,215,5	script	Exotic Trader	4_F_LYDIA,{
+	disable_items;	
+	mes "[Exotic Trader Lydia]";	
+	mes "Hello~";
+	mes "Interested in checking my wares?";
+	close2;	
+	callshop "exotic_trader",1;	
+	end;
+	
+OnBuyItem: //Had to make my own zeny deduction process on purchase since rAthena doesn`t have an innate list for it, game sucks
+	.@x = 0;
+	for ( .@i = 0; .@i < getarraysize(@bought_nameid); .@i++ ) { //Check all the items in the 'buying items' list, in a loop
+		if ( (.@x = inarray(.id_array, @bought_nameid[.@i])) == -1 ) { //Checks if somehow any item being purchased is not in the buying items list
+			mes "Something went wrong.";
+			mes "The ID : " + @bought_nameid[.@i] + " is not in the id array.";
+			close;
+		} else {
+			if ( @bought_quantity[.@i] < 1 ) { //Checks if somehow any item has 0 or less amount being bought
+				mes "Something went wrong.";
+				mes "Invalid amount.";
+				close;
+			}
+			if ( .id_array[.@x] != @bought_nameid[.@i] ) { //Checks if the process fucked up and brought wrong item IDs
+				mes "Something went wrong.";
+				mes "Index mismatch.";
+				close;
+			}
+			if ( Zeny < (.@price = .price_array[.@x] * @bought_quantity[.@i]) ) { //Checks if buyer has enough Zeny
+				mes "You have insufficient Zeny.";
+				close;
+			}
+			Zeny -= .@price; //Deducts zeny
+			getitem @bought_nameid[.@i], @bought_quantity[.@i]; //Gives the current item of the loop and its quantity.
+		}
+		.@x += 1;
+	}		
+	deletearray @bought_quantity, getarraysize(@bought_quantity); //Cleans the arrays used to set the item ID bought to reuse it for newer purchases
+	deletearray @bought_nameid, getarraysize(@bought_nameid); //Cleans the arrays used to set the item ID quantity to reuse it for newer purchases
+	close;
+	
+OnClock0755: // 07:55 AM server time: If it's Friday: Empties the shop from items and then does OnInit to refill the shop. (Notice the lack of 'end;' on else clause
+	if (gettime(4) != 5 ) {
+		end;
+	}
+	else {
+		for ( .@i = 0, .@i < getarraysize(.id_array); .@i++ ) {			
+			npcshopdelitem "exotic_trader",.id_array[.@i];
+		}
+	}
+OnInit:
+	initnpctimer;
+	npcshopattach "exotic_trader";
+	npcshopdelitem "exotic_trader",501;
+	setarray .id_array[0],0;
+	setarray .price_array[0],0;
+	.@p = 0;
+	.@random = 0;
+	.@cards$ = "SELECT `item_id`,`average_price` "
+				+ "FROM rathena_db.`c_exotictrader_card` "				
+				+ "ORDER BY RAND() "
+				+ "LIMIT "+rand(2, 3);
+	.@gears$ = "SELECT `item_id`,`average_price`"
+				+ "FROM rathena_db.`c_exotictrader_gear` "				
+				+ "ORDER BY RAND()"
+				+ "LIMIT "+rand(2, 3);
+	.@consumables$ = "SELECT `item_id`,`average_price`"
+					  + "FROM rathena_db.`c_exotictrader_consumable` "				
+					  + "ORDER BY RAND()"
+					  + "LIMIT "+rand(2, 3);
+	.@costumes$ = "SELECT `item_id`,`average_price`"
+				+ "FROM rathena_db.`c_exotictrader_costume` "				
+				+ "ORDER BY RAND()"
+				+ "LIMIT "+rand(2, 3);
+	setarray .@selects$,.@costumes$,.@cards$,.@gears$,.@consumables$;	
+	
+	for ( .@q = 0, .@q < getarraysize(.@selects$); .@q++ ) { // Goes through each SQL to fill the shop with items
+		query_sql( .@selects$[.@q], .@item_id, .@average_price); //Runs the SQL query to fetch item IDs and their average price
+		.@size = getarraysize( .@item_id );
+		if ( .@size > 0 ) { // Check if the list brought anything
+			for ( .@i = 0; .@i < .@size; .@i++ ) { // Initiates loop to add items to the shop
+			.@random = rand((.@average_price[.@i]/100), (.@average_price[.@i]*2/100)) * 100; // Rounds the price to end with 00
+			npcshopadditem "exotic_trader",.@item_id[.@i], .@random;
+			.id_array[.@p] = .@item_id[.@i];
+			.price_array[.@p] = .@random;
+			.@p += 1;
+			}
+			deletearray .@item_id[0],getarraysize(.@item_id); // Clean the arrays for reuse purpose
+			deletearray .@average_price,getarraysize(.@average_price);
+		}
+	}
+	
+	// In case the server resets or scripts are reloaded, check if the current server time is in the timeframe that the NPC should be in town
+	if ((gettime(3) >= 8 && gettime(4) == 5) || (gettime(4) == 6) || (gettime(3) < 20 && gettime(4) == 0)) { // In case the server is reboot, check if the current server time is in between the day/time the NPC is supposed to be in town
+		cloakoffnpc "Exotic Trader"; // Make the NPC visible
+		cloakoffnpc "Lunatic#Exotic Trader";
+		set $IsLunaticHidden, 0;
+		cloakonnpc "Exotic Trader Sign"; //Make the sign disappear
+	}
+	else {
+		cloakonnpc "Exotic Trader"; // Make the NPC disappear
+		cloakonnpc "Lunatic#Exotic Trader";
+		set $IsLunaticHidden, 1;
+		cloakoffnpc "Exotic Trader Sign"; // Make the sign visible	
+	}
+	end;
+
+OnFriday0800: // 8:00 AM server time, if it's Friday: NPC appears in town
+	sleep 2000;
+	announce "Exotic Trader: Hello Hello! Your favorite merchant has arrived! Come to prontera to check the new stock!", bc_all;
+	sleep 1000;
+	cloakoffnpc "Exotic Trader"; // Make the NPC visible
+	cloakoffnpc "Lunatic#Exotic Trader";
+	set $IsLunaticHidden, 0;
+	cloakonnpc "Exotic Trader Sign"; //Make the sign disappear
+	end;
+
+OnSunday1950: // 7:50 PM server time, if it's Sunday: Notifies that the NPC will leave in 10 minutes
+	sleep 2000;
+	announce "Exotic Trader Lydia: Everyone! I'm leaving in 10 minutes. If you have business with me, please do so before I leave.", bc_all;
+	end;
+
+OnSunday1955: // 7:55 PM server time, if it's Sunday: Notifies that the NPC will leave in 5 minutes
+	sleep 2000;		
+	announce "Exotic Trader Lydia: I'm packing my things, and I will leave in 5 minutes!", bc_all;
+	end;
+	
+OnSunday2000: // 8:00 PM server time, if it's Sunday: the NPC leaves
+	announce "Exotic Trader Lydia: I shall return to my hunt.", bc_all;
+	sleep 3000;		
+	announce "Exotic Trader Lydia: See you all next friday with more goods!", bc_all;
+	sleep 2000;
+	specialeffect EF_READYPORTAL;
+	sleep 1500;
+	specialeffect EF_TELEPORTATION;
+	cloakonnpc "Exotic Trader"; // Make the NPC disappear
+	cloakonnpc "Lunatic#Exotic Trader";
+	set $IsLunaticHidden, 1;
+	cloakoffnpc "Exotic Trader Sign"; // Make the sign visible
+	end;
+}

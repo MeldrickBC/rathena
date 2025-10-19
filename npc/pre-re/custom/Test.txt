@@ -1,0 +1,7 @@
+prontera,159,174,4    script    [PvP Ladder ]    742,{
+end;
+OnInit:
+    setunitdata (getnpcid(0), UNPC_GROUP_ID, 2);
+    setunittitle(getnpcid(0), "Custom title");
+        end;
+}

@@ -1,0 +1,23 @@
+new_5-1,63,116,5	script	Freebies	718,{
+
+
+		if( !#Freebies ) {
+		set #Freebies,1;
+		mes "Welcome...this is your gift...";
+		getitem 14003,5;
+		getitem 12900,1;
+		getitem 13990,5;
+		getitem 12914,1;
+		getitem 12913,1;
+		getitem 501,1;
+		close;
+		} else {
+		mes "You have claim the Reward already.";
+		close;
+}
+OnInit:
+waitingroom "Click me before you go!",0;
+end;
+}
+
+new_4-1,63,116,5	duplicate(Freebies)	Freebies#fre	718
