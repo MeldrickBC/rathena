@@ -64100,6 +64100,8 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
+    Classes:
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -64127,6 +64129,8 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
+    Classes:
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
