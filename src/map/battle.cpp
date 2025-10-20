@@ -3723,7 +3723,7 @@ int32 battle_get_magic_element(block_list* src, block_list* target, uint16 skill
 				element = sd->bonus.arrow_ele;
 			break;
 		case WM_REVERBERATION: {
-			element = ELE_NEUTRAL;
+			element = (sd->bonus.reverberation_element) ? sd->bonus.reverberation_element : ELE_NEUTRAL;
 			break;
 		}
 		case SU_CN_METEOR:

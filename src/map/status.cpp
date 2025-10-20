@@ -14757,42 +14757,6 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 
-#ifndef RENEWAL
-		case SC_WHISTLE:
-		case SC_ASSNCROS:
-		case SC_POEMBRAGI:
-		case SC_APPLEIDUN:
-		case SC_HUMMING:
-		case SC_DONTFORGETME:
-		case SC_FORTUNE:
-		case SC_SERVICE4U:
-			if (battle_config.refresh_song == 0 && !status_isdead(*bl)) {
-				// Most songs have no interval, but they can expire while the character is still standing in the area of effect
-				// We need to make sure to restore the duration here if that's the case
-				std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
-				if (scdb == nullptr)
-					break;
-				skill_unit* unit = map_find_skill_unit_oncell(bl, bl->x, bl->y, scdb->skill_id, nullptr, 1);
-				// No longer in area
-				if (unit == nullptr || !unit->alive)
-					break;
-				// Dissonance marker is set
-				if (unit->val2&(1 << UF_ENSEMBLE))
-					break;
-				// Standing in the area, but cannot affect self
-				if (unit->group->src_id == bl->id && !(sc != nullptr && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_BARDDANCER))
-					break;
-				// Restore pseudo-infinite duration
-				sce->val4 = 0;
-				// Update icon duration
-				if (battle_config.refresh_song_icon == 1)
-					clif_status_change(bl, static_cast<int32>(scdb->icon), 1, INFINITE_TICK, 1, 0, 0);
-				sc_timer_next(unit->limit + tick);
-				return 0;
-			}
-			break;
-#endif
-
 	case SC_BERSERK:
 		// 5% every 10 seconds [DracoRPG]
 		if( --( sce->val3 ) > 0 && status_charge(bl, sce->val2, 0) && status->hp > 100 ) {
@@ -14891,6 +14855,17 @@ TIMER_FUNC(status_change_timer){
 			break;
 		sc_timer_next(1000 + tick);
 		return 0;
+
+	case SC_APPLEIDUN:
+		if (--(sce->val4) >= 0) {
+			status_heal(bl, sce->val3, 0, 3);
+			sc_timer_next(5000 + tick);
+			if (status->hp != status->max_hp) {
+				clif_specialeffect(bl, 7, AREA);
+			}
+			return 0;
+		}
+		break;
 
 	case SC_RENOVATIO:
 		if( --(sce->val4) >= 0 ) {

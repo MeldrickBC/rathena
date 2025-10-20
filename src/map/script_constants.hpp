@@ -853,6 +853,7 @@
 	export_constant2("bPhysAtkEle", SP_PHYS_ATK_ELE);
 	export_constant2("bMiscAtkEle", SP_MISC_ATK_ELE);
 	export_constant2("bSummonPower", SP_SUMMON_POWER);
+	export_constant2("bReverberationElement", SP_REVERBERATION_ELEMENT);
 
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);

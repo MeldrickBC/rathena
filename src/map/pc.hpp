@@ -686,6 +686,7 @@ public:
 		int32 basic_atk_rate;
 		int32 dot_damage_rate;
 		int32 summon_power;
+		int32 reverberation_element;		
 	} bonus;
 	// zeroed vars end here.
 

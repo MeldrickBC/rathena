@@ -4489,6 +4489,10 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 			if (sd->state.lr_flag != 2)
 				sd->bonus.summon_power += val;
 			break;
+		case SP_REVERBERATION_ELEMENT:
+			if (sd->state.lr_flag != 2)
+				sd->bonus.reverberation_element = val;
+			break;			
 		default:
 			if (current_equip_combo_pos > 0) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in a combo with item #%u\n", type, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);

@@ -18626,7 +18626,9 @@ Body:
     Buy: 20
     Weight: 900
     Attack: 110
+    MagicAttack: 30
     Range: 1
+    Slots: 2
     Jobs:
       BardDancer: true
     Gender: Male
@@ -18637,6 +18639,7 @@ Body:
     Refineable: true
     Script: |
       bonus bAtkEle,Ele_Fire;
+      bonus bReverberationElement,Ele_Fire;
   - Id: 1915
     AegisName: Guitar_Of_Blue_Solo
     Name: Loner's Guitar
@@ -18645,7 +18648,9 @@ Body:
     Buy: 20
     Weight: 900
     Attack: 110
+    MagicAttack: 30
     Range: 1
+    Slots: 2
     Jobs:
       BardDancer: true
     Gender: Male
@@ -18656,6 +18661,7 @@ Body:
     Refineable: true
     Script: |
       bonus bAtkEle,Ele_Water;
+      bonus bReverberationElement,Ele_Water;
   - Id: 1916
     AegisName: Guitar_Of_Vast_Land
     Name: Green Acre Guitar
@@ -18664,7 +18670,9 @@ Body:
     Buy: 20
     Weight: 900
     Attack: 110
+    MagicAttack: 30
     Range: 1
+    Slots: 2
     Jobs:
       BardDancer: true
     Gender: Male
@@ -18675,6 +18683,7 @@ Body:
     Refineable: true
     Script: |
       bonus bAtkEle,Ele_Earth;
+      bonus bReverberationElement,Ele_Earth;
   - Id: 1917
     AegisName: Guitar_Of_Gentle_Breeze
     Name: Gentle Breeze Guitar
@@ -18683,7 +18692,9 @@ Body:
     Buy: 20
     Weight: 900
     Attack: 110
+    MagicAttack: 30
     Range: 1
+    Slots: 2
     Jobs:
       BardDancer: true
     Gender: Male
@@ -18694,6 +18705,7 @@ Body:
     Refineable: true
     Script: |
       bonus bAtkEle,Ele_Wind;
+      bonus bReverberationElement,Ele_Wind;
   - Id: 1918
     AegisName: Oriental_Lute
     Name: Oriental Lute
