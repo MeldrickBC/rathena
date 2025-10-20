@@ -10406,6 +10406,7 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_BASIC_ATK_RATE: val = sd->bonus.basic_atk_rate; break;
 		case SP_DOT_DAMAGE_RATE: val = sd->bonus.dot_damage_rate; break;
 		case SP_SUMMON_POWER: val = sd->bonus.summon_power; break;
+		case SP_REVERBERATION_ELEMENT: val = sd->bonus.reverberation_element; break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
 			return -1;
