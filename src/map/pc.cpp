@@ -5135,6 +5135,16 @@ void pc_bonus2(map_session_data *sd,int32 type,int32 type2,int32 val)
 
 		pc_bonus_itembonus( sd->itemgroupsphealrate, type2, val, false );
 		break;
+	case SP_PHYS_ATK_ELE: // bonus2 bPhysAtkEle,e,x;
+		PC_BONUS_CHK_ELEMENT(type2, SP_PHYS_ATK_ELE);
+		if (sd->state.lr_flag != 2)
+			sd->indexed_bonus.phys_atk_ele[type2] += val;
+		break;
+	case SP_MISC_ATK_ELE: // bonus2 bPhysAtkEle,e,x;
+		PC_BONUS_CHK_ELEMENT(type2, SP_MISC_ATK_ELE);
+		if (sd->state.lr_flag != 2)
+			sd->indexed_bonus.misc_atk_ele[type2] += val;
+		break;
 	default:
 		if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in a combo with item #%u\n", type, type2, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);

@@ -602,6 +602,8 @@ public:
 		int32 magic_subdefele[ELE_MAX];
 		int32 ignore_res_by_race[RC_MAX];
 		int32 ignore_mres_by_race[RC_MAX];
+		int32 phys_atk_ele[ELE_MAX];
+		int32 misc_atk_ele[ELE_MAX];
 	} indexed_bonus;
 	// zeroed arrays end here.
 
