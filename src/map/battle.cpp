@@ -138,8 +138,8 @@ int32 battle_gettarget(block_list* bl)
 	switch (bl->type) {
 		case BL_PC:  return ((map_session_data*)bl)->ud.target;
 		case BL_MOB: return ((mob_data*)bl)->target_id;
-		case BL_PET: return ((pet_data*)bl)->target_id;
-		case BL_HOM: return ((homun_data*)bl)->ud.target;
+		case BL_PET: return ((struct pet_data*)bl)->target_id;
+		case BL_HOM: return ((struct homun_data*)bl)->ud.target;
 		case BL_MER: return ((s_mercenary_data*)bl)->ud.target;
 		case BL_ELEM: return ((s_elemental_data*)bl)->ud.target;
 	}
@@ -1720,7 +1720,7 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 
 			return damage; //These skills bypass everything else.
 	}
-	
+
 	status_change* tsc = status_get_sc(bl); //check target status
 	status_change* ssc = status_get_sc(src); //check caster status
 
@@ -3725,7 +3725,7 @@ int32 battle_get_magic_element(block_list* src, block_list* target, uint16 skill
 		case IG_IMPERIAL_PRESSURE:
 			if (sc != nullptr && sc->hasSCE(SC_GUARD_STANCE))
 				element = ELE_HOLY;
-			break;		
+			break;
 		case TR_METALIC_FURY:
 		case TR_SOUNDBLEND:
 		case TR_RHYTHMICAL_WAVE:
@@ -4581,7 +4581,7 @@ static void battle_calc_multi_attack(struct Damage* wd, block_list *src,block_li
 				wd->div_ = wd->div_ * -1;// needs more info
 			break;
 		case MH_BLAZING_AND_FURIOUS: {
-			homun_data *hd = BL_CAST(BL_HOM, src);
+			struct homun_data *hd = BL_CAST(BL_HOM, src);
 			if (hd) {
 				wd->div_ = hd->homunculus.spiritball;
 				hom_delspiritball(hd, MAX_SPIRITBALL, 1);
@@ -7035,7 +7035,7 @@ static void battle_calc_defense_reduction(struct Damage* wd, block_list *src,blo
 		i = min(i,100); //cap it to 100 for 0 def min
 		def1 = (def1*(100-i))/100;
 		def2 = (def2*(100-i))/100;
-	}	
+	}
 
 	if (tsc) {
 		if (tsc->getSCE(SC_FORCEOFVANGUARD)) {
@@ -11060,7 +11060,7 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 									clif_skill_fail(*sd, r_skill);
 									map_freeblock_unlock();
 									return wd.dmg_lv;
-								}
+			}
 							}
 
 							if (sd->state.autocast == 0) {
@@ -12322,8 +12322,6 @@ static const struct _battle_data {
 	{ "feature.roulette",                   &battle_config.feature_roulette,                1,      0,      1,              },
 	{ "feature.roulette_bonus_reward",      &battle_config.feature_roulette_bonus_reward,   1,      0,      1,              },
 	{ "monster_hp_bars_info",               &battle_config.monster_hp_bars_info,            1,      0,      1,              },
-	{ "min_body_style",                     &battle_config.min_body_style,                  0,      0,      SHRT_MAX,       },
-	{ "max_body_style",                     &battle_config.max_body_style,                  1,      0,      SHRT_MAX,       },
 	{ "save_body_style",                    &battle_config.save_body_style,                 1,      0,      1,              },
 	{ "monster_eye_range_bonus",            &battle_config.mob_eye_range_bonus,             0,      0,      10,             },
 	{ "monster_stuck_warning",              &battle_config.mob_stuck_warning,               0,      0,      1,              },

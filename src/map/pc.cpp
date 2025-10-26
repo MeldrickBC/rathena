@@ -1358,7 +1358,13 @@ void pc_makesavestatus(map_session_data *sd) {
 		sd->status.clothes_color = 0;
 
 	if(!battle_config.save_body_style)
+	{
+#if PACKETVER >= 20231220
+ 		sd->status.body = sd->status.class_;
+#else
 		sd->status.body = 0;
+#endif
+ 	}
 
 	//Only copy the Cart/Peco/Falcon options, the rest are handled via
 	//status change load/saving. [Skotlex]
@@ -4492,7 +4498,7 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 		case SP_REVERBERATION_ELEMENT:
 			if (sd->state.lr_flag != 2)
 				sd->bonus.reverberation_element = val;
-			break;			
+			break;
 		default:
 			if (current_equip_combo_pos > 0) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in a combo with item #%u\n", type, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
@@ -6192,7 +6198,7 @@ bool pc_dropitem(map_session_data *sd,int32 n,int32 amount)
  * @param fitem Item that will be picked
  * @return False = fail; True = success
  *------------------------------------------*/
-bool pc_takeitem(map_session_data *sd,flooritem_data *fitem)
+bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 {
 	int32 flag = 0;
 	t_tick tick = gettick();
@@ -9856,7 +9862,7 @@ int32 pc_dead(map_session_data *sd,block_list *src)
 	}
 
 	if(sd->status.pet_id > 0 && sd->pd) {
-		pet_data *pd = sd->pd;
+		struct pet_data *pd = sd->pd;
 		if( !mapdata->getMapFlag(MF_NOEXPPENALTY) ) {
 			pet_set_intimate(pd, pd->pet.intimate + pd->get_pet_db()->die);
 			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INTIMACY );
@@ -10932,8 +10938,12 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 
 	// Reset body style to 0 before changing job to avoid
 	// errors since not every job has a alternate outfit.
+#if PACKETVER >= 20231220
+	sd->status.body = job;
+#else
 	sd->status.body = 0;
-	clif_changelook(sd,LOOK_BODY2,0);
+#endif
+	clif_changelook(sd, LOOK_BODY2, sd->status.body);
 
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
@@ -10966,14 +10976,6 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 			clif_updatestatus(*sd,SP_STATUSPOINT);
 		}
 	}
-
-	// Update increase cost indicator
-	clif_updatestatus(*sd,SP_USTR);
-	clif_updatestatus(*sd,SP_UAGI);
-	clif_updatestatus(*sd,SP_UVIT);
-	clif_updatestatus(*sd,SP_UINT);
-	clif_updatestatus(*sd,SP_UDEX);
-	clif_updatestatus(*sd,SP_ULUK);
 
 	// Give or reduce trait status points
 	if ((b_class & JOBL_FOURTH) && !(previous_class & JOBL_FOURTH)) {// Change to a 4th job.
@@ -15367,7 +15369,7 @@ void pc_show_questinfo(map_session_data *sd) {
 		return; // init was not called yet
 
 	for (int32 i = 0; i < mapdata->qi_npc.size(); i++) {
-		npc_data *nd = map_id2nd(mapdata->qi_npc[i]);
+		struct npc_data *nd = map_id2nd(mapdata->qi_npc[i]);
 
 		if (!nd || nd->qi_data.empty())
 			continue;
