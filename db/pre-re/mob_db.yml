@@ -118292,6 +118292,50 @@ Body:
       - Item: Poring_Card
         Rate: 1
         StealProtected: true
+  - Id: 22494
+    AegisName: CH1_BULGASARI
+    Name: Bulgasari
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 01
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
   - Id: 22495
     AegisName: CH1_GLUTTO
     Name: Glutto
