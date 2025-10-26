@@ -1083,6 +1083,8 @@ Body:
       - Item: Orc_Warrior_Card
         Rate: 1
         StealProtected: true
+      - Item: Round_Buckler
+        Rate: 2
   - Id: 1024
     AegisName: WORM_TAIL
     Name: Wormtail
@@ -116742,9 +116744,1901 @@ Body:
       - Item: Poring_Card
         Rate: 1
         StealProtected: true
+  - Id: 22420
+    AegisName: TATSI
+    Name: Tatsi
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22427
+    AegisName: MANDURING
+    Name: Manduring
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22429
+    AegisName: KINGMANDURING
+    Name: King Manduring
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22431
+    AegisName: TATSI
+    Name: Tatsi
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22434
+    AegisName: GUERRERO
+    Name: Guerrero
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22435
+    AegisName: HANOM
+    Name: Hanom
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22436
+    AegisName: SIRENA
+    Name: Sirena
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22437
+    AegisName: DIOSA
+    Name: Diosa
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22438
+    AegisName: PESKA
+    Name: Peska
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22443
+    AegisName: CH1_YGGRING
+    Name: Yggring
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22444
+    AegisName: CH1_LEAFEING
+    Name: Leafeing
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22445
+    AegisName: CH1_CHARCOARING
+    Name: Charcoaring
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22446
+    AegisName: CH1_VULRING
+    Name: Vulring
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22447
+    AegisName: CH1_FIRELOOP
+    Name: Fire Loop
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22448
+    AegisName: CH1_FIRAFFLESIA
+    Name: Firafflesia
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22449
+    AegisName: CH1_VOLIMPET
+    Name: Volimpet
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22463
+    AegisName: CH1_NYAISE
+    Name: Nyaise
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22464
+    AegisName: CH1_SHADOW_JAILER
+    Name: Shadow Jailer
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22465
+    AegisName: CH1_TULIP
+    Name: Tulip
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22466
+    AegisName: CH1_CALENDULA
+    Name: Calendula
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22467
+    AegisName: CH1_SCABIOSA
+    Name: Scabiosa
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22468
+    AegisName: CH1_LOBELIA
+    Name: Lobelia
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22469
+    AegisName: CH1_MYOSOTIS
+    Name: Myosotis
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22470
+    AegisName: CH1_ANEMONE
+    Name: Anemone
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22471
+    AegisName: CH1_SKOGL
+    Name: Skogl
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22472
+    AegisName: CH1_FRUS
+    Name: Frus
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22473
+    AegisName: CH1_LISTENER
+    Name: Listener
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22474
+    AegisName: CH1_IMMORTAL_OFFICER1
+    Name: Immortal Officer
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22475
+    AegisName: CH1_IMMORTAL_OFFICER2
+    Name: Immortal Officer
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22476
+    AegisName: CH1_TOXIT
+    Name: Toxit
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22478
+    AegisName: CH1_LUNARINA
+    Name: Lunarina
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22480
+    AegisName: CH1_BLOODY_SLASHER
+    Name: Bloody Slasher
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22482
+    AegisName: CH1_SHADIEST
+    Name: Shadiest
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22484
+    AegisName: CH1_SUCCUBUS
+    Name: Succubus
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22486
+    AegisName: CH1_INCCUBUS
+    Name: Inccubus
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22488
+    AegisName: CH1_ABYSS_KNIGHT
+    Name: Abyss Knight
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 22495
+    AegisName: CH1_GLUTTO
+    Name: Glutto
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
   - Id: 23002
     AegisName: 20TH_EVENT_HEMEL
     Name: Hemel
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 23003
+    AegisName: JT_20TH_EVENT_LOLI_RURI
+    Name: Loli Ruri
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 23004
+    AegisName: 20TH_EVENT_GIBBET
+    Name: Gibbet
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 23005
+    AegisName: 20TH_EVENT_HYLOZOIST
+    Name: Hylozoist
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 23006
+    AegisName: 20TH_EVENT_MURDERER
+    Name: Murderer
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 23007
+    AegisName: 20TH_EVENT_CORPS
+    Name: Corps
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 23008
+    AegisName: 20TH_EVENT_CO_CMDER
+    Name: Commander
+    Level: 1
+    Hp: 300000
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    Defense: 50
+    MagicDefense: 50
+    Int: 0
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 23009
+    AegisName: PITAYA_R_PET
+    Name: Red Pitaya
     Level: 1
     Hp: 300000
     BaseExp: 2
@@ -117325,6 +119219,52 @@ Body:
   - Id: 31012
     AegisName: Venomstalker
     Name: Venomstalker
+    Level: 47
+    Hp: 42210
+    BaseExp: 1435
+    JobExp: 1520
+    Attack: 430
+    Attack2: 590
+    Defense: 40
+    MagicDefense: 5
+    Agi: 25
+    Vit: 15
+    Int: 10
+    Dex: 81
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1500
+    AttackMotion: 500
+    DamageMotion: 1000
+    Ai: 09
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Tail_Of_Steel_Scorpion
+        Rate: 5335
+      - Item: Elunium_Stone
+        Rate: 229
+      - Item: Elunium_Stone
+        Rate: 22
+      - Item: Iron_Ore
+        Rate: 750
+      - Item: Steel
+        Rate: 180
+      - Item: Iron
+        Rate: 300
+      - Item: Venomstalker_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 31013
+    AegisName: Hrungnir
+    Name: hrungnir test
     Level: 47
     Hp: 42210
     BaseExp: 1435

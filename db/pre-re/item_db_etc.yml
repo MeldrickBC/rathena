@@ -91343,24 +91343,6 @@ Body:
     Trade:
       Override: 100
       NoSell: true
-  - Id: 3005001
-    AegisName: Arrow_Of_Elf_C
-    Name: Elven Arrow
-    Type: Ammo
-    SubType: Arrow
-    Buy: 10
-    Weight: 1
-    Attack: 45
-    Jobs:
-      Archer: true
-      Assassin: true
-      BardDancer: true
-      Hunter: true
-      Rogue: true
-      Thief: true
-    Locations:
-      Ammo: true
-    EquipLevelMin: 100
   - Id: 2999011
     AegisName: (Weapon)_ASPD_Core_Lv1
     Name: (Weapon) ASPD Core Lv1
