@@ -2000,6 +2000,10 @@
 	export_constant(SC_CONTENTS_20);
 	export_constant(SC_OVERCOMING_CRISIS);
 	export_constant(SC_CHASING);
+	export_constant(SC_FIRE_CHARM_POWER);
+	export_constant(SC_WATER_CHARM_POWER);
+	export_constant(SC_WIND_CHARM_POWER);
+	export_constant(SC_GROUND_CHARM_POWER);
 	export_constant(SC_FIRSTAID);
 	export_constant(SC_FALCONTACTICS);
 	export_constant(SC_GANGSTER);
