@@ -259961,7 +259961,7 @@ Body:
       bonus2 bSkillAtk,"HW_NAPALMVULCAN",15*(.@r/3);
       if (.@r>=7) {
          bonus2 bSkillAtk,"WL_SOULEXPANSION",20;
-         bonus2 bMagicAddEle,Ele_Ghost,15;
+         bonus2 bMagicAtkEle,Ele_Ghost,15;
       }
       if (.@r>=9) {
          bonus5 bAutoSpell,"MG_SOULSTRIKE",10,150,BF_LONG,1;
@@ -261465,7 +261465,7 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       .@r = getrefine();
       bonus bBaseAtk,.@r*3;
       bonus bBaseAtk,min(BaseLevel,180)/15*3;
@@ -261531,7 +261531,7 @@ Body:
       bonus bLongAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus2 bSkillAtk,"RL_R_TRIP",20;
-         bonus2 bSkillUseSPrate,"RL_R_TRIP",10;
+         bonus2 bSkillUseSPrate,"RL_R_TRIP",-10;
       }
       if (.@r>=9) {
          bonus2 bSkillAtk,"RL_R_TRIP",15;
