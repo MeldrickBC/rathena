@@ -77985,7 +77985,7 @@ Body:
       if (readparam(bInt)>=90)
          bonus2 bSkillAtk,"MO_EXTREMITYFIST",10;
       if (readparam(bDex)>=90)
-         bonus2 bVariableCastrate,MO_FINGEROFFENSIVE,-15;
+         bonus2 bVariableCastrate,"MO_FINGEROFFENSIVE",-15;
   - Id: 15850
     AegisName: STsung_Speller2_EXE
     Name: Kronika's Speller Mag (OSM)
@@ -243389,7 +243389,7 @@ Body:
          bonus2 bSkillAtk,"WM_METALICSOUND",10;
       }
       if (.@r>=9) {
-         bonus2 bSkillFixedCast,WM_REVERBERATION,-500;
+         bonus2 bSkillFixedCast,"WM_REVERBERATION",-500;
       }
       if (.@r>=11) {
          bonus bMatkRate,7;
@@ -245062,7 +245062,7 @@ Body:
          bonus2 bSkillAtk,"WM_METALICSOUND",10;
       }
       if (.@r>=9) {
-         bonus2 bSkillFixedCast,WM_REVERBERATION,-500;
+         bonus2 bSkillFixedCast,"WM_REVERBERATION",-500;
       }
       if (.@r>=11) {
          bonus bMatkRate,7;
@@ -246881,12 +246881,14 @@ Body:
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          bonus2 bMagicAtkEle,Ele_Holy,10;
-      }
-      if (.@r>=9) {
-         bonus2 bMagicAddRace,RC_All,15;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"AB_ADORAMUS",15;
+         if (.@r>=9) {
+            bonus2 bMagicAddRace,RC_All,15;
+            bonus2 bMagicAddRace,RC_Player_Human,-15;
+            bonus2 bMagicAddRace,RC_Player_Doram,-15;
+            if (.@r>=11) {
+               bonus2 bSkillAtk,"AB_ADORAMUS",15;
+            }
+         }
       }
   - Id: 590014
     AegisName: Meer_Sceptre
@@ -247643,7 +247645,8 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bSkillAtk,"CD_FRAMEN",7*(.@r/3);
+      bonus2 bSkillAtk,"CD_FRAMEN",7*(.@r/2);
+      bonus bHealPower,6*(.@r/2);
       bonus2 bSkillAtk,"CD_ARBITRIUM",7*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,3*(.@r/4);
       if (.@g >= ENCHANTGRADE_D) {
@@ -256856,6 +256859,7 @@ Body:
       bonus bBaseAtk,3*.@r+3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
          bonus bLongAtkRate,2*getskilllv("BA_MUSICALLESSON");
+         bonus bLongAtkRate,2*getskilllv("DC_DANCINGLESSON");
       }
       if (.@r>=9) {
          bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000;
