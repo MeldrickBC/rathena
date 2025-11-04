@@ -1930,6 +1930,7 @@ Body:
       Flee: true
       Flee2: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoDispell: true
       NoBanishingBuster: true
@@ -1945,6 +1946,7 @@ Body:
     CalcFlags:
       Aspd: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       FailedMado: true
       NoDispell: true
@@ -1961,6 +1963,7 @@ Body:
     Icon: EFST_POEMBRAGI
     DurationLookup: BA_POEMBRAGI
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoDispell: true
       NoBanishingBuster: true
@@ -1977,6 +1980,7 @@ Body:
       MaxHp: true
       Regen: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoDispell: true
       NoBanishingBuster: true
@@ -1996,6 +2000,7 @@ Body:
     CalcFlags:
       Hit: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoDispell: true
       NoBanishingBuster: true
@@ -2012,6 +2017,7 @@ Body:
       Speed: true
       Aspd: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoDispell: true
       NoBanishingBuster: true
@@ -2037,6 +2043,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoDispell: true
       NoBanishingBuster: true
@@ -2052,6 +2059,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoDispell: true
       NoBanishingBuster: true
