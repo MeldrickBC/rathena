@@ -1970,6 +1970,35 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case GN_SPORE_EXPLOSION:
 		sc_start(src, bl, SC_SPORE_EXPLOSION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
+	case AM_C_CARTCANNON_COCONUT:
+	case AM_C_CARTCANNON_MELON:
+	case AM_C_CARTCANNON_PINEAPPLE:
+	case AM_C_CARTCANNON_BANANA: {
+		if (sd) {
+			switch (sd->itemid) {
+				case ITEMID_COCONUT_BOMB:
+					sc_start(src, bl, SC_STUN, 20, skill_lv, 2000);
+					break;
+				case ITEMID_PINEAPPLE_BOMB:
+					sc_start(src, bl, SC_BLEEDING, 1000, skill_lv, 100000);
+					break;
+				case ITEMID_MELON_BOMB:
+					if (sc_start4(src, bl, SC_MELON_BOMB, 100, skill_lv, 20, 20, 0, 3000)) {
+						clif_specialeffect(bl, EF_DECAGILITY, AREA);
+					}
+					break;
+				case ITEMID_BANANA_BOMB: {
+					//sc_start(src, bl, SC_BANANA_BOMB_SITDOWN, sd->status.job_level + sstatus->luk, skill_lv, 500);
+					sc_start(src, bl, SC_TRICKDEAD, 100, skill_lv, 1000);					
+					break;
+				}
+				sd->itemid = 0;
+			}
+			break;
+
+		}
+	}
+
 	case GN_SLINGITEM_RANGEMELEEATK:
 		if( sd ) {
 			switch( sd->itemid ) {	// Starting SCs here instead of do it in skill_additional_effect to simplify the code.
@@ -3906,6 +3935,40 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		case GN_FIRE_EXPANSION_ACID:
 			clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, CR_ACIDDEMONSTRATION, skill_lv, DMG_MULTI_HIT );
 			break;
+		case AM_C_CARTCANNON_APPLE:
+			clif_soundeffect(*src, "explosion_attack.wav", 0, AREA);
+			clif_skill_damage(*src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, GN_CARTCANNON, -2, DMG_SINGLE);
+			break;
+		case AM_C_CARTCANNON_COCONUT:
+			clif_soundeffect(*src, "explosion_attack.wav", 0, AREA);
+			clif_skill_damage(*src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, GN_CARTCANNON, -2, DMG_SINGLE);
+			break;
+		case AM_C_CARTCANNON_MELON:
+			clif_soundeffect(*src, "explosion_attack.wav", 0, AREA);
+			clif_skill_damage(*src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, GN_CARTCANNON, -2, DMG_SINGLE);
+			break;
+		case AM_C_CARTCANNON_PINEAPPLE:
+			clif_soundeffect(*src, "explosion_attack.wav", 0, AREA);
+			clif_skill_damage(*src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, GN_CARTCANNON, -2, DMG_SINGLE);
+			break;
+		case AM_C_CARTCANNON_BANANA: {
+			clif_soundeffect(*src, "explosion_attack.wav", 0, AREA);
+			clif_skill_damage(*src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, GN_CARTCANNON, -2, DMG_SINGLE);
+			break;
+		}
+		case AM_C_CARTCANNON_SPORE:			
+			if (flag & SD_ANIMATION) { // the surrounding targets
+				// dmg.amotion = 200;
+				clif_skill_damage(*dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, GN_CARTCANNON, -1, DMG_MULTI_HIT); // needs -1 as skill level
+			}
+			else { // the central target doesn't display an animation
+				//dmg.amotion = 200;
+				clif_skill_damage(*dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, GN_CARTCANNON, -1, DMG_MULTI_HIT); // needs -2(!) as skill level
+			}
+			break;
+			/*dmg.amotion = 0;
+			clif_skill_damage(*src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, BA_MUSICALSTRIKE, -1, DMG_MULTI_HIT);
+			break;*/
 		case GN_SLINGITEM_RANGEMELEEATK:
 			clif_skill_damage( *src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, GN_SLINGITEM, -2, DMG_SINGLE );
 			break;
@@ -5362,6 +5425,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SKE_DAWN_BREAK:
 	case SKE_RISING_MOON:
 	case SS_FUUMAKOUCHIKU:
+	case AM_C_CARTCANNON:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 	case DK_DRAGONIC_AURA:
@@ -5686,6 +5750,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_SPLASHATTACK:
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 		[[fallthrough]];
+	case AM_C_CARTCANNON_SPORE:
 	case AS_SPLASHER:
 	case HT_BLITZBEAT:
 	case MA_SHOWER:
@@ -12600,6 +12665,52 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 		clif_skill_nodamage(src, *bl, AL_HEAL, potion_hp);
 		status_heal(bl, potion_hp, 0, 0);
+		break;
+	}
+	case AM_C_CARTCANNON: {
+		if (sd) {
+			i = sd->equip_index[EQI_AMMO];
+			if (i < 0)
+				break; // No ammo.
+			t_itemid ammo_id = sd->inventory_data[i]->nameid;
+			if (ammo_id == 0)
+				break;
+			sd->itemid = ammo_id;
+			if (itemdb_group.item_exists(IG_BOMB, ammo_id)) {
+				if (battle_check_target(src, bl, BCT_ENEMY) > 0) {// Only attack if the target is an enemy.
+					switch (ammo_id) {
+					case ITEMID_APPLE_BOMB:
+						skill_attack(BF_WEAPON, src, src, bl, AM_C_CARTCANNON_APPLE, skill_lv, tick, flag);
+						battle_consume_ammo(sd, AM_C_CARTCANNON_APPLE, skill_lv);
+						break;
+					case ITEMID_COCONUT_BOMB:
+						skill_attack(BF_WEAPON, src, src, bl, AM_C_CARTCANNON_COCONUT, skill_lv, tick, flag);
+						battle_consume_ammo(sd, AM_C_CARTCANNON_COCONUT, skill_lv);
+						break;
+					case ITEMID_MELON_BOMB:
+						skill_attack(BF_WEAPON, src, src, bl, AM_C_CARTCANNON_MELON, skill_lv, tick, flag);
+						battle_consume_ammo(sd, AM_C_CARTCANNON_MELON, skill_lv);
+						break;
+					case ITEMID_PINEAPPLE_BOMB:
+						skill_attack(BF_WEAPON, src, src, bl, AM_C_CARTCANNON_PINEAPPLE, skill_lv, tick, flag);
+						battle_consume_ammo(sd, AM_C_CARTCANNON_PINEAPPLE, skill_lv);
+						break;
+					case ITEMID_BANANA_BOMB:
+						skill_attack(BF_WEAPON, src, src, bl, AM_C_CARTCANNON_BANANA, skill_lv, tick, flag);
+						battle_consume_ammo(sd, AM_C_CARTCANNON_BANANA, skill_lv);
+						break;
+					case ITEMID_BOMB_MUSHROOM_SPORE:
+						clif_soundeffect(*src, "explosion_attack.wav", 0, AREA);
+						clif_specialeffect(bl, EF_SPR_LIGHTPRINT2, AREA);						
+						map_foreachinrange(skill_area_sub, bl, skill_get_splash(AM_C_CARTCANNON_SPORE, skill_lv), BL_CHAR | BL_SKILL, src, AM_C_CARTCANNON_SPORE, skill_lv, tick + (200 + status_get_amotion(src)), flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+						battle_consume_ammo(sd, AM_C_CARTCANNON_SPORE, skill_lv);
+						break;
+	}
+				}
+				else
+					clif_skill_fail(*sd, skill_id);
+			}
+		}
 		break;
 	}
 	case GN_SLINGITEM:

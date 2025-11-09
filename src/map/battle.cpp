@@ -3256,7 +3256,7 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 		return true;
 	else if (sc && sc->getSCE(SC_FUSION))
 		return true;
-	else if ((skill_id == AS_SPLASHER || skill_id == GN_SPORE_EXPLOSION) && !wd->miscflag)
+	else if ((skill_id == AS_SPLASHER || skill_id == GN_SPORE_EXPLOSION || skill_id == AM_C_CARTCANNON_SPORE) && !wd->miscflag)
 		return true;
 	else if (skill_id == CR_SHIELDBOOMERANG && sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_CRUSADER )
 		return true;
@@ -3361,6 +3361,14 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 #endif
 			case RK_SONICWAVE:
 				hitrate += hitrate * 3 * skill_lv / 100; // !TODO: Confirm the hitrate bonus
+				break;
+			case AM_C_CARTCANNON_APPLE:
+			case AM_C_CARTCANNON_COCONUT:
+			case AM_C_CARTCANNON_MELON:
+			case AM_C_CARTCANNON_PINEAPPLE:
+			case AM_C_CARTCANNON_BANANA:
+				if (sd && pc_checkskill(sd, AM_C_CARTUPGRADE))
+					hitrate += 10 + pc_checkskill(sd, AM_C_CARTUPGRADE) * 2;
 				break;
 			case GN_CART_TORNADO:
 			case GN_CARTCANNON:
@@ -5655,6 +5663,27 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case GN_CRAZYWEED_ATK:
 			skillratio += -100 + 700 + 100 * skill_lv;
 			RE_LVL_DMOD(100);
+			break;
+		case AM_C_CARTCANNON_APPLE:
+		case AM_C_CARTCANNON_COCONUT:
+		case AM_C_CARTCANNON_MELON:
+		case AM_C_CARTCANNON_PINEAPPLE:
+		case AM_C_CARTCANNON_BANANA:
+			if (sd) {				
+				switch (sd->itemid) {
+					case ITEMID_APPLE_BOMB:
+						skillratio = 300 + 50 * skill_lv;
+						break;
+					case ITEMID_COCONUT_BOMB:
+					case ITEMID_PINEAPPLE_BOMB:
+					case ITEMID_MELON_BOMB:
+						skillratio = 200 + 30 * skill_lv;
+						break;
+					case ITEMID_BANANA_BOMB:
+						skillratio -= 100 + 10 * skill_lv;
+						break;
+				}
+			}
 			break;
 		case GN_SLINGITEM_RANGEMELEEATK:
 			if( sd ) {
@@ -8485,6 +8514,9 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						if (battle_check_undead(tstatus->race,tstatus->def_ele))
 							skillratio += 5 * skill_lv;
 						break;
+					case AM_C_CARTCANNON_SPORE:
+						skillratio += 100 + 10 * skill_lv;
+						break;
 					case MG_FIREWALL:
 						skillratio -= 50;
 						break;
@@ -9978,6 +10010,10 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 			if( tsd != nullptr ){
 				md.damage /= 2;
 			}
+			break;
+		case AM_C_CARTCANNON_SPORE:		
+			md = battle_calc_magic_attack(src, target, skill_id, skill_lv, mflag);
+			md.damage += md.damage * sstatus->luk / 200;
 			break;
 		case KO_MUCHANAGE:
 			md.damage = skill_get_zeny( skill_id, skill_lv );
