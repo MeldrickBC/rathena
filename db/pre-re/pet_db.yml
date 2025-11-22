@@ -914,7 +914,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 7
     IntimacyFed: 20
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -943,7 +943,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -961,7 +961,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 200
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -981,7 +981,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 7
     IntimacyFed: 20
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1000,7 +1000,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 7
     IntimacyFed: 10
-    CaptureRate: 50
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1020,7 +1020,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 200
+    CaptureRate: 300
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1039,7 +1039,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 50
+    CaptureRate: 300
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1058,7 +1058,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 200
+    CaptureRate: 300
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1087,7 +1087,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 7
     IntimacyFed: 20
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1105,7 +1105,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 15
-    CaptureRate: 200
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1125,7 +1125,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 15
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1156,7 +1156,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 7
     IntimacyFed: 20
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1174,7 +1174,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 200
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1192,7 +1192,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 15
-    CaptureRate: 200
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1223,7 +1223,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1241,7 +1241,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 7
     IntimacyFed: 20
-    CaptureRate: 200
+    CaptureRate: 1000
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1272,7 +1272,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 7
     IntimacyFed: 10
-    CaptureRate: 2000
+    CaptureRate: 300
     SpecialPerformance: false
     AllowAutoFeed: true
   - Mob: IMP
@@ -1282,7 +1282,7 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 200
+    CaptureRate: 300
     SpecialPerformance: false
     AllowAutoFeed: true
     Script: >
@@ -1316,7 +1316,8 @@ Body:
     IntimacyStart: 0
     IntimacyFed: 0
     IntimacyOverfed: 0
-    CaptureRate: 50
+    IntimacyOwnerDie: 0
+    CaptureRate: 5000
     SpecialPerformance: false
     AllowAutoFeed: true
   - Mob: J_TAINI
