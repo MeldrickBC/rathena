@@ -1128,6 +1128,15 @@ Body:
   - Command: reject
     Help: |
       Automatically reject duel invitations.
+  - Command: reload
+    Help: |
+      Params: <type>
+      Reload a database or a configuration file.
+      itemdb               mobdb               skilldb
+      atcommand         battleconf          statusdb
+      pcdb                  motd                 script
+      questdb             msgconf             packetdb
+      cashdb               logconf
   - Command: reloadachievementdb
     Help: |
       Reload achievement database.
@@ -1167,6 +1176,8 @@ Body:
     Help: |
       Reload message configuration.
   - Command: reloadnpcfile
+    Aliases:
+      - reloadnpc
     Help: |
       Params: <path> - path to script
       Unloads and loads a script file from <path>.
