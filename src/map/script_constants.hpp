@@ -844,6 +844,7 @@
 	export_constant2("bAddItemSPHealRate", SP_ADD_ITEM_SPHEAL_RATE);
 	export_constant2("bAddItemGroupSPHealRate", SP_ADD_ITEMGROUP_SPHEAL_RATE);
 	export_constant2("bWeaponSubSize", SP_WEAPON_SUBSIZE);
+	export_constant2("bNonCritAtkRate", SP_NON_CRIT_ATK_RATE);
 
 	export_constant2("bAmmoEfficiency", SP_AMMO_EFFICIENCY);
 	export_constant2("bBuffDuration", SP_BUFF_DURATION);
@@ -10347,6 +10348,7 @@
 	export_constant(INF2_SHOWSCALE);
 	export_constant(INF2_IGNOREGTB);
 	export_constant(INF2_TOGGLEABLE);
+	export_constant(INF2_IGNORENONCRITATKBONUS);
 
 	/* skill no near npc flags */
 	export_constant(SKILL_NONEAR_WARPPORTAL);
