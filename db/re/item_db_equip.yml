@@ -25737,9 +25737,9 @@ Body:
     Locations:
       Head_Low: true
     ArmorLevel: 1
+    View: 22
     # Script: |
       # bonus bMaxHP,100000;
-    View: 22
   - Id: 2239
     AegisName: One_Eyed_Glass
     Name: Monocle
@@ -30673,7 +30673,7 @@ Body:
       .@b = readparam(bInt);
       if (.@a>=90)
          bonus bBaseAtk,10;
-      if (.@b=90)
+      if (.@b>=90)
          bonus bMatkRate,3;
       if (.@a>=120)
          bonus bBaseAtk,10;
@@ -85618,10 +85618,12 @@ Body:
       } else if (.@r<7) {
          bonus bHit,10;
       } else if (.@r<9) {
-         bonus bHit,7;bonus bMaxHPrate,3;
+         bonus bHit,7;
+         bonus bMaxHPrate,3;
       }
       else {
-         bonus bHit,4;bonus bMaxHPrate,4;
+         bonus bHit,4;
+         bonus bMaxHPrate,4;
       }
   - Id: 18574
     AegisName: Lord_of_Death
@@ -91634,9 +91636,9 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bDex,2;
-      if (.@r = 8)
+      if (.@r>=8)
          bonus bDex,1;
-      if (.@r = 10)
+      if (.@r>=10)
          bonus bDex,2;
   - Id: 18925
     AegisName: GodOfWinds_Fan
@@ -92100,31 +92102,31 @@ Body:
          bonus bBaseAtk,15;
          if (.@r >= 9)
             bonus bBaseAtk,15;
-         }
-         if (readparam(bInt) >= 90) {
+      }
+      if (readparam(bInt) >= 90) {
+         bonus bMatk,15;
+         if (.@r >= 9)
             bonus bMatk,15;
-            if (.@r >= 9)
-               bonus bMatk,15;
-         }
-         if (readparam(bVit) >= 90) {
+      }
+      if (readparam(bVit) >= 90) {
+         bonus bMaxHP,500;
+         if (.@r >= 9)
             bonus bMaxHP,500;
-            if (.@r >= 9)
-               bonus bMaxHP,500;
-         }
-         if (readparam(bAgi) >= 90) {
-            bonus bAspdRate,2;
-            if (.@r >= 9)
-               bonus bAspdRate,3;
-         }
-         if (readparam(bDex) >= 90) {
+      }
+      if (readparam(bAgi) >= 90) {
+         bonus bAspdRate,2;
+         if (.@r >= 9)
+            bonus bAspdRate,3;
+      }
+      if (readparam(bDex) >= 90) {
+         bonus bLongAtkRate,3;
+         if (.@r >= 9)
             bonus bLongAtkRate,3;
-            if (.@r >= 9)
-               bonus bLongAtkRate,3;
-         }
-         if (readparam(bLuk) >= 90) {
+      }
+      if (readparam(bLuk) >= 90) {
+         bonus bCritical,5;
+         if (.@r >= 9)
             bonus bCritical,5;
-            if (.@r >= 9)
-               bonus bCritical,5;
       }
   - Id: 18962
     AegisName: Panda_Balloon
@@ -94331,7 +94333,7 @@ Body:
     Refineable: true
     View: 1463
     Script: |
-      .@r=getrefine();
+      .@r = getrefine();
       bonus bMaxHPrate,5;
       bonus bMaxSPrate,5;
       bonus2 bSkillAtk,"RK_DRAGONBREATH",(.@r>=8?45:(.@r>=6?30:15));
@@ -97082,7 +97084,7 @@ Body:
     Refineable: true
     View: 1463
     Script: |
-      .@r=getrefine();
+      .@r = getrefine();
       bonus bMaxHPrate,5;
       bonus bMaxSPrate,5;
       bonus2 bSkillAtk,"RK_DRAGONBREATH",((.@r>=10)?10:(.@r>=7?3:0));
@@ -113291,10 +113293,10 @@ Body:
          if (readparam(bVit)>=90)
             bonus2 bSubEle,Ele_Neutral,(.@r>=9)?10:5;
          if (readparam(bAgi)>=90) {
-         bonus bAspdRate,8;
+            bonus bAspdRate,8;
             if (.@r>=9)
-         bonus bAspd,1;
-      }
+               bonus bAspd,1;
+         }
          if (readparam(bDex)>=90)
             bonus bLongAtkRate,(.@r>=9)?10:5;
          if (readparam(bLuk)>=90)
@@ -205894,7 +205896,7 @@ Body:
       bonus bMaxHPrate,30;
       bonus bMaxSPrate,30;
       bonus bAtkRate,4*.@r;
-      if (.@r=5) {
+      if (.@r>=5) {
          bonus bDelayrate,-35;
          if (.@r>=6) {
              bonus bAspdRate,10;
@@ -205923,7 +205925,7 @@ Body:
       bonus bMaxHPrate,30;
       bonus bMaxSPrate,30;
       bonus bMatkRate,4*.@r;
-      if (.@r=5) {
+      if (.@r>=5) {
          bonus bDelayrate,-35;
          if (.@r>=6) {
              bonus bAspdRate,10;
@@ -211251,7 +211253,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,5;
       bonus2 bSubRace,RC_Player_Doram,5;
       bonus bSPDrainValue,getskilllv("SU_CHATTERING");
-      bonus2 bSkillAtk,"SU_CN_METEOR",10*getskilllv("SU_NYANGGRASS");;
+      bonus2 bSkillAtk,"SU_CN_METEOR",10*getskilllv("SU_NYANGGRASS");
       if (getskilllv("SU_SPIRITOFLAND") == 1) {
          bonus bInt,.@a;
          bonus2 bSkillAtk,"SU_SV_STEMSPEAR",.@a;
