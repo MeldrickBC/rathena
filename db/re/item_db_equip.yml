@@ -5225,7 +5225,7 @@ Body:
       bonus4 bSetMDefRace,RC_Player_Human,10000,5000,1;
       bonus4 bSetDefRace,RC_Player_Doram,10000,5000,1;
       bonus4 bSetMDefRace,RC_Player_Doram,10000,5000,1;
-      bonus bAspdRate,getrefine();
+      bonus bAspdRate,4+getrefine();
   - Id: 1294
     AegisName: Velum_Scare
     Name: Vellum Scale
@@ -11045,7 +11045,7 @@ Body:
     EquipLevelMin: 40
     Refineable: true
     Script: |
-      bonus2 bAddRace,RC_Undead,15;
+      bonus2 bAddEle,Ele_Undead,15;
       bonus2 bComaRace,RC_Undead,10;
       bonus2 bExpAddRace,RC_Undead,5;
   - Id: 1527
@@ -12616,7 +12616,7 @@ Body:
     EquipLevelMin: 95
     Refineable: true
     Script: |
-      bonus bHealPower,5+BaseLevel;
+      bonus bHealPower,5+BaseLevel/10;
       if (getrefine()>=6) {
          bonus2 bSkillCooldown,"AB_LAUDAAGNUS",-3000;
          bonus2 bSkillCooldown,"AB_LAUDARAMUS",-3000;
@@ -14596,8 +14596,8 @@ Body:
     Script: |
       .@r = getrefine();
       if (.@r>5) {
-         bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",(.@r-6)*2;
-         bonus bMaxHPrate,-(.@r-6)*2;
+         bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",(.@r-5)*2;
+         bonus bMaxHPrate,-(.@r-5)*2;
       }
       bonus2 bSkillVariableCast,"SO_PSYCHIC_WAVE",-3000;
       bonus2 bSkillUseSP,"SO_PSYCHIC_WAVE",-60;
@@ -15049,10 +15049,13 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatk,30*(.@r/3);
-      if (.@r>=6)
-         bonus bMatkRate,(.@r>=9?10:5);
-      if (.@r>=9)
-         bonus5 bAutoSpell,"HW_MAGICPOWER",1,5,BF_MAGIC,0;
+      if (.@r>=6) {
+         bonus2 bMagicAddRace,RC_All,5;
+         if (.@r>=9) {
+            bonus2 bMagicAddRace,RC_All,5;
+            bonus5 bAutoSpell,"HW_MAGICPOWER",1,5,BF_MAGIC,0;
+         }
+      }
   - Id: 1671
     AegisName: Staff_Of_Evil_Slayer
     Name: Evil Slayer Vanquisher Staff
@@ -17693,8 +17696,8 @@ Body:
       bonus2 bSkillAtk,"SR_SKYNETBLOW",20;
       bonus bUseSPrate,5;
       .@r = getrefine();
-      if (.@r>6) {
-         bonus bUseSPrate,-1*(.@r-6);
+      if (.@r>5) {
+         bonus bUseSPrate,-1*(.@r-5);
       }
   - Id: 1831
     AegisName: P_Knuckle1
@@ -18455,15 +18458,15 @@ Body:
       bonus bAtkRate,10;
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",10;
       if (.@r>=7) {
-         bonus bAspdRate,10;
+         bonus bAspdRate,15;
          bonus bBaseAtk,40;
-      }
-      if (.@r>=9) {
-         bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
-         autobonus "{ bonus2 bAddSize,Size_All,15; }",10,10000,BF_WEAPON;
-      }
-      if (.@r>=11) {
-         bonus bDelayrate,-20;
+         if (.@r>=9) {
+            bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
+            autobonus "{ bonus2 bAddSize,Size_All,15; }",10,10000,BF_WEAPON;
+            if (.@r>=11) {
+               bonus bDelayrate,-20;
+            }
+         }
       }
   - Id: 1868
     AegisName: Combo_Fist_J
@@ -35011,6 +35014,7 @@ Body:
     Name: Safety Ring
     Type: Armor
     Buy: 1
+    Defense: 8
     Jobs:
       All: true
       Novice: false
@@ -35029,7 +35033,6 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bDef,8;
       if (vip_status(VIP_STATUS_ACTIVE)) {
          bonus bAllStats,1;
       }
@@ -38137,6 +38140,7 @@ Body:
       bonus bVariableCastrate,-10;
       skill "AL_HEAL",1;
       skill "AL_TELEPORT",1;
+      bonus bAspdRate,10;
   - Id: 2842
     AegisName: F_Earing_C
     Name: Earring
@@ -39421,7 +39425,7 @@ Body:
       bonus bMaxSP,20;
       bonus bBaseAtk,(readparam(bStr)/10);
       if (readparam(bStr)>=110)
-         bonus bAtkRate,1;
+         bonus2 bAddClass,Class_All,1;
   - Id: 2918
     AegisName: Int_Glove
     Name: Int Glove
