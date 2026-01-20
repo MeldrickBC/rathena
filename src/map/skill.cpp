@@ -5260,11 +5260,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-#ifndef RENEWAL
-	case SN_SHARPSHOOTING:
-		flag |= 2; // Flag for specific mob damage formula
-		[[fallthrough]];
-#endif
 	case MA_SHARPSHOOTING:
 	case NJ_KAMAITACHI:
 	case NPC_DARKPIERCING:
@@ -5284,10 +5279,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			if (!(map_foreachindir(skill_attack_area, src->m, src->x, src->y, bl->x, bl->y,
 			   skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), 0, splash_target(src),
 			   skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY))) {
-#ifndef RENEWAL
-			   	if (skill_id == SN_SHARPSHOOTING)
-			   		flag &= ~2; // Only targets in the splash area are affected
-#endif
 
 				//These skills hit at least the target if the AoE doesn't hit
 				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
@@ -5388,9 +5379,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		[[fallthrough]];
 	case AM_C_CARTCANNON_SPORE:
 	case MA_SHOWER:
-#ifdef RENEWAL
-	case SN_SHARPSHOOTING:
-#endif
 	case HW_NAPALMVULCAN:
 	case NJ_HUUMA:
 	case NPC_PULSESTRIKE:
@@ -5594,11 +5582,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 						status_heal(src, heal, 0, 0);
 					}
 					break;
-#ifdef RENEWAL
-				case SN_SHARPSHOOTING:
-					status_change_end(src, SC_CAMOUFLAGE);
-					break;
-#endif
 				case SJ_PROMINENCEKICK: // Trigger the 2nd hit. (100% fire damage.)
 					skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag|8|SD_ANIMATION);
 					break;
@@ -6286,7 +6269,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		if (rnd() % 2 == 0)
 			break; // 50% chance
 		[[fallthrough]];
-	case SN_FALCONASSAULT:
 #ifndef RENEWAL
 	case PA_PRESSURE:
 	case CR_ACIDDEMONSTRATION:
@@ -8652,7 +8634,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 1, skill_castend_nodamage_id);
 		break;
 
-	case SN_WINDWALK:
 	case CASH_BLESSING:
 	case CASH_INCAGI:
 	case CASH_ASSUMPTIO:
