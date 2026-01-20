@@ -1460,9 +1460,7 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 #ifndef RENEWAL
 	case PA_PRESSURE:
 		status_percent_damage(src, bl, 0, 15+5*skill_lv, false);
-		[[fallthrough]];
-	case HW_GRAVITATION:
-		//Pressure and Gravitation can trigger physical autospells
+		//Pressure can trigger physical autospells
 		attack_type |= BF_NORMAL;
 		attack_type |= BF_WEAPON;
 		break;
@@ -1595,7 +1593,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case HW_NAPALMVULCAN:
 	case HN_NAPALM_VULCAN_STRIKE:
 		sc_start(src,bl,SC_CURSE,5*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
@@ -5379,7 +5376,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		[[fallthrough]];
 	case AM_C_CARTCANNON_SPORE:
 	case MA_SHOWER:
-	case HW_NAPALMVULCAN:
 	case NJ_HUUMA:
 	case NPC_PULSESTRIKE:
 	case NPC_PULSESTRIKE2:
@@ -13469,9 +13465,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case NJ_HYOUSYOURAKU:
 	case NJ_RAIGEKISAI:
 	case NJ_KAMAITACHI:
-#ifdef RENEWAL
-	case HW_GRAVITATION:
-#endif
 	case NPC_EVILLAND:
 	case NPC_VENOMFOG:
 	case NPC_COMET:
@@ -13729,26 +13722,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 			}
 		}
 		break;
-
-	case HW_GANBANTEIN:
-		if (rnd()%100 < 80) {
-			int32 dummy = 1;
-			clif_skill_poseffect( *src, skill_id, skill_lv, x, y, tick );
-			i = skill_get_splash(skill_id, skill_lv);
-			map_foreachinallarea(skill_cell_overlap, src->m, x-i, y-i, x+i, y+i, BL_SKILL, HW_GANBANTEIN, &dummy, src);
-		} else {
-			if (sd) clif_skill_fail( *sd, skill_id );
-			return 1;
-		}
-		break;
-
-#ifndef RENEWAL
-	case HW_GRAVITATION:
-		if ((sg = skill_unitsetting(src,skill_id,skill_lv,x,y,0)))
-			sc_start4(src,src,type,100,skill_lv,0,BCT_SELF,sg->group_id,skill_get_time(skill_id,skill_lv));
-		flag|=1;
-		break;
-#endif
 
 	// Plant Cultivation [Celest]
 	case CR_CULTIVATION:
