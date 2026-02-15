@@ -1674,6 +1674,9 @@
     <ClInclude Include="skills/swordman/vitalstrike.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/allinthesky.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/bookofcreatingstar.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
@@ -1684,6 +1687,9 @@
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/curseexplosion.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/dawnbreak.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/documentofsunmoonandstar.hpp">
@@ -1770,16 +1776,28 @@
     <ClInclude Include="skills/taekwon/kaute.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/midnightkick.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/mission.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/newmoonkick.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/noonblast.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/novaexplosion.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/prominencekick.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/risingmoon.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/risingsun.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/run.hpp">
@@ -1792,6 +1810,12 @@
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/skill_factory_taekwon.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/skymoon.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/skysun.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/solarburst.hpp">
@@ -1869,10 +1893,22 @@
     <ClInclude Include="skills/taekwon/spiritofthewizard.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/starburst.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/starcannon.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/staremperoradvent.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/starlightkick.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/stormkick.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/sunsetblast.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/talismanofblacktortoise.hpp">
@@ -1909,6 +1945,9 @@
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/turnkick.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/twinklinggalaxy.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/warmthofthemoon.hpp">
@@ -3431,6 +3470,9 @@
     <ClCompile Include="skills/swordman/vitalstrike.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/allinthesky.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/bookofcreatingstar.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
@@ -3441,6 +3483,9 @@
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/curseexplosion.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/dawnbreak.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/documentofsunmoonandstar.cpp">
@@ -3527,16 +3572,28 @@
     <ClCompile Include="skills/taekwon/kaute.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/midnightkick.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/mission.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/newmoonkick.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/noonblast.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/novaexplosion.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/prominencekick.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/risingmoon.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/risingsun.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/run.cpp">
@@ -3549,6 +3606,12 @@
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/skymoon.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/skysun.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/solarburst.cpp">
@@ -3626,10 +3689,22 @@
     <ClCompile Include="skills/taekwon/spiritofthewizard.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/starburst.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/starcannon.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/staremperoradvent.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/starlightkick.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/stormkick.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/sunsetblast.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/talismanofblacktortoise.cpp">
@@ -3666,6 +3741,9 @@
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/turnkick.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/twinklinggalaxy.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/warmthofthemoon.cpp">
