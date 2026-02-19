@@ -1723,9 +1723,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case RL_AM_BLAST:
 		sc_start(src,bl,SC_ANTI_M_BLAST,20 + 10 * skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
-	case TR_ROSEBLOSSOM:// Rose blossom seed can only bloom if the target is hit.
-		sc_start4(src, bl, SC_ROSEBLOSSOM, 100, skill_lv, TR_ROSEBLOSSOM_ATK, src->id, 0, skill_get_time(skill_id, skill_lv));
-		[[fallthrough]];
 	case WM_METALICSOUND:
 	case WM_REVERBERATION:
 		status_change_end(bl, SC_SOUNDBLEND);
@@ -4765,13 +4762,11 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 	FreeBlockLock freeLock;
 
-	switch(skill_id) {	
-	case ITM_TOMAHAWK:		
-	case TR_ROSEBLOSSOM:
-	case TR_RHYTHMSHOOTING:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		break;	
+	switch(skill_id) {
+	case ITM_TOMAHAWK:
+		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+		break;
+
 	case KN_CHARGEATK:
 		{
 		bool path = path_search_long(nullptr, src->m, src->x, src->y, bl->x, bl->y,CELL_CHKWALL);
@@ -4865,13 +4860,11 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case BO_ACIDIFIED_ZONE_GROUND:
 	case BO_ACIDIFIED_ZONE_WIND:
 	case BO_ACIDIFIED_ZONE_FIRE:
-	case TR_ROSEBLOSSOM_ATK:
 	case BO_EXPLOSIVE_POWDER:
 	case BO_MAYHEMIC_THORNS:
 	case BO_MYSTERY_POWDER:
 	case BO_DUST_EXPLOSION:
 	case NPC_WIDECRITICALWOUND:
-	case TR_METALIC_FURY:
 		if( flag&1 ) {//Recursive invocation
 			int32 sflag = skill_area_temp[0] & 0xFFF;
 			int32 heal = 0;
@@ -5069,11 +5062,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	case TR_SOUNDBLEND:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-
 	case NPC_MAGICALATTACK:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		sc_start(src,src,SC_MAGICALATTACK,100,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -5231,7 +5219,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	case WM_REVERBERATION:
-	case TR_RHYTHMICAL_WAVE:
 		if (flag & 1)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		else {
@@ -6008,11 +5995,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 		break;
 
-	case TR_SOUNDBLEND:
-		skill_castend_damage_id(src, bl, skill_id, skill_lv, tick, 0);
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
-		break;
-
 	case BO_ADVANCE_PROTECTION:
 		if( sd && ( !dstsd || pc_checkequip( dstsd, EQP_SHADOW_GEAR ) < 0 ) ){
 			clif_skill_fail( *sd, skill_id );
@@ -6771,12 +6753,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 
 		}
-		break;
-
-	case TR_RETROSPECTION:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		if (sd)
-			unit_skilluse_id(src, src->id, sd->skill_id_song, sd->skill_lv_song);
 		break;
 
 	case PF_MINDBREAKER:
@@ -8155,70 +8131,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		} else if (sd) {
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 1, skill_castend_nodamage_id);
-		}
-		break;
-
-	case TR_MUSICAL_INTERLUDE:
-	case TR_JAWAII_SERENADE:
-	case TR_PRON_MARCH:
-		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1))
-			sc_start4(src, bl, type, 100, skill_lv, 0, flag, 0, skill_get_time(skill_id, skill_lv));
-		else if (sd) {
-			clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
-
-			sd->skill_id_song = skill_id;
-			sd->skill_lv_song = skill_lv;
-
-			if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
-				flag |= 2;
-
-			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 1, skill_castend_nodamage_id);
-		}
-		break;
-
-	case TR_GEF_NOCTURN:
-	case TR_AIN_RHAPSODY:
-		if (flag & 1)
-			sc_start4(src, bl, type, 100, skill_lv, 0, flag, 0, skill_get_time(skill_id, skill_lv));
-		else if (sd) {
-			clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
-
-			sd->skill_id_song = skill_id;
-			sd->skill_lv_song = skill_lv;
-
-			if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
-				flag |= 2;
-
-			map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_nodamage_id);
-		}
-		break;
-
-	case TR_ROKI_CAPRICCIO:
-	case TR_NIPELHEIM_REQUIEM:
-		if (flag & 1) { // Need official success chances.
-			uint16 success_chance = 5 * skill_lv;
-
-			if (flag & 2)
-				success_chance *= 2;
-
-			// Is it a chance to inflect so and so, or seprate chances for inflicting each status? [Rytech]
-			if (skill_id == TR_ROKI_CAPRICCIO) {
-				sc_start(src, bl, SC_CONFUSION, 4 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-				sc_start(src, bl, SC_HANDICAPSTATE_MISFORTUNE, success_chance, skill_lv, skill_get_time2(skill_id, skill_lv));
-			} else { // TR_NIPELHEIM_REQUIEM
-				sc_start(src, bl, SC_CURSE, 4 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-				sc_start(src, bl, SC_HANDICAPSTATE_DEPRESSION, success_chance, skill_lv, skill_get_time2(skill_id, skill_lv));
-			}
-		} else if (sd) {
-			clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
-
-			sd->skill_id_song = skill_id;
-			sd->skill_lv_song = skill_lv;
-
-			if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
-				flag |= 2;
-
-			map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_nodamage_id);
 		}
 		break;
 
