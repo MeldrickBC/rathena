@@ -8,6 +8,7 @@
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
 #include "aimedbolt.cpp"
+#include "ainrhapsody.cpp"
 #include "anklesnare.cpp"
 #include "arrowshower.cpp"
 #include "arrowstorm.cpp"
@@ -34,21 +35,34 @@
 #include "focusedarrowstrike.cpp"
 #include "freezingtrap.cpp"
 #include "galestorm.cpp"
+#include "geffenianocturn.cpp"
 #include "hawkboomerang.cpp"
 #include "hawkmastery.cpp"
 #include "hawkrush.cpp"
 #include "iceboundtrap.cpp"
+#include "jawaiiserenade.cpp"
 #include "landmine.cpp"
 #include "magentatrap.cpp"
 #include "maizetrap.cpp"
 #include "makingarrow.cpp"
+#include "metallicfury.cpp"
+#include "musicalinterlude.cpp"
+#include "nipelheimrequiem.cpp"
 #include "phantasmicarrow.cpp"
+#include "powerchord.cpp"
+#include "pronmarch.cpp"
 #include "removetrap.cpp"
+#include "retrospection.cpp"
+#include "rhythmicalwave.cpp"
+#include "rhythmshooting.cpp"
+#include "rokicapriccio.cpp"
+#include "roseblossom.cpp"
 #include "sandman.cpp"
 #include "sensitivekeen.cpp"
 #include "shockwavetrap.cpp"
 #include "skidtrap.cpp"
 #include "solidtrap.cpp"
+#include "soundblend.cpp"
 #include "springtrap.cpp"
 #include "swifttrap.cpp"
 #include "talkiebox.cpp"
@@ -161,10 +175,38 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SN_WINDWALK:
 			return std::make_unique<SkillWindWalker>();
+		case TR_AIN_RHAPSODY:
+			return std::make_unique<SkillAinRhapsody>();
+		case TR_GEF_NOCTURN:
+			return std::make_unique<SkillGeffeniaNocturn>();
+		case TR_JAWAII_SERENADE:
+			return std::make_unique<SkillJawaiiSerenade>();
 		case TR_KVASIR_SONATA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case TR_METALIC_FURY:
+			return std::make_unique<SkillMetallicFury>();
+		case TR_MUSICAL_INTERLUDE:
+			return std::make_unique<SkillMusicalInterlude>();
 		case TR_MYSTIC_SYMPHONY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case TR_NIPELHEIM_REQUIEM:
+			return std::make_unique<SkillNipelheimRequiem>();
+		case TR_PRON_MARCH:
+			return std::make_unique<SkillPronMarch>();
+		case TR_RETROSPECTION:
+			return std::make_unique<SkillRetrospection>();
+		case TR_RHYTHMICAL_WAVE:
+			return std::make_unique<SkillRhythmicalWave>();
+		case TR_RHYTHMSHOOTING:
+			return std::make_unique<SkillRhythmShooting>();
+		case TR_ROKI_CAPRICCIO:
+			return std::make_unique<SkillRokiCapriccio>();
+		case TR_ROSEBLOSSOM:
+			return std::make_unique<SkillRoseBlossom>();
+		case TR_ROSEBLOSSOM_ATK:
+			return std::make_unique<SkillRoseBlossomAttack>();
+		case TR_SOUNDBLEND:
+			return std::make_unique<SkillSoundBlend>();
 		case WH_CALAMITYGALE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WH_CRESCIVE_BOLT:

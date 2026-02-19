@@ -327,6 +327,8 @@
     <ClInclude Include="skills/acolyte/zen.hpp" />
     <ClInclude Include="skills/archer/acousticrhythm.hpp" />
     <ClInclude Include="skills/archer/aimedbolt.hpp" />
+    <ClInclude Include="skills/archer/ainrhapsody.hpp" />
+    <ClInclude Include="skills/archer/amp.hpp" />
     <ClInclude Include="skills/archer/anklesnare.hpp" />
     <ClInclude Include="skills/archer/arrowshower.hpp" />
     <ClInclude Include="skills/archer/arrowstorm.hpp" />
@@ -353,22 +355,45 @@
     <ClInclude Include="skills/archer/focusedarrowstrike.hpp" />
     <ClInclude Include="skills/archer/freezingtrap.hpp" />
     <ClInclude Include="skills/archer/galestorm.hpp" />
+    <ClInclude Include="skills/archer/geffenianocturn.hpp" />
+    <ClInclude Include="skills/archer/gypsyskiss.hpp" />
+    <ClInclude Include="skills/archer/harmoniclick.hpp" />
     <ClInclude Include="skills/archer/hawkboomerang.hpp" />
     <ClInclude Include="skills/archer/hawkmastery.hpp" />
     <ClInclude Include="skills/archer/hawkrush.hpp" />
     <ClInclude Include="skills/archer/iceboundtrap.hpp" />
+    <ClInclude Include="skills/archer/impressiveriff.hpp" />
+    <ClInclude Include="skills/archer/jawaiiserenade.hpp" />
+    <ClInclude Include="skills/archer/ladyluck.hpp" />
     <ClInclude Include="skills/archer/landmine.hpp" />
     <ClInclude Include="skills/archer/magentatrap.hpp" />
     <ClInclude Include="skills/archer/maizetrap.hpp" />
     <ClInclude Include="skills/archer/makingarrow.hpp" />
     <ClInclude Include="skills/archer/phantasmicarrow.hpp" />
+    <ClInclude Include="skills/archer/melodystrike.hpp" />
+    <ClInclude Include="skills/archer/mentalsensing.hpp" />
+    <ClInclude Include="skills/archer/metallicfury.hpp" />
+    <ClInclude Include="skills/archer/musicalinterlude.hpp" />
+    <ClInclude Include="skills/archer/nipelheimrequiem.hpp" />
+    <ClInclude Include="skills/archer/pangvoice.hpp" />
+    <ClInclude Include="skills/archer/perfecttablature.hpp" />
+    <ClInclude Include="skills/archer/phantasmicarrow.hpp" />
+    <ClInclude Include="skills/archer/powerchord.hpp" />
+    <ClInclude Include="skills/archer/pronmarch.hpp" />
     <ClInclude Include="skills/archer/removetrap.hpp" />
+    <ClInclude Include="skills/archer/retrospection.hpp" />
+    <ClInclude Include="skills/archer/rhythmicalwave.hpp" />
+    <ClInclude Include="skills/archer/rhythmshooting.hpp" />
+    <ClInclude Include="skills/archer/rokicapriccio.hpp" />
+    <ClInclude Include="skills/archer/roseblossom.hpp" />
     <ClInclude Include="skills/archer/sandman.hpp" />
     <ClInclude Include="skills/archer/sensitivekeen.hpp" />
     <ClInclude Include="skills/archer/shockwavetrap.hpp" />
     <ClInclude Include="skills/archer/skidtrap.hpp" />
     <ClInclude Include="skills/archer/skill_factory_archer.hpp" />
     <ClInclude Include="skills/archer/solidtrap.hpp" />
+    <ClInclude Include="skills/archer/songoflutie.hpp" />
+    <ClInclude Include="skills/archer/soundblend.hpp" />
     <ClInclude Include="skills/archer/springtrap.hpp" />
     <ClInclude Include="skills/archer/swifttrap.hpp" />
     <ClInclude Include="skills/archer/talkiebox.hpp" />
@@ -1265,6 +1290,12 @@
     <ClCompile Include="skills/archer/aimedbolt.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/ainrhapsody.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/amp.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/anklesnare.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1343,6 +1374,15 @@
     <ClCompile Include="skills/archer/galestorm.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/geffenianocturn.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/gypsyskiss.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/harmoniclick.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/hawkboomerang.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1353,6 +1393,15 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/iceboundtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/impressiveriff.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/jawaiiserenade.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/ladyluck.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/landmine.cpp">
@@ -1370,7 +1419,52 @@
     <ClCompile Include="skills/archer/phantasmicarrow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/melodystrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/mentalsensing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/metallicfury.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/musicalinterlude.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/nipelheimrequiem.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/pangvoice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/perfecttablature.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/phantasmicarrow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/powerchord.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/pronmarch.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/removetrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/retrospection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/rhythmicalwave.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/rhythmshooting.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/rokicapriccio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/roseblossom.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/sandman.cpp">
@@ -1389,6 +1483,12 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/solidtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/songoflutie.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/soundblend.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/springtrap.cpp">
