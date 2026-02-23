@@ -180196,6 +180196,14 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2484
+  - Id: 401196
+    AegisName: aegis_401196
+    Name: Costume Striped Ribbon Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2425
   - Id: 401207
     AegisName: C_CLB_GAT_button
     Name: Costume Honor Eagle Five Brothers    # !todo check english name
@@ -184700,6 +184708,14 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2748
+  - Id: 410574
+    AegisName: C_Blink_Eyes_Chocolate
+    Name: Costume Blink Eyes Chocolate
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2795
   - Id: 420000
     AegisName: Isabella_Carrot
     Name: Isabella Carrot
@@ -188652,6 +188668,30 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2716
+  - Id: 420726
+    AegisName: aegis_420726
+    Name: Costume Orange Rear Ribbon
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2704
+  - Id: 420727
+    AegisName: C_Lots_Braided_Hair
+    Name: Costume Lots Braided Hair
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2794
+  - Id: 420728
+    AegisName: C_Love_Piece_BL
+    Name: Costume Heart Chocolate in Mouth    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2796
   - Id: 420729
     AegisName: C_CLB_GAT_bye
     Name: Costume Goodbye Five Eagle Brothers    # !todo check english name
@@ -218320,6 +218360,22 @@ Body:
             }
          }
       }
+  - Id: 480717
+    AegisName: C_Giant_Chained_Bear
+    Name: Costume Giant Chained Bear
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 297
+  - Id: 480718
+    AegisName: C_Sweet_Folk
+    Name: Costume Sweet Folk
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 298
   - Id: 490004
     AegisName: Atker_Ring
     Name: Attacker Booster Ring
