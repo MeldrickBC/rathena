@@ -203829,6 +203829,7 @@ Body:
       .@r = getrefine();
       bonus bMdef,15;
       bonus bMatkRate,15;
+      bonus2 bSubClass,Class_Normal,5;
       bonus2 bSubClass,Class_Boss,5;
       bonus bMaxHPrate,4*.@r;
       if (.@r>=7) {
