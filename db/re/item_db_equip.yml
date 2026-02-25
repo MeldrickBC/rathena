@@ -189620,9 +189620,6 @@ Body:
     Type: Armor
     Defense: 100
     Slots: 1
-    Classes:
-      All_Third: true
-      Fourth: true
     Locations:
       Armor: true
     Trade:
