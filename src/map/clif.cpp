@@ -8426,6 +8426,76 @@ void clif_autospell( map_session_data& sd, uint16 skill_lv ){
 }
 
 
+/// Presents a list of skills that can be plagiarized.
+///	by Anarth
+void c_clif_plagiarism(map_session_data& sd, map_session_data& dst, uint16 skill_lv) {
+
+	PACKET_ZC_SKILL_SELECT_REQUEST* p = reinterpret_cast<PACKET_ZC_SKILL_SELECT_REQUEST*>(packet_buffer);
+
+	p->packetType = HEADER_ZC_SKILL_SELECT_REQUEST;
+	p->packetLength = sizeof(*p);
+	p->flag = 0;
+
+	size_t count = 0;
+	for (int i = 0; i < MAX_SKILL; i++) {
+		if (dst.status.skill[i].id != 0 && dst.status.skill[i].lv > 0) {
+			if (c_skill_canPlagiarize(dst.status.skill[i].id)) {
+				p->skillIds[count] = dst.status.skill[i].id;
+				p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(p->skillIds[0]));
+				count++;
+			}
+		}
+	}
+	
+	if (count <= 0) {
+		clif_skill_fail(sd, RG_PLAGIARISM, USESKILL_FAIL_IMITATION_SKILL_NONE);
+		return;
+	}
+
+	clif_send(p, p->packetLength, &sd, SELF);		
+
+	sd.menuskill_id = RG_PLAGIARISM;
+	sd.menuskill_val = skill_lv;
+}
+
+/// Presents a list of skills from a mob that can be plagiarized.
+/// 01cd { <skill id>.L }*7 (ZC_AUTOSPELLLIST???)
+/// by Anarth
+void c_clif_plagiarism_mob(map_session_data& sd, mob_data* md, uint16 skill_lv) {
+
+	std::shared_ptr<s_mob_db> mob = mob_db.find(md->mob_id);
+
+	PACKET_ZC_SKILL_SELECT_REQUEST* p = reinterpret_cast<PACKET_ZC_SKILL_SELECT_REQUEST*>(packet_buffer);
+
+	p->packetType = HEADER_ZC_SKILL_SELECT_REQUEST;
+	p->packetLength = sizeof(*p);
+	p->flag = 0;
+
+	size_t count = 0;
+	for (auto skill : mob->skill) {
+		if (skill->skill_id != 0 && skill->skill_lv > 0) {
+			if (!(std::find(p->skillIds, p->skillIds + count, skill->skill_id) != p->skillIds + count)) {
+				if (c_skill_canPlagiarize(skill->skill_id)) {				
+					p->skillIds[count] = skill->skill_id;
+					p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(p->skillIds[0]));
+					count++;
+				}
+			}
+		}
+
+	}
+
+	if (count <= 0) {
+		clif_skill_fail(sd, RG_PLAGIARISM, USESKILL_FAIL_IMITATION_SKILL_NONE);
+		return;
+	}
+
+	clif_send(p, p->packetLength, &sd, SELF);
+
+	sd.menuskill_id = RG_PLAGIARISM;
+	sd.menuskill_val = skill_lv;
+}
+
 /// Devotion's visual effect (ZC_DEVOTIONLIST).
 /// 01cf <devoter id>.L { <devotee id>.L }*5 <max distance>.W
 void clif_devotion(block_list *src, map_session_data *tsd)
@@ -13437,13 +13507,27 @@ void clif_parse_SelectArrow(int32 fd,map_session_data *sd) {
 /// 01ce <skill id>.L (CZ_SELECTAUTOSPELL)
 void clif_parse_AutoSpell(int32 fd,map_session_data *sd)
 {
-	if (sd->menuskill_id != SA_AUTOSPELL)
-		return;
+	if (sd->menuskill_id == RG_PLAGIARISM) {
+		sd->state.workinprogress = WIP_DISABLE_NONE;
+
+		const PACKET_CZ_SELECTAUTOSPELL* p = reinterpret_cast<PACKET_CZ_SELECTAUTOSPELL*>(RFIFOP(fd, 0));
+
+		block_list* target = map_id2bl(sd->id);
+
+		uint16 skill_id = static_cast<uint16>(p->skill_id);
+
+		if (skill_do_copy(target, target, skill_id, min(skill_get_max(skill_id), pc_checkskill(sd, RG_PLAGIARISM))))
+			clif_specialeffect(target, EF_GUARD2, SELF);
+	}
+	else if (sd->menuskill_id == SA_AUTOSPELL) {
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 
-	const PACKET_CZ_SELECTAUTOSPELL* p = reinterpret_cast<PACKET_CZ_SELECTAUTOSPELL*>( RFIFOP( fd, 0 ) );
+		const PACKET_CZ_SELECTAUTOSPELL* p = reinterpret_cast<PACKET_CZ_SELECTAUTOSPELL*>(RFIFOP(fd, 0));
 
-	skill_autospell( sd, static_cast<uint16>( p->skill_id ) );
+		skill_autospell(sd, static_cast<uint16>(p->skill_id));
+	}
+	else
+		return;
 
 	clif_menuskill_clear(sd);
 }

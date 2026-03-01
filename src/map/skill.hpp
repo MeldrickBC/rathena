@@ -625,6 +625,7 @@ int32 skill_calc_heal(block_list *src, block_list *target, uint16 skill_id, uint
 
 bool skill_check_cloaking(block_list *bl, struct status_change_entry *sce);
 int8 skill_isCopyable(map_session_data *sd, uint16 skill_id);
+int8 c_skill_canPlagiarize(uint16 skill_id);
 
 // Abnormal status
 bool skill_isNotOk( uint16 skill_id, map_session_data& sd );
@@ -1557,6 +1558,7 @@ enum e_skill {
 	AM_C_CARTCANNON_BANANA = 1118,
 	AM_C_CARTCANNON_SPORE = 1119,
 
+	ST_C_SHADOWSPELLCAST = 1120,
 	RK_ENCHANTBLADE = 2001,
 	RK_SONICWAVE,
 	RK_DEATHBOUND,
@@ -2866,6 +2868,7 @@ int32 skill_is_combo(uint16 skill_id);
 void skill_combo_toggle_inf(block_list* bl, uint16 skill_id, int32 inf);
 void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick);
 
+int32 skill_do_copy(block_list* src, block_list* bl, uint16 skill_id, uint16 skill_lv);
 enum sc_type skill_get_sc(int16 skill_id);
 void skill_reveal_trap_inarea(block_list *src, int32 range, int32 x, int32 y);
 int32 skill_get_time3(struct map_data *mapdata, uint16 skill_id, uint16 skill_lv);

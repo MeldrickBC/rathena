@@ -5582,6 +5582,13 @@ bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type)
 
 	if (sd.status.skill[idx].flag == SKILL_FLAG_PLAGIARIZED) {
 		uint16 skill_id = sd.status.skill[idx].id;
+
+		int32 skill_type = skill_get_inf(skill_id);
+		sc_type sc = skill_db.find(skill_id)->sc;
+		if ((skill_type & INF_SUPPORT_SKILL || skill_type & INF_SELF_SKILL) && sc != SC_NONE) {
+			status_change_end(&sd, sc);
+		};
+
 		sd.status.skill[idx].id = 0;
 		sd.status.skill[idx].lv = 0;
 		sd.status.skill[idx].flag = SKILL_FLAG_PERMANENT;

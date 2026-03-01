@@ -1003,6 +1003,11 @@ void clif_skillunit_update( block_list& bl);
 void clif_skill_unit_test(block_list *bl, int16 x, int16 y, int32 unit_id, int16 range, int16 skill_lv);
 
 void clif_autospell( map_session_data& sd, uint16 skill_lv );
+
+void c_clif_plagiarism(map_session_data& sd, map_session_data& dst, uint16 skill_lv);
+
+void c_clif_plagiarism_mob(map_session_data& sd, mob_data* md, uint16 skill_lv);
+
 void clif_devotion(block_list *src, map_session_data *tsd);
 void clif_spiritball( block_list *bl, block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_soulball( map_session_data *sd, block_list* target = nullptr, enum send_target send_target = AREA );

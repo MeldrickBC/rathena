@@ -4542,7 +4542,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,TF_MISS))>0)
-		base_status->flee += skill*(sd->class_&JOBL_2 && (sd->class_&MAPID_BASEMASK) == MAPID_THIEF? 4 : 3);
+		base_status->flee += skill * 4;
 	if((skill=pc_checkskill(sd,MO_DODGE))>0)
 		base_status->flee += (skill*3) / 2;
 	if (pc_checkskill(sd, SU_POWEROFLIFE) > 0)
@@ -7691,6 +7691,8 @@ static int16 status_calc_flee(block_list *bl, status_change *sc, int32 flee)
 		flee += sc->getSCE(SC_MOON_COMFORT)->val2;
 	if(sc->getSCE(SC_CLOSECONFINE))
 		flee += sc->getSCE(SC_CLOSECONFINE)->val3;
+	if (sc->getSCE(SC_CLOSECONFINE2))
+		flee -= sc->getSCE(SC_CLOSECONFINE2)->val3;
 	if (sc->getSCE(SC_ANGRIFFS_MODUS))
 		flee -= sc->getSCE(SC_ANGRIFFS_MODUS)->val3;
 	if(sc->getSCE(SC_ADJUSTMENT))
@@ -11682,10 +11684,10 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 #ifdef RENEWAL
 					val3 = 50; // Flee increase
 #else
-					val3 = 10; // Flee increase
+					val3 = 5 * val1; // Flee increase
 #endif
 
-					sc_start4(src2,src2,SC_CLOSECONFINE,100,val1,1,val3,0,tick+1000);
+					sc_start4(src2,src2,SC_CLOSECONFINE,100,val1,1,val3,0,tick);
 				} else { // Increase count of locked enemies and refresh time.
 					(sce2->val2)++;
 					delete_timer(sce2->timer, status_change_timer);

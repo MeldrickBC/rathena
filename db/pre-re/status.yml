@@ -1791,6 +1791,8 @@ Body:
     DurationLookup: RG_CLOSECONFINE
     States:
       NoMove: true
+    CalcFlags:
+      Flee: true
     Flags:
       StopWalking: true
       NoDispell: true

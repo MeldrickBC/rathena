@@ -4866,19 +4866,19 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			break;
 		case RG_BACKSTAP:
 			if (sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty)
-				skillratio += (200 + 80 * skill_lv) / 2;
+				skillratio += (200 + 40 * skill_lv) / 2;
 			else
-				skillratio += 200 + 80 * skill_lv;
+				skillratio += 200 + 40 * skill_lv;
 			break;
 		case RG_RAID:
 #ifdef RENEWAL
 			skillratio += -100 + 50 + skill_lv * 150;
 #else
-			skillratio += 40 * skill_lv;
+			skillratio += 100 + 20 * skill_lv;
 #endif
 			break;
 		case RG_INTIMIDATE:
-			skillratio += 30 * skill_lv;
+			skillratio += 0;
 			break;
 		case CR_SHIELDCHARGE:
 			skillratio += 20 * skill_lv;
@@ -9864,9 +9864,9 @@ struct Damage battle_calc_misc_attack(block_list *src,block_list *target,uint16 
 	switch (skill_id) {
 		case TF_THROWSTONE:
 			if (sd)
-				md.damage = 50;
+				md.damage = (sd->status.base_level / 5) * 10 + 25 + 25 * skill_lv;
 			else
-				md.damage = 30;
+				md.damage = 25 + 25 * skill_lv;
 			md.flag |= BF_WEAPON;
 			break;
 		case NPC_KILLING_AURA:
@@ -11055,17 +11055,21 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 	}
 
 	if (sd) {
-		uint16 r_skill = 0, sk_idx = 0;
-		if (sd->status.skill[sd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED /*&& Check if player has autocast buff*/) {
-			r_skill = sd->status.skill[sd->cloneskill_idx].id;
-			sk_idx = sd->status.skill[sd->cloneskill_idx].lv;
+		if (pc_checkskill(sd, ST_C_SHADOWSPELLCAST) && sd->status.skill[sd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED) {
+			uint16 r_skill = sd->status.skill[sd->cloneskill_idx].id;
+			if (skill_get_type(r_skill) == BF_MAGIC) {
+				int r_lv = min(5 + (pc_checkskill(sd, ST_C_SHADOWSPELLCAST) / 2), sd->status.skill[sd->cloneskill_idx].lv);
 			int type = skill_get_casttype(r_skill);
-			int procchance = (type == CAST_GROUND) ? 20 : 30;
+				int sp = skill_get_sp(r_skill, r_lv);
+
+				int procchance = (type == CAST_GROUND) ? 5 : 10;
+				procchance += pc_checkskill(sd, ST_C_SHADOWSPELLCAST);
+				
 
 			if (rnd() % 100 < procchance) {
-				if (skill_get_type(r_skill) == BF_MAGIC &&
-					type != CAST_NODAMAGE &&
-					DIFF_TICK(tick, sd->ud.canact_tick) >= 0
+					if (type != CAST_NODAMAGE &&
+						DIFF_TICK(tick, sd->ud.canact_tick) >= 0 &&
+						sd->battle_status.sp >= sp) {
 					//&& util::umap_exists(sd, r_skill)
 					//&& skill_blockpc_get(sd, r_skill) == -1)
 					) {

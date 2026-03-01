@@ -234,6 +234,9 @@ Body:
     HitCount: 1
     Duration1: 30000
     Cooldown: 1000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -357,6 +360,11 @@ Body:
         Time: 37000
     Duration2: 10000
     Cooldown: 10000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost: 10
     Status: Endure
@@ -379,6 +387,9 @@ Body:
     SplashArea: 3
     CastCancel: true
     Duration1: 10000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 10
     Status: Sight
@@ -503,6 +514,9 @@ Body:
         Time: 45000
       - Level: 10
         Time: 50000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -798,6 +812,9 @@ Body:
     CastTime: 1000
     Duration1: 5000
     Duration2: 20000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -1299,7 +1316,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastCancel: true
     Duration1: 10000
     Requires:
@@ -1318,6 +1334,9 @@ Body:
     HitCount: 1
     CastCancel: true
     Duration1: 10000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 10
     Unit:
@@ -1343,6 +1362,9 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -1423,7 +1445,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastCancel: true
     AfterCastActDelay: 1000
     Requires:
@@ -1485,6 +1506,9 @@ Body:
         Time: 220000
       - Level: 10
         Time: 240000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       HpCost: 15
       SpCost:
@@ -1546,6 +1570,9 @@ Body:
         Time: 130000
       - Level: 11
         Time: 130000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -1582,6 +1609,9 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 10
       State: Water
@@ -1600,6 +1630,9 @@ Body:
     CastCancel: true
     CastTime: 500
     AfterCastActDelay: 2000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 35
     Status: SignumCrucis
@@ -1639,6 +1672,9 @@ Body:
         Time: 270000
       - Level: 10
         Time: 300000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -1697,6 +1733,9 @@ Body:
         Time: 220000
       - Level: 10
         Time: 240000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -1734,6 +1773,9 @@ Body:
     CastCancel: true
     AfterCastActDelay: 1000
     Duration2: 6000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 15
   - Id: 36
@@ -1797,7 +1839,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     Requires:
       SpCost: 5
       ZenyCost:
@@ -2089,6 +2130,11 @@ Body:
     Hit: Multi_Hit
     HitCount: 3
     Element: Weapon
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost: 7
       Weapon:
@@ -2109,8 +2155,12 @@ Body:
     SplashArea: 2
     ActiveInstance: 5
     Knockback: 2
-    #CastTime: 700
-    CastTime: 200
+    CastTime: 700
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Duration1: 1000
     Requires:
       SpCost: 12
@@ -2133,6 +2183,11 @@ Body:
     HitCount: 1
     Element: Weapon
     Knockback: 6
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost: 9
       Weapon:
@@ -2159,6 +2214,11 @@ Body:
     HitCount: 1
     Element: Weapon
     AfterCastActDelay: 1000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost: 10
       Weapon:
@@ -2197,6 +2257,11 @@ Body:
         Time: 300000
       - Level: 11
         Time: 300000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost:
         - Level: 1
@@ -2246,6 +2311,11 @@ Body:
         Time: 1600
       - Level: 5
         Time: 2000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost: 3
       Weapon:
@@ -2291,7 +2361,8 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
+      RemoveRequirement:
+        Weapon: true
     CastTime: 700
     Requires:
       SpCost:
@@ -2344,6 +2415,9 @@ Body:
     CastCancel: true
     AfterCastActDelay: 3000
     Duration1: 60000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -2380,6 +2454,9 @@ Body:
         Time: 60000
       - Level: 3
         Time: 60000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 8
     Status: Suffragium
@@ -2400,7 +2477,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastCancel: true
     AfterCastActDelay: 2000
     Duration1:
@@ -2482,7 +2558,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastCancel: true
     CastTime: 5000
     Duration1:
@@ -2585,6 +2660,9 @@ Body:
     CastCancel: true
     AfterCastActDelay: 2000
     Duration2: 30000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 5
     Status: Blind
@@ -2603,6 +2681,9 @@ Body:
     CastTime: 2000
     AfterCastActDelay: 2000
     Duration1: 120000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -2652,6 +2733,9 @@ Body:
         Time: 75000
       - Level: 5
         Time: 90000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 40
     Status: Magnificat
@@ -2680,6 +2764,9 @@ Body:
         Time: 25000
       - Level: 5
         Time: 30000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 20
     Status: Gloria
@@ -2716,6 +2803,9 @@ Body:
         Time: 60000
       - Level: 10
         Time: 60000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -2755,7 +2845,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 3000
@@ -2774,6 +2863,9 @@ Body:
     CastCancel: true
     AfterCastActDelay: 3000
     Duration1: 600000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 10
     Status: Aeterna
@@ -2810,7 +2902,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastCancel: true
     CastTime: 15000
     AfterCastActDelay: 2000
@@ -3796,6 +3887,9 @@ Body:
         Time: 20000
       - Level: 5
         Time: 25000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -3997,6 +4091,11 @@ Body:
       - Level: 6
         Area: 12
     Duration2: 5000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost: 10
       Weapon:
@@ -4031,6 +4130,11 @@ Body:
         Time: 120000
       - Level: 5
         Time: 150000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost:
         - Level: 1
@@ -4085,6 +4189,11 @@ Body:
         Time: 40000
       - Level: 5
         Time: 50000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost:
         - Level: 1
@@ -4123,6 +4232,11 @@ Body:
         Time: 80000
       - Level: 5
         Time: 100000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost:
         - Level: 1
@@ -4184,6 +4298,11 @@ Body:
         Time: 4000
       - Level: 5
         Time: 5000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost: 10
     Status: MaximizePower
@@ -4836,6 +4955,9 @@ Body:
         Time: 8000
       - Level: 10
         Time: 9000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 15
     Status: Cloaking
@@ -4854,6 +4976,11 @@ Body:
     Duration2: 5000
     CastDelayFlags:
       IgnoreStatus: true
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost:
         - Level: 1
@@ -4906,6 +5033,11 @@ Body:
     Element: Weapon
     SplashArea: 1
     Duration2: 1000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost: 3
       Weapon:
@@ -4968,6 +5100,9 @@ Body:
         Time: 90000
       - Level: 10
         Time: 100000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 20
     Status: EncPoison
@@ -5000,6 +5135,9 @@ Body:
         Time: 60000
       - Level: 10
         Time: 65000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -5057,6 +5195,9 @@ Body:
       - Level: 10
         Time: 50000
     Duration2: 60000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 20
       ItemCost:
@@ -5089,7 +5230,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastCancel: true
     CastTime: 1000
     Duration1:
@@ -5276,7 +5416,7 @@ Body:
   - Id: 149
     Name: TF_SPRINKLESAND
     Description: Sand Attack
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Weapon
     TargetType: Attack
     DamageFlags:
@@ -5347,7 +5487,17 @@ Body:
     Duration1: 5000
     Duration2: 30000
     Requires:
-      SpCost: 5
+      SpCost:
+        - Level: 1
+          Amount: 5
+        - Level: 2
+          Amount: 7
+        - Level: 3
+          Amount: 9
+        - Level: 4
+          Amount: 11
+        - Level: 5
+          Amount: 13
     Status: Stun
   - Id: 153
     Name: MC_CARTREVOLUTION
@@ -5402,6 +5552,9 @@ Body:
     Duration1: 300000
     Cooldown: 30000
     FixedCastTime: 300
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 8
     Status: Loud
@@ -5420,7 +5573,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastCancel: true
     CastTime: 2000
     Requires:
@@ -5440,6 +5592,9 @@ Body:
     CastCancel: true
     CastTime: 5000
     Duration1: 300000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 30
     Status: EnergyCoat
@@ -6195,7 +6350,7 @@ Body:
   - Id: 214
     Name: RG_RAID
     Description: Sightless Mind
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Weapon
     TargetType: Self
     DamageFlags:
@@ -6206,7 +6361,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    SplashArea: 1
+    SplashArea: 2
     Duration1: 5000
     Duration2: 30000
     Requires:
@@ -6368,22 +6523,25 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Range: 1
+    Range: -1
     Hit: Single
     HitCount: 1
+    Flags:
+      AlterRangeVulture: true
     Element: Weapon
-    Requires:
-      SpCost:
+    Cooldown:
         - Level: 1
-          Amount: 13
+        Time: 150000
         - Level: 2
-          Amount: 16
+        Time: 120000
         - Level: 3
-          Amount: 19
+        Time: 90000
         - Level: 4
-          Amount: 22
+        Time: 60000
         - Level: 5
-          Amount: 25
+        Time: 30000
+    Requires:
+      SpCost: 25
   - Id: 220
     Name: RG_GRAFFITI
     Description: Scribble
@@ -6454,8 +6612,19 @@ Body:
     MaxLevel: 5
   - Id: 225
     Name: RG_PLAGIARISM
-    Description: Intimidate
+    Description: Plagiarism
     MaxLevel: 10
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IgnoreHovering: true
+    Range: 11
+    Hit: Single
+    HitCount: 1
+    CastTime: 500
+    CastCancel: false
+    AfterCastActDelay: 1000
   - Id: 226
     Name: AM_AXEMASTERY
     Description: Axe Mastery
@@ -6497,7 +6666,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastCancel: true
     CastTime: 1000
     Duration1:
@@ -6543,7 +6711,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastCancel: true
     CastTime: 1000
     Duration1:
@@ -6579,6 +6746,9 @@ Body:
     HitCount: 1
     CastCancel: true
     AfterCastActDelay: 500
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 1
       ItemCost:
@@ -6626,6 +6796,9 @@ Body:
         Time: 120000
       - Level: 5
         Time: 60000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 20
       ItemCost:
@@ -6674,6 +6847,9 @@ Body:
         Time: 480000
       - Level: 5
         Time: 600000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 30
       ItemCost:
@@ -6704,6 +6880,9 @@ Body:
         Time: 480000
       - Level: 5
         Time: 600000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 25
       ItemCost:
@@ -6734,6 +6913,9 @@ Body:
         Time: 480000
       - Level: 5
         Time: 600000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 25
       ItemCost:
@@ -6764,6 +6946,9 @@ Body:
         Time: 480000
       - Level: 5
         Time: 600000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 25
       ItemCost:
@@ -6837,6 +7022,9 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -6884,7 +7072,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     Duration2: 5000
     Requires:
       SpCost: 10
@@ -6912,7 +7099,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     AfterCastActDelay: 700
     Requires:
       SpCost: 12
@@ -6928,6 +7114,9 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -6967,7 +7156,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     Duration2: 30000
     Requires:
       SpCost:
@@ -7007,7 +7195,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastDefenseReduction: 33
     CastTime: 3000
     AfterCastActDelay: 1500
@@ -7081,6 +7268,9 @@ Body:
         Time: 75000
       - Level: 5
         Time: 90000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 25
     Status: Devotion
@@ -7099,6 +7289,9 @@ Body:
     CastCancel: true
     CastTime: 3000
     Duration1: 180000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 30
     Status: Providence
@@ -7114,6 +7307,9 @@ Body:
     HitCount: 1
     AfterCastActDelay: 800
     Duration1: 180000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 30
       State: Shield
@@ -7149,6 +7345,9 @@ Body:
         Time: 270000
       - Level: 10
         Time: 300000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -7195,6 +7394,9 @@ Body:
     HitCount: 1
     CastTime: 1000
     Duration1: 600000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 8
   - Id: 262
@@ -7210,6 +7412,9 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 2000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 5
   - Id: 263
@@ -7227,7 +7432,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastDelayFlags:
       IgnoreStatus: true
   - Id: 264
@@ -7240,6 +7444,9 @@ Body:
     Range: 18
     Hit: Single
     HitCount: 1
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 14
       SpiritSphereCost: 1
@@ -7264,7 +7471,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastTime: 1000
     AfterCastActDelay: 500
     Requires:
@@ -7305,7 +7511,6 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
     CastTime: 1000
     AfterCastActDelay: 500
     AfterCastWalkDelay:
@@ -7352,6 +7557,9 @@ Body:
         Time: 120000
       - Level: 5
         Time: 150000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 200
       SpiritSphereCost: 5
@@ -7388,6 +7596,11 @@ Body:
         Time: 50000
       - Level: 5
         Time: 60000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost: 10
       Weapon:
@@ -7425,6 +7638,9 @@ Body:
       NoDamage: true
     Hit: Single
     Duration1: 180000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 15
       SpiritSphereCost: 5
@@ -7446,7 +7662,8 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
+      RemoveRequirement:
+        Weapon: true
     CastCancel: true
     CastTime:
       - Level: 1
@@ -7516,7 +7733,8 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
+      RemoveRequirement:
+        Weapon: true
     CastDelayFlags:
       IgnoreStatus: true
     Requires:
@@ -7573,6 +7791,11 @@ Body:
     SplashArea: 1
     CastDelayFlags:
       IgnoreStatus: true
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost:
         - Level: 1
@@ -7624,6 +7847,9 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 2
   - Id: 276
@@ -7648,6 +7874,9 @@ Body:
         Time: 1000
       - Level: 5
         Time: 1200
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 2
     Status: MagicRod
@@ -7664,6 +7893,9 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 700
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 10
   - Id: 278
@@ -7704,6 +7936,9 @@ Body:
         Time: 360000
       - Level: 10
         Time: 390000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 35
     Status: AutoSpell
@@ -7735,6 +7970,9 @@ Body:
         Time: 1200000
       - Level: 5
         Time: 1800000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 40
       ItemCost:
@@ -7769,6 +8007,9 @@ Body:
         Time: 1200000
       - Level: 5
         Time: 1800000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 40
       ItemCost:
@@ -7803,6 +8044,9 @@ Body:
         Time: 1200000
       - Level: 5
         Time: 1800000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 40
       ItemCost:
@@ -7837,6 +8081,9 @@ Body:
         Time: 1200000
       - Level: 5
         Time: 1800000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 40
       ItemCost:
@@ -7875,6 +8122,9 @@ Body:
         Time: 240000
       - Level: 5
         Time: 300000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -7925,6 +8175,9 @@ Body:
         Time: 240000
       - Level: 5
         Time: 300000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -7975,6 +8228,9 @@ Body:
         Time: 240000
       - Level: 5
         Time: 300000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -8022,6 +8278,9 @@ Body:
         Time: 300000
       - Level: 5
         Time: 345000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -8074,6 +8333,9 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 2000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 1
       ItemCost:
@@ -8572,6 +8834,11 @@ Body:
     HitCount: 2
     Element: Weapon
     AfterCastActDelay: 500
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost: 12
       Weapon:
@@ -8626,6 +8893,11 @@ Body:
     AfterCastActDelay: 4000
     Duration1: 15000
     Duration2: 12000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true 
     Requires:
       SpCost:
         - Level: 1
@@ -8655,6 +8927,11 @@ Body:
     Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true  
     Requires:
       SpCost:
         - Level: 1
@@ -8697,6 +8974,11 @@ Body:
     Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true 
     Requires:
       SpCost:
         - Level: 1
@@ -8739,6 +9021,11 @@ Body:
     Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true 
     Requires:
       SpCost:
         - Level: 1
@@ -8781,6 +9068,11 @@ Body:
     Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true 
     Requires:
       SpCost:
         - Level: 1
@@ -8825,6 +9117,11 @@ Body:
     HitCount: 2
     Element: Weapon
     AfterCastActDelay: 500
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
     Requires:
       SpCost: 12
       Weapon:
@@ -8878,6 +9175,9 @@ Body:
     AfterCastActDelay: 4000
     Duration1: 5000
     Duration2: 5000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost:
         - Level: 1
@@ -8907,6 +9207,11 @@ Body:
     Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true 
     Requires:
       HpCost: 1
       SpCost:
@@ -8952,6 +9257,11 @@ Body:
     Duration1: 60000
     Duration2: 20000
     Cooldown: 20000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true 
     Requires:
       SpCost:
         - Level: 1
@@ -8994,6 +9304,11 @@ Body:
     Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true 
     Requires:
       SpCost:
         - Level: 1
@@ -9037,6 +9352,11 @@ Body:
     Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true 
     Requires:
       SpCost:
         - Level: 1
@@ -13655,6 +13975,9 @@ Body:
     HitCount: 3
     Element: Weapon
     Duration1: 100
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 12
       Weapon:
@@ -18149,7 +18472,8 @@ Body:
     CopyFlags:
       Skill:
         Plagiarism: true
-        Reproduce: true
+      RemoveRequirement:
+        Weapon: true
     CastTime: 500
     Requires:
       SpCost: 40      
@@ -18167,6 +18491,9 @@ Body:
     Hit: Single
     Knockback: 2
     Duration1: 300000
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 15
       State: Shield
@@ -18194,6 +18521,8 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+      RemoveRequirement:
+        Weapon: true
     Duration2: 60000
     Requires:
       SpCost: 15
@@ -18376,6 +18705,9 @@ Body:
     CastTime: 4000
     CastTimeFlags:
       IgnoreDex: true
+    CopyFlags:
+      Skill:
+        Plagiarism: true
     Requires:
       SpCost: 400
   - Id: 1015
@@ -18556,6 +18888,10 @@ Body:
     CastCancel: false
     Requires:
       SpCost: 0
+  - Id: 1120
+    Name: ST_C_SHADOWSPELLCAST
+    Description: Shadow Spell Cast
+    MaxLevel: 10
   - Id: 2001
     Name: RK_ENCHANTBLADE
     Description: Enchant Blade
@@ -26026,11 +26362,6 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: 5
-    Element: Weapon
-    CopyFlags:
-      Skill:
-        Plagiarism: true
-        Reproduce: true
     CastCancel: true
     CastTime:
       - Level: 1

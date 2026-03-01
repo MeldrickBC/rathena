@@ -294,7 +294,7 @@ Body:
           - Name: TF_POISON
             Level: 3
       - Name: TF_SPRINKLESAND
-        MaxLevel: 5
+        MaxLevel: 10
       - Name: TF_BACKSLIDING
         MaxLevel: 5
         Requires:
@@ -1128,7 +1128,7 @@ Body:
           - Name: RG_SNATCHER
             Level: 4
       - Name: RG_BACKSTAP
-        MaxLevel: 5
+        MaxLevel: 10
         Requires:
           - Name: RG_STEALCOIN
             Level: 4
@@ -1138,7 +1138,7 @@ Body:
           - Name: TF_HIDING
             Level: 1
       - Name: RG_RAID
-        MaxLevel: 5
+        MaxLevel: 10
         Requires:
           - Name: RG_BACKSTAP
             Level: 2
@@ -1171,21 +1171,11 @@ Body:
             Level: 4
           - Name: RG_RAID
             Level: 5
-      - Name: RG_GRAFFITI
-        MaxLevel: 1
-        Requires:
-          - Name: RG_CLEANER
-            Level: 1
-      - Name: RG_CLEANER
-        MaxLevel: 1
-        Requires:
           - Name: RG_GANGSTER
-            Level: 1
-      - Name: RG_GANGSTER
         MaxLevel: 5
         Requires:
-          - Name: RG_STRIPSHIELD
-            Level: 3
+          - Name: RG_STEALCOIN
+            Level: 2
       - Name: RG_PLAGIARISM
         MaxLevel: 10
         Requires:
@@ -2430,11 +2420,11 @@ Body:
         Requires:
           - Name: RG_STRIPWEAPON
             Level: 1
-      - Name: ST_PRESERVE
-        MaxLevel: 1
+      - Name: ST_C_SHADOWSPELLCAST
+        MaxLevel: 10
         Requires:
           - Name: RG_PLAGIARISM
-            Level: 10
+            Level: 5
       - Name: ST_FULLSTRIP
         MaxLevel: 5
         Requires:

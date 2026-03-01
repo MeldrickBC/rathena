@@ -813,6 +813,15 @@ int8 skill_isCopyable(map_session_data *sd, uint16 skill_id) {
 	return 0;
 }
 
+int8 c_skill_canPlagiarize(uint16 skill_id) {
+
+	s_skill_copyable copyable = skill_db.find(skill_id)->copyable;
+
+	if (copyable.option & SKILL_COPY_PLAGIARISM)
+		return 1;
+	return 0;
+}
+
 /**
  * Check if the skill is ok to cast and when.
  * Done before skill_check_condition_castbegin, requirement
@@ -3424,15 +3433,15 @@ void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_
  * @param skill_id: Skill that casted
  * @param skill_lv: Skill level of the casted skill
  */
-static void skill_do_copy(block_list* src,block_list *bl, uint16 skill_id, uint16 skill_lv)
+int32 skill_do_copy(block_list* src,block_list *bl, uint16 skill_id, uint16 skill_lv)
 {
 	TBL_PC *tsd = BL_CAST(BL_PC, bl);
 
 	if (!tsd || (!pc_checkskill(tsd,RG_PLAGIARISM) && !pc_checkskill(tsd,SC_REPRODUCE)))
-		return;
+		return 0;
 	//If SC_PRESERVE is active and SC__REPRODUCE is not active, nothing to do
 	else if (tsd->sc.getSCE(SC_PRESERVE) && !tsd->sc.getSCE(SC__REPRODUCE))
-		return;
+		return 0;
 	else {
 		uint16 idx;
 		uint8 lv;
@@ -3441,7 +3450,7 @@ static void skill_do_copy(block_list* src,block_list *bl, uint16 skill_id, uint1
 
 		//Use skill index, avoiding out-of-bound array [Cydh]
 		if (!(idx = skill_get_index(skill_id)))
-			return;
+			return 0;
 
 		switch ( skill_isCopyable(tsd, skill_id) ) {
 			case 1: //Copied by Plagiarism
@@ -3487,12 +3496,13 @@ static void skill_do_copy(block_list* src,block_list *bl, uint16 skill_id, uint1
 				break;
 
 			default: 
-				return;
+				return 0;
 		}
 		tsd->status.skill[idx].id = skill_id;
 		tsd->status.skill[idx].lv = lv;
 		tsd->status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
 		clif_addskill(*tsd,skill_id);
+		return 1;
 	}
 }
 
@@ -4057,10 +4067,6 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 
 	FreeBlockLock freeLock;
 
-	if (bl->type == BL_PC && skill_id && skill_db.find(skill_id)->copyable.option && //Only copy skill that copyable [Cydh]
-		dmg.flag&BF_SKILL && dmg.damage+dmg.damage2 > 0 && damage < status_get_hp(bl)) //Cannot copy skills if the blow will kill you. [Skotlex]
-		skill_do_copy(src,bl,skill_id,skill_lv);
-
 	if (dmg.dmg_lv >= ATK_MISS && (type = skill_get_walkdelay(skill_id, skill_lv)) > 0)
 	{	//Skills with can't walk delay also stop normal attacking for that
 		//duration when the attack connects. [Skotlex]
@@ -4597,7 +4603,7 @@ static TIMER_FUNC(skill_timerskill){
 			break; // Source not on Map
 		if(skl->target_id) {
 			target = map_id2bl(skl->target_id);
-			if( ( skl->skill_id == RG_INTIMIDATE || skl->skill_id == NPC_FATALMENACE ) && (!target || target->prev == nullptr || !check_distance_bl(src,target,AREA_SIZE)) )
+			if( ( skl->skill_id == NPC_FATALMENACE) && (!target || target->prev == nullptr || !check_distance_bl(src,target,AREA_SIZE)) )
 				target = src; //Required since it has to warp.
 
 			if (skl->skill_id == SR_SKYNETBLOW) {
@@ -4642,12 +4648,7 @@ static TIMER_FUNC(skill_timerskill){
 					clif_skill_nodamage(src,*target,skl->skill_id,skl->skill_lv);
 					break;
 				case RG_INTIMIDATE:
-					if (unit_warp(src,-1,-1,-1,CLR_TELEPORT) == 0) {
-						int16 x,y;
-						map_search_freecell(src, 0, &x, &y, 1, 1, 0);
-						if (target != src && !status_isdead(*target))
-							unit_warp(target, -1, x, y, CLR_TELEPORT);
-					}
+					unit_warp(target, -1, -1, -1, CLR_TELEPORT);
 					break;
 				case BA_FROSTJOKER:
 				case DC_SCREAM:
@@ -8343,8 +8344,12 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		if (sc->getSCE(SC_GANGSTER))
 			status_change_end(src, SC_GANGSTER);
-		else
-			sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		else {
+			if (sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)))
+				clif_specialeffect(src, EF_BLACKBODY, AREA);
+				if (sd)
+					clif_soundeffect(*sd, "autoshadow.wav", 0, AREA);
+		}
 		break;
 	//Passive Magnum, should had been casted on yourself.
 	case MS_MAGNUM:
@@ -10252,6 +10257,22 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*src,SA_MAGICROD,skill_lv);
 #endif
 		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
+		break;
+	case RG_PLAGIARISM:
+		if (sd) {
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+			if (bl->type == BL_PC && src != bl) {
+				sd->state.workinprogress = WIP_DISABLE_ALL;
+				c_clif_plagiarism(*sd, *dstsd, skill_lv );
+			}
+			else if (bl->type == BL_MOB) {
+				sd->state.workinprogress = WIP_DISABLE_ALL;
+				if (dstmd->mob_id != MOBID_EMPERIUM)
+					c_clif_plagiarism_mob(*sd, dstmd, skill_lv);
+				else
+					clif_skill_fail(*sd, skill_id);
+			}
+		}
 		break;
 	case SA_AUTOSPELL:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
@@ -21206,9 +21227,6 @@ static int32 skill_sit_count(block_list *bl, va_list ap)
 	if (!pc_issit(sd))
 		return 0;
 
-	if (flag&1 && pc_checkskill(sd, RG_GANGSTER) > 0)
-		return 1;
-
 	if (flag&2 && (pc_checkskill(sd, TK_HPTIME) > 0 || pc_checkskill(sd, TK_SPTIME) > 0))
 		return 1;
 
@@ -21228,9 +21246,6 @@ static int32 skill_sit_in(block_list *bl, va_list ap)
 
 	if (!pc_issit(sd))
 		return 0;
-
-	if (flag&1 && pc_checkskill(sd, RG_GANGSTER) > 0)
-		sd->state.gangsterparadise = 1;
 
 	if (flag&2 && (pc_checkskill(sd, TK_HPTIME) > 0 || pc_checkskill(sd, TK_SPTIME) > 0 )) {
 		sd->state.rest = 1;
@@ -21278,10 +21293,6 @@ int32 skill_sit(map_session_data *sd, bool sitting)
 
 	nullpo_ret(sd);
 
-	if ((lv = pc_checkskill(sd, RG_GANGSTER)) > 0) {
-		flag |= 1;
-		range = skill_get_splash(RG_GANGSTER, lv);
-	}
 	if ((lv = pc_checkskill(sd, TK_HPTIME)) > 0) {
 		flag |= 2;
 		range = skill_get_splash(TK_HPTIME, lv);
