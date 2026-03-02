@@ -93888,9 +93888,15 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     ArmorLevel: 1
     EquipLevelMin: 80
-    Refineable: true
     View: 1041
     Script: |
       bonus bAtkRate,2;
