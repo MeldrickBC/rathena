@@ -179580,6 +179580,30 @@ Body:
             }
          }
       }
+  - Id: 400993
+    AegisName: C_M_Plant_Hat_W
+    Name: Costume White Mechanical Plant Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2583
+  - Id: 400994
+    AegisName: C_Mech_Feath_Hairband_B
+    Name: Costume Blue Mechanical Feather
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2659
   - Id: 401000
     AegisName: C_Liamette_Hair_Band
     Name: Costume Liamette Hair Band
@@ -184668,6 +184692,14 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2730
+  - Id: 410470
+    AegisName: aegis_410470
+    Name: Costume Alarm Mask (Middle)
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 170
   - Id: 410471
     AegisName: C_Gear_Monocle
     Name: Costume Gear Monocle
@@ -218046,6 +218078,18 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 283
+  - Id: 480630
+    AegisName: C_Mechanical_Fairy_Wing
+    Name: Costume Mechanical Fairy Wings
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 284
   - Id: 480631
     AegisName: C_Detective_Mag_Glass
     Name: Costume Detective's Magnifying Glass
