@@ -178447,6 +178447,26 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2717
+  - Id: 400952
+    AegisName: aegis_400952
+    Name: Costume Indian Feather Headband
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 809
+  - Id: 400953
+    AegisName: C_Summer_Sunglasses
+    Name: Costume Summer Sunglasses
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2720
   - Id: 400956
     AegisName: C_Chestnut_Helmet
     Name: Costume Chestnut Mask
@@ -188654,6 +188674,43 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 420545
+    AegisName: C_Vacation_Pope_Hair
+    Name: Costume Vacation Pope Hair
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2718
+  - Id: 420546
+    AegisName: C_Miriam_Hair
+    Name: Costume Miriam Ponytail
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 2719
+  - Id: 420547
+    AegisName: C_Come_On_Soda
+    Name: Costume Blueberry Popsicle
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+    ArmorLevel: 1
+    View: 2721
   - Id: 420552
     AegisName: C_Divine_Sky_Invite
     Name: Costume Divine Invitation
@@ -216794,7 +216851,7 @@ Body:
     ArmorLevel: 1
     View: 228
   - Id: 480462
-    AegisName: aegis_480462
+    AegisName: C_Hanwha_Pool_Ring
     Name: Costume Hanwha X RO Poring Tube
     Type: Armor
     Locations:
@@ -218058,6 +218115,18 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 278
+  - Id: 480619
+    AegisName: C_Melon_Cream_Soda
+    Name: Costume Melon Cream Soda
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    Trade:
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    View: 279
   - Id: 480627
     AegisName: C_2025RosFesta
     Name: Costume ROS 2025 Champion Coat
