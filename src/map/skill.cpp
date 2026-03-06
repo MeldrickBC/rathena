@@ -4290,11 +4290,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	FreeBlockLock freeLock;
 
 	switch(skill_id) {
-	case ALL_RESURRECTION:
-		if (!battle_check_undead(tstatus->race, tstatus->def_ele))
-			break;
-		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
 
 	case 0:/* no skill - basic/normal attack */
 		if(sd) {
@@ -4537,12 +4532,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	FreeBlockLock freeLock;
 	switch(skill_id)
 	{
-	case ALL_RESURRECTION:
-		if(sd && (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND)))
-		{	//No reviving in WoE grounds!
-			clif_skill_fail( *sd, skill_id );
-			break;
-		}
 		if (!status_isdead(*bl))
 			break;
 		{
