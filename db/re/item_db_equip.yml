@@ -215709,6 +215709,11 @@ Body:
     Slots: 1
     Locations:
       Garment: true
+    Trade:
+      NoDrop: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
     ArmorLevel: 1
     EquipLevelMin: 100
     Refineable: true
@@ -215723,18 +215728,7 @@ Body:
          bonus2 bAddItemHealRate,11523,100;
          bonus2 bAddItemHealRate,11524,100;
          if (.@r>=9) {
-             bonus2 bAddMonsterDropItem,11520,200;
-             bonus2 bAddMonsterDropItem,11521,200;
-             bonus2 bAddMonsterDropItem,11522,200;
-             bonus2 bAddMonsterDropItem,11523,200;
-             bonus2 bAddMonsterDropItem,11524,200;
-             bonus2 bAddMonsterDropItem,11525,200;
-             bonus2 bAddMonsterDropItem,11526,200;
-             bonus2 bAddMonsterDropItem,12574,200;
-             bonus2 bAddMonsterDropItem,12812,200;
-             bonus2 bAddMonsterDropItem,12813,200;
-             bonus2 bAddMonsterDropItem,12814,200;
-             bonus2 bAddMonsterDropItem,12815,200;
+             bonus2 bAddMonsterDropItemGroup,IG_SPENDID_CAPE_BR,200;
              if (.@r>=11) {
                   bonus bNoCastCancel;
              }
