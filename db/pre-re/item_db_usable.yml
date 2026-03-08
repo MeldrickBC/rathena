@@ -4760,7 +4760,7 @@ Body:
       sc_start SC_STRFOOD,1200000,5;
       percentheal 10,0;
   - Id: 12046
-    AegisName: Int_Dish01
+    AegisName: Grape_Juice_Herbal_Tea
     Name: Grape Juice Herbal Tea
     Type: Healing
     Buy: 2000
@@ -4768,8 +4768,9 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_INTFOOD,1200000,1;
-      percentheal 0,5;
+      sc_start4 SC_WELLFED, 1800000, 5, 10, 10, 12046;
+      sc_start SC_WELLFED_SP, INFINITE_TICK, 3;
+      sc_start SC_WELLFED_MATK, INFINITE_TICK, 20;
   - Id: 12047
     AegisName: Int_Dish02
     Name: Autumn Red Tea
@@ -4925,7 +4926,7 @@ Body:
       sc_start SC_AGIFOOD,1200000,5;
       percentheal 6,2;
   - Id: 12061
-    AegisName: Dex_Dish01
+    AegisName: Honey_Grape_Juice
     Name: Honey Grape Juice
     Type: Healing
     Buy: 2000
@@ -4933,8 +4934,9 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DEXFOOD,1200000,1;
-      percentheal 2,2;
+      sc_start4 SC_WELLFED, 1800000, 5, 10, 10, 12061;
+      sc_start SC_WELLFED_SP, INFINITE_TICK, 3;
+      sc_start2 SC_WELLFED_SP_REGEN, INFINITE_TICK, 3, 10000;
   - Id: 12062
     AegisName: Dex_Dish02
     Name: Chocolate Mousse Cake
@@ -5622,56 +5624,6 @@ Body:
     Script: |
       sc_start SC_BATKFOOD,60000,10;
       sc_start SC_MATKFOOD,60000,10;
-  - Id: 12125
-    AegisName: Outdoor_Cooking_Kits
-    Name: Outdoor Cooking Kit
-    Type: Usable
-    Buy: 500
-    Weight: 20
-    Flags:
-      BuyingStore: true
-    Script: |
-      cooking 11;
-  - Id: 12126
-    AegisName: Indoor_Cooking_Kits
-    Name: Home Cooking Kit
-    Type: Usable
-    Buy: 1000
-    Weight: 30
-    Flags:
-      BuyingStore: true
-    Script: |
-      cooking 12;
-  - Id: 12127
-    AegisName: High_end_Cooking_Kits
-    Name: Professional Cooking Kit
-    Type: Usable
-    Buy: 2000
-    Weight: 50
-    Flags:
-      BuyingStore: true
-    Script: |
-      cooking 13;
-  - Id: 12128
-    AegisName: Imperial_Cooking_Kits
-    Name: Royal Cooking Kit
-    Type: Usable
-    Buy: 5000
-    Weight: 70
-    Flags:
-      BuyingStore: true
-    Script: |
-      cooking 14;
-  - Id: 12129
-    AegisName: Fantastic_Cooking_Kits
-    Name: Fantastic Cooking Kit
-    Type: Usable
-    Buy: 10000
-    Weight: 70
-    Flags:
-      BuyingStore: true
-    Script: |
-      cooking 15;
   - Id: 12130
     AegisName: Cookie_Bag
     Name: Cookie Bag
@@ -9413,7 +9365,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_SAVAGE_STEAK,300000,20;
+      sc_start4 SC_WELLFED, 1800000, 5, 10, 10, 12429;
+      sc_start SC_WELLFED_STR, INFINITE_TICK, 10;
   - Id: 12430
     AegisName: Wug_Blood_Cocktail
     Name: Cocktail Warg Blood
@@ -9422,7 +9375,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_COCKTAIL_WARG_BLOOD,300000,20;
+      sc_start4 SC_WELLFED, 1800000, 5, 10, 10, 12430;
+      sc_start SC_WELLFED_INT, INFINITE_TICK, 10;
   - Id: 12431
     AegisName: Minor_Brisket
     Name: Minor Stew
@@ -9431,7 +9385,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_MINOR_BBQ,300000,20;
+      sc_start4 SC_WELLFED, 1800000, 5, 10, 10, 12431;
+      sc_start SC_WELLFED_VIT, INFINITE_TICK, 10;
   - Id: 12432
     AegisName: Siroma_Icetea
     Name: Siroma Iced Tea
@@ -9440,7 +9395,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_SIROMA_ICE_TEA,300000,20;
+      sc_start4 SC_WELLFED, 1800000, 5, 10, 10, 12432;
+      sc_start SC_WELLFED_DEX, INFINITE_TICK, 10;
   - Id: 12433
     AegisName: Drocera_Herb_Stew
     Name: Drosera Herb Salad
@@ -9449,7 +9405,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DROCERA_HERB_STEAMED,300000,20;
+      sc_start4 SC_WELLFED, 1800000, 5, 10, 10, 12433;
+      sc_start SC_WELLFED_AGI, INFINITE_TICK, 10;
   - Id: 12434
     AegisName: Petti_Tail_Noodle
     Name: Petite Tail Noodles
@@ -9458,7 +9415,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_PUTTI_TAILS_NOODLES,300000,20;
+      sc_start4 SC_WELLFED, 1800000, 5, 10, 10, 12434;
+      sc_start SC_WELLFED_LUK, INFINITE_TICK, 10;
   - Id: 12435
     AegisName: Black_Thing
     Name: Black Mass

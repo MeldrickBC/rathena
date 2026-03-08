@@ -5896,12 +5896,38 @@ void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 ds
 		p.element = ELE_NEUTRAL;
 	}
 
-#if PACKETVER_MAIN_NUM >= 20091124 || PACKETVER_RE_NUM >= 20091124 || defined(PACKETVER_ZERO)
-	p.disposable = false;
-#endif
+//#if PACKETVER_MAIN_NUM >= 20091124 || PACKETVER_RE_NUM >= 20091124 || defined(PACKETVER_ZERO)
+//	p.disposable = false;
+//#endif
+	if (src.type == BL_PC)
+		p.disposable = true;
+	else
+		p.disposable = false;
 #if PACKETVER_MAIN_NUM >= 20181212 || PACKETVER_RE_NUM >= 20181212 || PACKETVER_ZERO_NUM >= 20190130
 	p.attackMT = 0;
 #endif
+	if (skill_id >= 1100 && skill_id < 2000) {
+		switch (property) {
+			case ELE_WATER:
+				p.skillId = MG_COLDBOLT;
+				break;
+			case ELE_EARTH:
+				p.skillId = WZ_EARTHSPIKE;
+				break;
+			case ELE_FIRE:
+				p.skillId = MG_FIREBOLT;
+				break;
+			case ELE_WIND:
+				p.skillId = MG_LIGHTNINGBOLT;
+				break;
+			case ELE_HOLY:
+				p.skillId = AL_HOLYLIGHT;
+				break;
+			case ELE_GHOST:
+				p.skillId = MG_SOULSTRIKE;
+				break;
+		}
+	}	
 
 	if (disguised(&src)) {
 		clif_send(&p,sizeof(p), &src, AREA_WOS);
@@ -6027,7 +6053,7 @@ void clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sde
 	if (damage != DMGVAL_IGNORE && type == DMG_SINGLE)
 		type = DMG_MULTI_HIT;
 #endif
-	packet.action = static_cast<decltype(packet.action)>(type);
+	packet.action = static_cast<decltype(packet.action)>(type);	
 
 	if (disguised(&dst)) {
 		clif_send( &packet, sizeof( packet ), &dst, AREA_WOS );
@@ -11653,7 +11679,7 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 	emotion_type emoticon = static_cast<emotion_type>( p->emotion_type );
 #endif
 
-	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2 || pc_checkskill(sd, SU_BASIC_SKILL) >= 1) {
+	//if (battle_config.basic_skill_check == 0 /*|| pc_checkskill(sd, NV_BASIC) >= 2*/ || pc_checkskill(sd, SU_BASIC_SKILL) >= 1) {
 		if (emoticon == ET_CHAT_PROHIBIT) {// prevent use of the mute emote [Valaris]
 			clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 1 );
 			return;
@@ -11683,8 +11709,8 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 		}
 
 		clif_emotion( *sd, emoticon );
-	} else
-		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 1 );
+	//} else
+	//	clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 1 );
 }
 
 
@@ -11756,10 +11782,10 @@ void clif_parse_ActionRequest_sub( map_session_data& sd, uint8 action_type, int3
 		unit_attack(&sd, target_id, action_type != 0);
 		break;
 	case DMG_SIT_DOWN: // sitdown
-		if (battle_config.basic_skill_check && pc_checkskill(&sd, NV_BASIC) < 3 && pc_checkskill(&sd, SU_BASIC_SKILL) < 1) {
-			clif_skill_fail( sd, 1, USESKILL_FAIL_LEVEL, 2 );
-			break;
-		}
+		//if (battle_config.basic_skill_check && pc_checkskill(&sd, NV_BASIC) < 3 && pc_checkskill(&sd, SU_BASIC_SKILL) < 1) {
+		//	clif_skill_fail( sd, 1, USESKILL_FAIL_LEVEL, 2 );
+		//	break;
+		//}
 
 		if(pc_issit(&sd)) {
 			//Bugged client? Just refresh them.
@@ -12395,10 +12421,10 @@ void clif_parse_CreateChatRoom( int32 fd, map_session_data* sd){
 		return;
 	}
 
-	if(battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 4 && pc_checkskill(sd, SU_BASIC_SKILL) < 1) {
-		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 3 );
-		return;
-	}
+	//if (battle_config.basic_skill_check && pc_checkskill(sd, NV_BASIC) < 4 && pc_checkskill(sd, SU_BASIC_SKILL) < 1) {
+	//	clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 3 );
+	//	return;
+	//}
 
 	if( npc_isnear(sd) ) {
 		// uncomment to send msg_txt.
@@ -12532,10 +12558,10 @@ void clif_parse_TradeRequest(int32 fd,map_session_data *sd)
 		}
 	}
 
-	if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 1 && pc_checkskill(sd, SU_BASIC_SKILL) < 1) {
-		clif_skill_fail( *sd, 1 );
-		return;
-	}
+	//if (battle_config.basic_skill_check && pc_checkskill(sd, NV_BASIC) < 1 && pc_checkskill(sd, SU_BASIC_SKILL) < 1) {
+	//	clif_skill_fail( *sd, 1 );
+	//	return;
+	//}
 
 	trade_traderequest(sd,t_sd);
 }
@@ -13520,7 +13546,7 @@ void clif_parse_AutoSpell(int32 fd,map_session_data *sd)
 			clif_specialeffect(target, EF_GUARD2, SELF);
 	}
 	else if (sd->menuskill_id == SA_AUTOSPELL) {
-	sd->state.workinprogress = WIP_DISABLE_NONE;
+		sd->state.workinprogress = WIP_DISABLE_NONE;
 
 		const PACKET_CZ_SELECTAUTOSPELL* p = reinterpret_cast<PACKET_CZ_SELECTAUTOSPELL*>(RFIFOP(fd, 0));
 
@@ -13529,7 +13555,7 @@ void clif_parse_AutoSpell(int32 fd,map_session_data *sd)
 	else
 		return;
 
-	clif_menuskill_clear(sd);
+	clif_menuskill_clear(sd);	
 }
 
 
@@ -13837,10 +13863,10 @@ void clif_parse_CreateParty(int32 fd, map_session_data *sd){
 		clif_displaymessage(fd, msg_txt(sd,227));
 		return;
 	}
-	if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 7 && pc_checkskill(sd, SU_BASIC_SKILL) < 1 ) {
-		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 4 );
-		return;
-	}
+	//if (battle_config.basic_skill_check && pc_checkskill(sd, NV_BASIC) < 7 && pc_checkskill(sd, SU_BASIC_SKILL) < 1) {
+	//	clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 4 );
+	//	return;
+	//}
 
 	const PACKET_CZ_MAKE_GROUP* p = reinterpret_cast<PACKET_CZ_MAKE_GROUP*>( RFIFOP( fd, 0 ) );
 	char name[NAME_LENGTH];
@@ -13860,10 +13886,10 @@ void clif_parse_CreateParty2(int32 fd, map_session_data *sd){
 		clif_displaymessage(fd, msg_txt(sd,227));
 		return;
 	}
-	if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 7 && pc_checkskill(sd, SU_BASIC_SKILL) < 1 ) {
-		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 4 );
-		return;
-	}
+	//if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 7 && pc_checkskill(sd, SU_BASIC_SKILL) < 1 ) {
+	//	clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 4 );
+	//	return;
+	//}
 
 	const PACKET_CZ_MAKE_GROUP2* p = reinterpret_cast<PACKET_CZ_MAKE_GROUP2*>( RFIFOP( fd, 0 ) );
 	char name[NAME_LENGTH];

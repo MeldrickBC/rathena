@@ -1836,10 +1836,7 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 		// Assumptio increases DEF on RE mode, otherwise gives a reduction on the final damage. [Igniz]
 #ifndef RENEWAL
 		if( tsc->getSCE(SC_ASSUMPTIO) ) {
-			if( map_flag_vs(bl->m) )
-				damage = (int64)damage*2/3; //Receive 66% damage
-			else
-				damage /= 2; //Receive 50% damage
+			damage -= ((int64)damage * tsc->getSCE(SC_ASSUMPTIO)->val2) / 100; // -30% - 30 * buff efficiency
 		}
 #endif
 
@@ -2671,12 +2668,20 @@ void battle_consume_ammo(map_session_data*sd, int32 skill, int32 lv)
 
 	if (sd->equip_index[EQI_AMMO] >= 0) //Qty check should have been done in skill_check_condition
 		if (sd->bonus.ammo_efficiency > 0) {
-			if (qty == 1) {
-				if (rand() % 100 <= min(sd->bonus.ammo_efficiency, 100))
-					return;
+			int32 ammo_eff = min(sd->bonus.ammo_efficiency, 100);
+			float remainder = 0;
+
+			if (qty > 1) {
+				remainder = qty % (100 / ammo_eff);
+				qty -= qty * ammo_eff / 100;
 			}
-			else {
-				qty -= qty * min(sd->bonus.ammo_efficiency, 100) / 100;
+
+			if (qty == 1) {
+				if (remainder) {
+					ammo_eff = remainder;
+				}
+				if (rand() % 100 <= ammo_eff)
+					qty = 0;
 			}
 		}
 		pc_delitem(sd,sd->equip_index[EQI_AMMO],qty,0,1,LOG_TYPE_CONSUME);
@@ -2695,7 +2700,7 @@ static int32 battle_range_type(block_list *src, block_list *target, uint16 skill
 		case AM_DEMONSTRATION:
 			// When monsters use Arrow Shower or Bomb, it is always short range
 			if (src->type == BL_MOB)
-				return BF_SHORT;
+				return BF_LONG;
 			break;
 #ifdef RENEWAL
 		case KN_BRANDISHSPEAR:
@@ -3361,7 +3366,7 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 #endif
 			case RK_SONICWAVE:
 				hitrate += hitrate * 3 * skill_lv / 100; // !TODO: Confirm the hitrate bonus
-				break;
+				break;			
 			case AM_C_CARTCANNON_APPLE:
 			case AM_C_CARTCANNON_COCONUT:
 			case AM_C_CARTCANNON_MELON:
@@ -3955,6 +3960,14 @@ static void battle_calc_element_damage(struct Damage* wd, block_list *src, block
 
 		// Skill-specific bonuses
 		switch(skill_id) {
+			case PR_C_SACRUSIMPETUS_ATK: {
+				if (sd) {
+					int32 mindmg = sc->getSCE(SC_SACRUSIMPETUS)->val2;
+					int32 maxdmg = sc->getSCE(SC_SACRUSIMPETUS)->val3;				
+					wd->damage = battle_attr_fix(src, target, (rnd() % (maxdmg - mindmg) + mindmg + 1), ELE_HOLY, tstatus->def_ele, tstatus->ele_lv, 1);
+					break;
+				}
+			}
 			case TF_POISON:
 				ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
 				// Envenom applies the attribute table to the base damage and then again to the final damage
@@ -4438,7 +4451,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, block_list *src,blo
 				if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0) {
 					if( (i = party_foreachsamemap(party_sub_count, sd, 0)) > 1 ) { // exclude the player himself [Inkfish]
 						// Reduce count by one (self) [Tydus1]
-						i -= 1; 
+						i -= 1;
 						ATK_ADDRATE(wd->damage, wd->damage2, 2*skill*i);
 					}
 				}
@@ -4502,6 +4515,19 @@ static void battle_calc_multi_attack(struct Damage* wd, block_list *src,block_li
 
 	if( sd && !skill_id ) {	// if no skill_id passed, check for double attack [helvetica]
 		int16 i;
+
+		if (sc && sc->getSCE(SC_MULTIHITSHOT))
+		{
+			if (sc->getSCE(SC_MULTIHITSHOT)->val1 < sc->getSCE(SC_MULTIHITSHOT)->val2) {
+				sc->getSCE(SC_MULTIHITSHOT)->val1++;
+			}
+			else {
+				wd->div_ = sc->getSCE(SC_MULTIHITSHOT)->val3;
+				wd->type = DMG_MULTI_HIT;
+				sc->getSCE(SC_MULTIHITSHOT)->val1 = 0;
+			}
+		}
+
 		if(sc && sc->getSCE(SC_FEARBREEZE) && sd->weapontype1==W_BOW
 			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
 		{
@@ -4753,11 +4779,8 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += 10 * skill_lv; //Outer 5x5 circle takes 100%+10%*level damage [Playtester]
 			break;
 		case HT_POWER:
-			skillratio += 50 + 20 * skill_lv;
+			skillratio += 20 * skill_lv;
 			skillratio += (skillratio)*sstatus->str / 200;
-			if (tstatus && (tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT || tstatus->race == RC_DRAGON)) {
-				skillratio += skillratio * 0.2;
-			}
 			break;
 		case MA_DOUBLE:
 			skillratio += 10 * (skill_lv - 1);
@@ -8427,8 +8450,10 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 #endif
 				if(i > 700)
 					i = 700;
-				if(rnd()%1000 < i && !status_has_mode(tstatus,MD_STATUSIMMUNE))
+				if(rnd()%1000 < i && !status_has_mode(tstatus,MD_STATUSIMMUNE)) {
 					ad.damage = tstatus->hp;
+					clif_soundeffect(*src, "priest_turn_undead.wav", 0, AREA);
+				}
 				else {
 #ifdef RENEWAL
 					if (sstatus->matk_max > sstatus->matk_min) {
@@ -8547,9 +8572,12 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += 10 * skill_lv;
 						break;
 					case AL_HOLYLIGHT:
-						skillratio += 25;
-						if (sd && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_PRIEST)
-							skillratio *= 5; //Does 5x damage include bonuses from other skills?
+						skillratio += 50 * skill_lv;
+						break;
+						//if (sd && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_PRIEST)
+						//	skillratio *= 5; //Does 5x damage include bonuses from other skills?						
+					case HP_C_RADIUSLUCIS:
+						skillratio += 400 + 100 * skill_lv;
 						break;
 					case AL_RUWACH:
 						skillratio += 45;
@@ -10913,6 +10941,14 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 	damage = wd.damage + wd.damage2;
 	if( damage > 0 && src != target )
 	{
+		if (sc && sc->getSCE(SC_SACRUSIMPETUS)) {
+			uint16 procrate = 20 + 3 * sc->getSCE(SC_SACRUSIMPETUS)->val1;
+
+			if (rand() % 100 < procrate) {
+				skill_castend_damage_id(src, target, PR_C_SACRUSIMPETUS_ATK, sc->getSCE(SC_SACRUSIMPETUS)->val1, tick, flag | SD_LEVEL);		
+			}
+		}
+
 		if (sc && sc->getSCE(SC_DUPLELIGHT) && (wd.flag & BF_SHORT)) { // Activates only from regular melee damage. Success chance is seperate for both duple light attacks.
 			uint16 duple_rate = 10 + 2 * sc->getSCE(SC_DUPLELIGHT)->val1;
 
@@ -11054,30 +11090,27 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 		}
 	}
 
-	if (sd) {
+	if (sd) {		
 		if (pc_checkskill(sd, ST_C_SHADOWSPELLCAST) && sd->status.skill[sd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED) {
 			uint16 r_skill = sd->status.skill[sd->cloneskill_idx].id;
 			if (skill_get_type(r_skill) == BF_MAGIC) {
 				int r_lv = min(5 + (pc_checkskill(sd, ST_C_SHADOWSPELLCAST) / 2), sd->status.skill[sd->cloneskill_idx].lv);
-			int type = skill_get_casttype(r_skill);
+				int type = skill_get_casttype(r_skill);				
 				int sp = skill_get_sp(r_skill, r_lv);
 
 				int procchance = (type == CAST_GROUND) ? 5 : 10;
 				procchance += pc_checkskill(sd, ST_C_SHADOWSPELLCAST);
 				
 
-			if (rnd() % 100 < procchance) {
+				if (rnd() % 100 < procchance) {
 					if (type != CAST_NODAMAGE &&
 						DIFF_TICK(tick, sd->ud.canact_tick) >= 0 &&
 						sd->battle_status.sp >= sp) {
 					//&& util::umap_exists(sd, r_skill)
 					//&& skill_blockpc_get(sd, r_skill) == -1)
-					) {
-					int sp = skill_get_sp(r_skill, sk_idx);
 
-					if (sd->battle_status.sp >= sp) {
-						if (/*r_skill != AL_HOLYLIGHT && r_skill != PR_MAGNUS*/ 1) {
-							int r_lv = sk_idx;
+						if (/*r_skill != AL_
+							&& r_skill != PR_MAGNUS*/ 1) {							
 
 							if (type == CAST_GROUND) {
 								int maxcount = 0;
@@ -11100,26 +11133,26 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 									clif_skill_fail(*sd, r_skill);
 									map_freeblock_unlock();
 									return wd.dmg_lv;
-			}
+								}
 							}
 
 							if (sd->state.autocast == 0) {
 								sd->state.autocast = 1;
 								skill_consume_requirement(sd, r_skill, r_lv, 3);
 								switch (type) {
-								case CAST_GROUND:
-									if (!skill_castend_pos2(src, target->x, target->y, r_skill, r_lv, tick, flag)) {
-										status_charge(src, 0, sp);
-										clif_specialeffect_value(src, EF_DARKCASTING, 0, AREA);
+									case CAST_GROUND:
+										if (!skill_castend_pos2(src, target->x, target->y, r_skill, r_lv, tick, flag)) {
+											status_charge(src, 0, sp);
+											clif_specialeffect_value(src, EF_DARKCASTING, 0, AREA);
+										}
+										break;
+									case CAST_DAMAGE:
+										if (!skill_castend_damage_id(src, target, r_skill, r_lv, tick, flag)) {
+											status_charge(src, 0, sp);
+											clif_specialeffect_value(src, EF_DARKCASTING, 0, AREA);
+										}
+										break;
 									}
-									break;
-								case CAST_DAMAGE:
-									if (!skill_castend_damage_id(src, target, r_skill, r_lv, tick, flag)) {
-										status_charge(src, 0, sp);
-										clif_specialeffect_value(src, EF_DARKCASTING, 0, AREA);
-									}
-									break;
-								}
 							}
 							sd->state.autocast = 0;
 							sd->ud.canact_tick = i64max(tick + skill_delayfix(src, r_skill, r_lv), sd->ud.canact_tick);

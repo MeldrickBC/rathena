@@ -375,6 +375,8 @@ int32 skill_get_range2(block_list *bl, uint16 skill_id, uint16 skill_lv, bool is
  **/
 uint16 skill_dummy2skill_id(uint16 skill_id) {
 	switch (skill_id) {
+		case PR_C_SACRUSIMPETUS_ATK:
+			return PR_C_SACRUSIMPETUS;
 		case AB_DUPLELIGHT_MELEE:
 		case AB_DUPLELIGHT_MAGIC:
 			return AB_DUPLELIGHT;
@@ -2006,8 +2008,8 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			break;
 
 		}
-	}
-
+		break;
+	}		
 	case GN_SLINGITEM_RANGEMELEEATK:
 		if( sd ) {
 			switch( sd->itemid ) {	// Starting SCs here instead of do it in skill_additional_effect to simplify the code.
@@ -4047,6 +4049,15 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 			else
 				clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, dmg_type );
 			break;
+		case HP_C_RADIUSLUCIS:
+			clif_skill_damage(*dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, dmg_type);
+			break;
+		case PR_C_SACRUSIMPETUS_ATK: {
+			dmg.amotion = 200;
+			clif_skill_damage(*src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, BA_MUSICALSTRIKE, -1, DMG_SINGLE);
+			clif_specialeffect(bl, EF_HOLYHIT, AREA);
+			break;
+		}
 		case AB_DUPLELIGHT_MELEE:
 		case AB_DUPLELIGHT_MAGIC:
 			dmg.amotion = 300;/* makes the damage value not overlap with previous damage (when displayed by the client) */
@@ -4647,7 +4658,7 @@ static TIMER_FUNC(skill_timerskill){
 				case KN_AUTOCOUNTER:
 					clif_skill_nodamage(src,*target,skl->skill_id,skl->skill_lv);
 					break;
-				case RG_INTIMIDATE:
+				case RG_INTIMIDATE:					
 					unit_warp(target, -1, -1, -1, CLR_TELEPORT);
 					break;
 				case BA_FROSTJOKER:
@@ -5259,6 +5270,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 {
 	map_session_data *sd = nullptr;
 	status_change *sc, *tsc;
+	status_data* sstatus = status_get_status_data(*src);
 
 	if (skill_id > 0 && !skill_lv) return 0;
 
@@ -5379,6 +5391,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_CRITICALWOUND:
 	case NPC_HELLPOWER:
 	case RK_SONICWAVE:
+	case PR_C_SACRUSIMPETUS_ATK:
 	case AB_DUPLELIGHT_MELEE:
 	case RA_AIMEDBOLT:
 	case NC_BOOSTKNUCKLE:
@@ -5451,7 +5464,16 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
-
+	case HP_C_RADIUSLUCIS:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		if (skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag)) {
+			if (sd && pc_checkskill(sd, AL_DECAGI)) {
+				int32 DecAgiLv = pc_checkskill(sd, AL_DECAGI);
+				if (tsc && (!(tsc->getSCE(SC_DECREASEAGI))) && sc_start(src, bl, SC_DECREASEAGI, (50 + DecAgiLv * 3 + (status_get_lv(src) + sstatus->int_) / 5), DecAgiLv, skill_get_time(AL_DECAGI, DecAgiLv)))
+					clif_specialeffect(bl, EF_DECAGILITY, AREA);
+			}
+		}
+		break;
 	case SHC_ETERNAL_SLASH:
 		if( sc && sc->getSCE(SC_E_SLASH_COUNT) )
 			sc_start(src, src, SC_E_SLASH_COUNT, 100, min( 5, 1 + sc->getSCE(SC_E_SLASH_COUNT)->val1 ), skill_get_time(skill_id, skill_lv));
@@ -8527,6 +8549,39 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
+	case PR_C_SACRUSIMPETUS:
+		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
+
+			// Animations don't play when outside visible range
+			if (check_distance_bl(src, bl, AREA_SIZE) && src == bl)
+				clif_skill_nodamage(bl, *bl, skill_id, skill_lv);			
+
+			int32 mindmg = sstatus->matk_min + sstatus->batk;
+			int32 maxdmg = sstatus->matk_max + sstatus->batk;			
+
+			if (src->id != bl->id) {
+				mindmg /= 2;
+				maxdmg /= 2;								
+			}
+
+			mindmg += 50 + 5 * skill_lv;
+			maxdmg += 50 + 5 * skill_lv;
+
+			if (src->id != bl->id) {
+				if (dstsd) {
+					mindmg = mindmg * dstsd->status.base_level / 100;
+					maxdmg = maxdmg * dstsd->status.base_level / 100;
+				}
+			}	
+
+			if (maxdmg < mindmg)
+				maxdmg = mindmg;
+
+			sc_start4(src, bl, type, 100, skill_lv, mindmg, maxdmg, src->id, skill_get_time(skill_id, skill_lv));
+		}
+		else if (sd)
+			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 1, skill_castend_nodamage_id);
+		break;
 	case ST_PRESERVE: {
 		if (sc->getSCE(SC_PRESERVE))
 			status_change_end(src, SC_PRESERVE);
@@ -10313,8 +10368,13 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 					skill_get_time(SA_AUTOSPELL,skill_lv));
 		}
 		break;
-
 	case NV_COLLECT:
+		if (sd) {			
+			if (map_foreachinallrange(skill_greed, bl,
+				skill_get_splash(skill_id, skill_lv), BL_ITEM, bl))
+				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		}
+		break;
 	case BS_GREED:
 		if(sd){
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
@@ -10346,7 +10406,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 	case NPC_PROVOCATION:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (md) mob_unlocktarget(md, tick);
+		//if (md) mob_unlocktarget(md, tick);
 		break;
 
 	case NPC_REBIRTH:
@@ -10902,7 +10962,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 			if (rnd() % 100 > 40 ||
 #ifndef RENEWAL
-			(tsc && tsc->getSCE(SC_BASILICA)) ||
+			/*(tsc&& tsc->getSCE(SC_BASILICA)) ||*/
 #endif
 			(dstmd && ((dstmd->guardian_data && dstmd->mob_id == MOBID_EMPERIUM) || status_get_class_(bl) == CLASS_BATTLEFIELD)) ) {
 				if( sd )
@@ -12749,8 +12809,8 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 						if (ammo_id == ITEMID_BOMB_MUSHROOM_SPORE) {
 							clif_specialeffect(bl, EF_SPR_LIGHTPRINT2, AREA);
 							clif_specialeffect(bl, EF_SPR_LIGHTPRINT3, AREA);
-							int splashsize = skill_get_splash(AM_SPORE_EXPLOSION, skill_lv);
-							map_foreachinarea(skill_area_sub, bl->m, bl->x - splashsize, bl->y - splashsize, bl->x + splashsize, bl->y + splashsize, BL_CHAR, src, AM_SPORE_EXPLOSION, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
+							//int splashsize = skill_get_splash(AM_SPORE_EXPLOSION, skill_lv);
+							//map_foreachinarea(skill_area_sub, bl->m, bl->x - splashsize, bl->y - splashsize, bl->x + splashsize, bl->y + splashsize, BL_CHAR, src, AM_SPORE_EXPLOSION, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
 							/*if (dstsd)
 								clif_soundeffect(dstsd.id, "explosion1.wav", 0, AREA);
 							else if (dstmd)
@@ -16858,8 +16918,8 @@ static int32 skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick)
 
 	std::shared_ptr<s_skill_db> skill = skill_db.find(sg->skill_id);
 
-	if( (skill->inf2[INF2_ISSONG] || skill->inf2[INF2_ISENSEMBLE]) && map_getcell(bl->m, bl->x, bl->y, CELL_CHKBASILICA) )
-		return 0; //Songs don't work in Basilica
+	/*if ((skill->inf2[INF2_ISSONG] || skill->inf2[INF2_ISENSEMBLE]) && map_getcell(bl->m, bl->x, bl->y, CELL_CHKBASILICA))
+		return 0; //Songs don't work in Basilica*/
 
 	sc = status_get_sc(bl);
 
@@ -17077,10 +17137,10 @@ static int32 skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick)
 			{
 				int32 i = battle_check_target(bl, bl, BCT_ENEMY);
 
-				if (i > 0) {
+				/*if (i > 0) {
 					skill_blown(ss, bl, skill_get_blewcount(skill_id, sg->skill_lv), unit_getdir(bl), BLOWN_NONE);
 					break;
-				}
+				}*/
 				if (!sce && i <= 0)
 					sc_start4(ss, bl, type, 100, 0, 0, sg->group_id, ss->id, sg->limit);
 			}
@@ -17772,10 +17832,10 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 			{
 				int32 i = battle_check_target(unit, bl, BCT_ENEMY);
 
-				if (i > 0) {
+				/*if (i > 0) {
 					skill_blown(unit, bl, skill_get_blewcount(skill_id, sg->skill_lv), unit_getdir(bl), BLOWN_NONE);
 					break;
-				}
+				}*/
 				if (i <= 0 && (!tsc || !tsc->getSCE(SC_BASILICA)))
 					sc_start4(ss, bl, type, 100, 0, 0, sg->group_id, ss->id, sg->limit);
 			}
@@ -20078,10 +20138,6 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 			case BD_ENCORE:
 				require.sp = 0;
 				break;
-			case AL_HOLYLIGHT:
-				if(sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_PRIEST)
-					require.sp *= 5;
-				break;
 			case MO_KITRANSLATION:
 				//Spiritual Bestowment only uses spirit sphere when giving it to someone
 				require.spiritball = 0;
@@ -20687,8 +20743,6 @@ int32 skill_castfix_sc(block_list *bl, double time, uint8 flag)
 		if (sc->getSCE(SC_SUFFRAGIUM)) {
 			if(!(flag&2))
 				time -= time * sc->getSCE(SC_SUFFRAGIUM)->val2 / 100;
-			//Suffragium ends even if the skill is not affected by it
-			status_change_end(bl, SC_SUFFRAGIUM);
 		}
 	}
 

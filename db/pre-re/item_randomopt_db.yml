@@ -1030,72 +1030,80 @@ Body:
     Script: |
       bonus bCRate,getrandomoptinfo(ROA_VALUE);
   - Id: 255
-    Option: EMPTY
+    Option: DAMAGE_HIT_TARGET
     Script: |
       bonus bMaxHP,0;
   - Id: 256
-    Option: RES_RANDOM
+    Option: DAMAGE_HIT_USER
     Script: |
       bonus bMaxHP,0;
   - Id: 257
+    Option: EMPTY
+    Script: |
+      bonus bMaxHP,0;
+  - Id: 258
+    Option: RES_RANDOM
+    Script: |
+      bonus bMaxHP,0;
+  - Id: 259
     Option: RES_STATUS_STUN
     Script: |
       bonus2 bResEff,Eff_Stun,getrandomoptinfo(ROA_VALUE);
-  - Id: 258
+  - Id: 260
     Option: RES_STATUS_BLIND
     Script: |
       bonus2 bResEff,Eff_Blind,getrandomoptinfo(ROA_VALUE);
-  - Id: 259
+  - Id: 261
     Option: RES_STATUS_STONE
     Script: |
       bonus2 bResEff,Eff_Stone,getrandomoptinfo(ROA_VALUE);
-  - Id: 260
+  - Id: 262
     Option: RES_STATUS_BLEED
     Script: |
       bonus2 bResEff,Eff_Stun,getrandomoptinfo(ROA_VALUE);
-  - Id: 261
+  - Id: 263
     Option: RES_STATUS_SLEEP
     Script: |
       bonus2 bResEff,Eff_Sleep,getrandomoptinfo(ROA_VALUE);
-  - Id: 262
+  - Id: 264
     Option: RES_STATUS_SILENCE
     Script: |
       bonus2 bResEff,Eff_Silence,getrandomoptinfo(ROA_VALUE);
-  - Id: 263
+  - Id: 265
     Option: RES_STATUS_FREEZE
     Script: |
       bonus2 bResEff,Eff_Freeze,getrandomoptinfo(ROA_VALUE);
-  - Id: 264
+  - Id: 266
     Option: RES_STATUS_CURSE
     Script: |
       bonus2 bResEff,Eff_Curse,getrandomoptinfo(ROA_VALUE);
-  - Id: 265
+  - Id: 267
     Option: RES_STATUS_POISON
     Script: |
       bonus2 bResEff,Eff_Poison,getrandomoptinfo(ROA_VALUE);
-  - Id: 266
+  - Id: 268
     Option: RES_STATUS_CONFUSION
     Script: |
       bonus2 bResEff,Eff_Confusion,getrandomoptinfo(ROA_VALUE);
-  - Id: 267
+  - Id: 269
     Option: MAGIC_ATTACK_DAMAGE_USER
     Script: |
       bonus bMagicAtkDef,getrandomoptinfo(ROA_VALUE);
-  - Id: 268
+  - Id: 270
     Option: MOVEMENT_SPEED
     Script: |
       bonus bSpeedAddRate,getrandomoptinfo(ROA_VALUE);
-  - Id: 269
+  - Id: 271
     Option: MAX_WEIGHT
     Script: |
       bonus bAddMaxWeight,getrandomoptinfo(ROA_VALUE)*10;
-  - Id: 270
+  - Id: 272
     Option: VAR_HYBRID
     Script: |
       bonus bAtk,getrandomoptinfo(ROA_VALUE);
       bonus bMatk,getrandomoptinfo(ROA_VALUE);
-  - Id: 271
+  - Id: 273
     Option: VAR_HYBRIDPERCENT
     Script: |
       bonus bAtkRate,getrandomoptinfo(ROA_VALUE);
-      bonus bMatkRate,getrandomoptinfo(ROA_VALUE);
+      bonus bMatkRate,getrandomoptinfo(ROA_VALUE);      

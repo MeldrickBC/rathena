@@ -3361,37 +3361,38 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		// Ore Discovery (triggers if owner has loot priority, does not require to be the killer)
 		if (first_sd != nullptr && pc_checkskill(first_sd, BS_FINDINGORE) > 0) {
 			std::shared_ptr<s_mob_drop> mobdrop = std::make_shared<s_mob_drop>();
+			if (rnd() % 100 < 5) {
+				int oreroll = rnd() % 10000;
 
-			int oreroll = rnd() % 10000;
+				if (oreroll == 0) {
+					mobdrop->nameid = ITEMID_EMPERIUM;
+				}
+				else if (oreroll <= 500) {
+					mobdrop->nameid = ITEMID_ORIDECON_STONE;
+				}
+				else if (oreroll <= 1000) {
+					mobdrop->nameid = ITEMID_ELUNIUM_STONE;
+				}
+				else if (oreroll <= 2500) {
+					//ITEMID_BLOODY_RED = 990,
+					//ITEMID_CRYSTAL_BLUE = 991,
+					//ITEMID_WIND_OF_VERDURE = 992,
+					//ITEMID_YELLOW_LIVE = 993,
+					mobdrop->nameid = rnd() % 4 + ITEMID_BLOODY_RED;
+				}
+				else if (oreroll <= 3500) {
+					mobdrop->nameid = ITEMID_SPARKLING_DUST;
+				}
+				else if (oreroll <= 7000) {
+					mobdrop->nameid = ITEMID_COAL;
+				}
+				else
+					mobdrop->nameid = ITEMID_IRON_ORE;
 
-			if (oreroll == 0) {
-				mobdrop->nameid = ITEMID_EMPERIUM;
-			}
-			else if (oreroll <= 500) {
-				mobdrop->nameid = ITEMID_ORIDECON_STONE;
-			}
-			else if (oreroll <= 1000) {
-				mobdrop->nameid = ITEMID_ELUNIUM_STONE;
-			}
-			else if (oreroll <= 2500) {
-				//ITEMID_BLOODY_RED = 990,
-				//ITEMID_CRYSTAL_BLUE = 991,
-				//ITEMID_WIND_OF_VERDURE = 992,
-				//ITEMID_YELLOW_LIVE = 993,
-				mobdrop->nameid = rnd() % 4 + ITEMID_BLOODY_RED;
-			}
-			else if (oreroll <= 3500) {
-				mobdrop->nameid = ITEMID_SPARKLING_DUST;
-			}
-			else if (oreroll <= 7000) {
-				mobdrop->nameid = ITEMID_COAL;
-			}
-			else
-				mobdrop->nameid = ITEMID_IRON_ORE;
+				std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
 
-			std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
-
-			mob_item_drop(md, dlist, ditem, 0, mobdrop->rate, homkillonly || merckillonly);
+				mob_item_drop(md, dlist, ditem, 0, mobdrop->rate, homkillonly || merckillonly);
+			}
 
 		}
 

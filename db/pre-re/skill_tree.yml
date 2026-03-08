@@ -223,7 +223,7 @@ Body:
           - Name: AL_HEAL
             Level: 2
       - Name: AL_HOLYLIGHT
-        MaxLevel: 1
+        MaxLevel: 10
   - Job: Merchant
     Inherit:
       Novice: true
@@ -406,20 +406,11 @@ Body:
             Level: 1
           - Name: PR_IMPOSITIO
             Level: 3
-      - Name: PR_BENEDICTIO
-        MaxLevel: 5
-        Requires:
-          - Name: PR_GLORIA
-            Level: 3
-          - Name: PR_ASPERSIO
-            Level: 5
       - Name: PR_SANCTUARY
         MaxLevel: 10
         Requires:
           - Name: AL_HEAL
             Level: 1
-      - Name: PR_SLOWPOISON
-        MaxLevel: 4
       - Name: PR_STRECOVERY
         MaxLevel: 1
       - Name: PR_KYRIE
@@ -464,6 +455,16 @@ Body:
             Level: 3
       - Name: PR_REDEMPTIO
         MaxLevel: 1
+        Requires:
+          - Name: ALL_RESURRECTION
+            Level: 4
+      - Name: PR_C_SACRUSIMPETUS
+        MaxLevel: 10
+        Requires:
+          - Name: PR_MACEMASTERY
+            Level: 5
+          - Name: PR_ASPERSIO
+            Level: 1
   - Job: Wizard
     Inherit:
       Novice: true
@@ -714,7 +715,7 @@ Body:
           - Name: HT_FALCON
             Level: 1
       - Name: HT_POWER
-        MaxLevel: 5
+        MaxLevel: 10
         Requires:
           - Name: AC_DOUBLE
             Level: 10
@@ -1171,7 +1172,7 @@ Body:
             Level: 4
           - Name: RG_RAID
             Level: 5
-          - Name: RG_GANGSTER
+      - Name: RG_GANGSTER
         MaxLevel: 5
         Requires:
           - Name: RG_STEALCOIN
@@ -1191,16 +1192,16 @@ Body:
       Novice: true
       Merchant: true
     Tree:
-      - Name: GN_REMODELING_CART
-        MaxLevel: 5
-        Requires:
-          - Name: MC_PUSHCART
-            Level: 10        
-      - Name: GN_CARTCANNON
+      - Name: AM_C_CARTUPGRADE
         MaxLevel: 10
         Requires:
-          - Name: GN_REMODELING_CART
-            Level: 2
+          - Name: MC_PUSHCART
+            Level: 10
+      - Name: AM_C_CARTCANNON
+        MaxLevel: 10
+        Requires:
+          - Name: AM_C_CARTUPGRADE
+            Level: 1
       - Name: AM_LEARNINGPOTION
         MaxLevel: 10
       - Name: AM_PHARMACY
@@ -1218,8 +1219,8 @@ Body:
         Requires:
           - Name: AM_PHARMACY
             Level: 5
-      - Name: GN_SLINGITEM
-        MaxLevel: 10
+      - Name: AM_POTIONPITCHER
+        MaxLevel: 5
         Requires:
           - Name: AM_PHARMACY
             Level: 3
@@ -2018,11 +2019,6 @@ Body:
       Acolyte: true
       Priest: true
     Tree:
-      - Name: PR_SLOWPOISON
-        MaxLevel: 4
-        Requires:
-          - Name: PR_STRECOVERY
-            Level: 1
       - Name: HP_ASSUMPTIO
         MaxLevel: 5
         Requires:
@@ -2050,12 +2046,10 @@ Body:
             Level: 5
           - Name: PR_LEXDIVINA
             Level: 5
-      - Name: HP_MANARECHARGE
-        MaxLevel: 5
+      - Name: HP_C_RADIUSLUCIS
+        MaxLevel: 10
         Requires:
-          - Name: PR_MACEMASTERY
-            Level: 10
-          - Name: AL_DEMONBANE
+          - Name: AL_HOLYLIGHT
             Level: 10
   - Job: High_Wizard
     Inherit:
@@ -2454,11 +2448,11 @@ Body:
            # Level: 6
          # - Name: ST_REJECTSWORD
            # Level: 2
-      #- Name: CR_SLIMPITCHER
-      #  MaxLevel: 10
-      #  Requires:
-      #    - Name: AM_POTIONPITCHER
-      #      Level: 5
+      - Name: CR_SLIMPITCHER
+        MaxLevel: 10
+        Requires:
+          - Name: AM_POTIONPITCHER
+            Level: 5
       - Name: CR_FULLPROTECTION
         MaxLevel: 5
         Requires:

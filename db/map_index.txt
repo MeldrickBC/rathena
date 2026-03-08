@@ -1297,3 +1297,24 @@ ygg_roots
 //======================================================================================
 // - Other/Extra maps -
 //======================================================================================
+//ZERO
+
+1@darv
+1@hrung
+1@ktull
+1@pop2_1
+1@thz
+1@tlab
+1@w_raid
+ice_dun03z
+ice_dun03_
+ice_dun04z
+ice_dun05z
+ice_dun05z_
+ice_dun06z
+thor_v03z
+thor_v04z
+thor_v04z_
+thor_v05z
+thor_v06z
+thor_v07z

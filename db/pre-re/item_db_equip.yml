@@ -2582,8 +2582,6 @@ Body:
     WeaponLevel: 1
     EquipLevelMin: 1
     Refineable: true
-    Script: |
-      skill "NC_AXETORNADO",5;
   - Id: 1202
     AegisName: Knife_
     Name: Knife
@@ -15929,6 +15927,7 @@ Body:
     Weight: 1500
     Attack: 125
     Range: 5
+    Slots: 1
     Jobs:
       Hunter: true
     Locations:
@@ -15945,12 +15944,13 @@ Body:
     Weight: 500
     Attack: 75
     Range: 11
+    Slots: 1
     Jobs:
       Thief: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
-    EquipLevelMin: 48
+    EquipLevelMin: 40
     Refineable: true
   - Id: 1720
     AegisName: Bow_Of_Rudra
@@ -16000,6 +16000,10 @@ Body:
     WeaponLevel: 3
     EquipLevelMin: 65
     Refineable: true
+    EquipScript: |
+      sc_start4 SC_MULTIHITSHOT,INFINITE_TICK,0,3,3,0;
+    UnEquipScript: |
+      sc_end SC_MULTIHITSHOT;
   - Id: 1722
     AegisName: Balistar
     Name: Ballista
@@ -16066,7 +16070,7 @@ Body:
     SubType: Bow
     Buy: 20
     Weight: 1700
-    Attack: 120
+    Attack: 100
     Range: 5
     Slots: 1
     Jobs:
@@ -16075,11 +16079,12 @@ Body:
     Locations:
       Both_Hand: true
     WeaponLevel: 4
-    EquipLevelMin: 70
+    EquipLevelMin: 50
     Refineable: true
     Script: |
       bonus bInt,2;
       bonus bSPrecovRate,10;
+      bonus bPerformBow,1;
   - Id: 1726
     AegisName: Hunter_Bow_
     Name: Hunter Bow
@@ -16089,7 +16094,7 @@ Body:
     Weight: 1500
     Attack: 125
     Range: 5
-    Slots: 1
+    Slots: 2
     Jobs:
       Hunter: true
     Locations:
@@ -58713,6 +58718,7 @@ Body:
       bonus bDex,1;
       bonus4 bAutoSpellOnSkill,"RG_BACKSTAP","SM_BASH",10,100;
       bonus2 bSkillAtk,"RG_BACKSTAP",20;
+      bonus bBackstapTeleport,1;
   - Id: 13039
     AegisName: Ivory_Knife
     Name: Ivory Knife
@@ -59515,12 +59521,10 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
-    Classes:
-      All_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
-    EquipLevelMin: 120
+    EquipLevelMin: 70
     Refineable: true
     Script: |
       bonus bMaxSP,100;
@@ -77690,8 +77694,6 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
-    Classes:
-      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3

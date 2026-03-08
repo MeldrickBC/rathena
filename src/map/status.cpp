@@ -3973,6 +3973,10 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			wa->atk += sd->inventory_data[index]->atk;
 			if( info != nullptr ){
 				wa->atk2 += info->bonus / 100;
+				if (sd->inventory.u.items_inventory[index].enchantgrade > 0) {
+					int32 grade = sd->inventory.u.items_inventory[index].enchantgrade;
+					wa->atk2 += (grade * info->bonus / 200) / 2;
+				}
 
 #ifdef RENEWAL
 				if( enchantgrade_info != nullptr ){
@@ -3988,8 +3992,12 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 			wa->matk += sd->inventory_data[index]->matk;
 
-			if (info != nullptr) {				
+			if (info != nullptr) {
 				wa->matk += info->bonus / 200;
+				if (sd->inventory.u.items_inventory[index].enchantgrade > 0) {
+					int32 grade = sd->inventory.u.items_inventory[index].enchantgrade;
+					wa->matk += (grade * info->bonus / 200) / 2;
+				}
 			}
 #ifdef RENEWAL
 			if (sd->bonus.weapon_atk_rate)
@@ -4541,7 +4549,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 // ----- FLEE CALCULATION -----
 
 	// Absolute modifiers from passive skills
-	if((skill=pc_checkskill(sd,TF_MISS))>0)
+	if((skill=pc_checkskill(sd,TF_MISS))>0)	
 		base_status->flee += skill * 4;
 	if((skill=pc_checkskill(sd,MO_DODGE))>0)
 		base_status->flee += (skill*3) / 2;
@@ -7497,6 +7505,8 @@ uint16 status_calc_pseudobuff_matk( map_session_data* sd, status_change *sc, int
 	if (sce = sc->getSCE(SC_VOLCANO))
 		matk += sce->val2;
 #endif
+	if (sc->getSCE(SC_IMPOSITIO))
+		matk += sc->getSCE(SC_IMPOSITIO)->val2;
 	if (sce = sc->getSCE(SC_DORAM_MATK))
 		matk += sce->val1;
 	if (sce = sc->getSCE(SC_AQUAPLAY_OPTION))
@@ -8868,7 +8878,8 @@ static unsigned char status_calc_element_lv(block_list *bl, status_change *sc, i
 		return 1;
 	if(sc->getSCE(SC_STONE))
 		return 1;
-	if(sc->getSCE(SC_BENEDICTIO))
+	//if(sc->getSCE(SC_BENEDICTIO))
+	if (sc->getSCE(SC_BASILICA))
 		return 1;
 	if(sc->getSCE(SC_CHANGEUNDEAD))
 		return 1;
@@ -9611,6 +9622,7 @@ static int32 status_get_sc_interval(enum sc_type type)
 		case SC_DEATHHURT:
 		case SC_GRADUAL_GRAVITY:
 		case SC_KILLING_AURA:
+		case SC_BOSSFIND:
 		case SC_BOSSMAPINFO:
 			return 1000;
 		case SC_WINKCHARM:
@@ -9624,6 +9636,7 @@ static int32 status_get_sc_interval(enum sc_type type)
 		case SC_STONE:
 			return 5000;
 		case SC_BLEEDING:
+			return 5000;
 		case SC_TOXIN:
 			return 10000;
 		case SC_HELLS_PLANT:
@@ -10274,7 +10287,12 @@ bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 ra
 	view_data* vd = status_get_viewdata(bl);
 
 	map_session_data* s_sd = BL_CAST(BL_PC, src);
-	if (s_sd && s_sd->bonus.buff_duration > 0) {
+
+	if (type == SC_WELLFED) {
+		clif_specialeffect(bl, EF_LAMADAN, SELF);
+	}
+
+	if (s_sd && s_sd->bonus.buff_duration != 0) {
 		switch (type) {
 			//Swordsman
 		case SC_ENDURE:
@@ -10298,6 +10316,7 @@ bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 ra
 		case SC_IMPOSITIO:
 		case SC_SUFFRAGIUM:
 		case SC_ASPERSIO:
+		case SC_SACRUSIMPETUS:
 			//Hunter
 			//Assassin
 		case SC_ENCPOISON:
@@ -10465,10 +10484,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_KYRIE:
 		case SC_TUNAPARTY:
 			if (bl->type == BL_MOB)
-				return false;
-			break;
-		case SC_ADRENALINE:
-			if(sd && !pc_check_weapontype(sd,skill_get_weapontype(BS_ADRENALINE)))
 				return false;
 			break;
 		case SC_ADRENALINE2:
@@ -11056,6 +11071,9 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				val3 = (val1 / 2 + 5);
 			}
 			break;
+		case SC_ASSUMPTIO:
+			val2 = 30;
+			break;
 		case SC_MAGICPOWER:
 			val3 = 5 * val1; // Matk% increase
 #ifndef RENEWAL
@@ -11348,7 +11366,27 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			[[fallthrough]];
 		case SC_STONE:
 		case SC_POISON:
+			if (type == SC_POISON) {
+				val1 = src->id;
+				int wmatk = status_get_base_status(src)->rhw.matk + status_get_base_status(src)->lhw.matk;
+				int min = status_get_base_status(src)->matk_min + wmatk;
+				int max = status_get_base_status(src)->matk_max + wmatk;
+				val2 = (rnd() % (max - min + 1)) + min;
+				map_session_data* s_sd = BL_CAST(BL_PC, src);
+				if (s_sd)
+					val3 = s_sd->bonus.dot_damage_rate;
+			}
+			[[fallthrough]];
 		case SC_BLEEDING:
+			if (type == SC_BLEEDING) {
+				val1 = src->id;
+				int wpatk = status_get_base_status(src)->batk;
+				val2 = wpatk;
+				map_session_data* s_sd = BL_CAST(BL_PC, src);
+				if (s_sd)
+					val3 = s_sd->bonus.dot_damage_rate;
+			}
+			[[fallthrough]];
 		case SC_BURNING:
 		case SC_KILLING_AURA:
 		case SC_WINKCHARM:
@@ -11420,6 +11458,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 					break;
 			}
 			break;
+		case SC_BOSSFIND:
 		case SC_BOSSMAPINFO:
 			if( sd == nullptr ){
 				return false;
@@ -11789,17 +11828,24 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 #endif
 				}
 				else if (type == SC_ADRENALINE2 || type == SC_ADRENALINE) {
-					val3 = (val2) ? 300 : 200; // Aspd increase
 					if (s_sd) {
 						switch (s_sd->weapontype1) {
 						case W_1HAXE:
 						case W_2HAXE:
 						case W_MACE:
 						case W_2HMACE:
-							break;
+							val3 = 200;
+						case W_BOW:
+						case W_REVOLVER:
+						case W_RIFLE:
+						case W_GATLING:
+						case W_SHOTGUN:
+						case W_GRENADE:
+							val3 = 50;
 						default:
-							val3 /= 2;
+							val3 = 100;
 						}
+						val3 += (val2) ? 100 : 0; // Aspd increase
 					}
 				}
 				if (s_sd && pc_checkskill(s_sd, BS_HILTBINDING) > 0)
@@ -11819,7 +11865,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			break;
 		case SC_ANGELUS:
 			val2 = 5*val1; // def increase
-			break;
+			break;		
 		case SC_IMPOSITIO:
 			val2 = 5*val1; // WATK/MATK increase
 			break;
@@ -11988,7 +12034,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 #ifdef RENEWAL
 			val2 = 5 + val1 * 5; // Speed cast decrease
 #else
-			val2 = 15 * val1; // Speed cast decrease
+			val2 = 5 * val1; // Speed cast decrease
 #endif
 			break;
 		case SC_INCHEALRATE:
@@ -13199,7 +13245,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			val3 = 15000 * val1;
 			break;
 		case SC_FIRSTAID: {
-			val2 = val1;
+			val2 = val1 * 2;
 			if (sd) {
 				val3 = sd->status.max_hp;
 			}
@@ -13212,7 +13258,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				return false;
 			}
 	} else // Special considerations when loading SC data.
-		switch( type ) {
+		switch( type ) {			
 			case SC_WEDDING:
 			case SC_XMAS:
 			case SC_SUMMER:
@@ -13297,6 +13343,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_MAGNIFICAT:
 		case SC_IMPOSITIO:
 		case SC_SUFFRAGIUM:
+		case SC_SACRUSIMPETUS:
 			//Hunter
 			//Assassin
 			//Blacksmith
@@ -13545,6 +13592,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 					ud->state.running = unit_run(bl, nullptr, SC_RUN);
 			}
 			break;
+		case SC_BOSSFIND:
 		case SC_BOSSMAPINFO:
 			if( sd == nullptr ){
 				return false;
@@ -13561,7 +13609,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				// Boss is alive
 				}else if( boss_md->prev != nullptr ){
 					sce->val2 = 0;
-					clif_bossmapinfo( *sd, boss_md, BOSS_INFO_ALIVE_WITHMSG );
+					clif_bossmapinfo( *sd, boss_md, BOSS_INFO_ALIVE );
 				// Boss is dead
 				}else if( boss_md->spawn_timer != INVALID_TIMER ){
 					sce->val2 = 1;
@@ -14538,18 +14586,58 @@ TIMER_FUNC(status_change_timer){
 				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 50 : 2 + status->max_hp * 3 / 200;
 			else
 				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 100 : 2 + status->max_hp / 200;
-			if (status->hp > umax(status->max_hp / 4, damage)) // Stop damaging after 25% HP left.
-				status_zap(bl, damage, 0);
+			// if (status->hp > umax(status->max_hp / 4, damage)) // Stop damaging after 25% HP left.
+			//	status_zap(bl, damage, 0);
+
+			//Envenom now leaves at 1 HP
+			if (status->hp == 1) {
+				break;
+			}
+			if (damage > 0) {
+				if (damage > 1000)
+					damage = 1000;
+				damage += sce->val2;
+			}
+			else
+				break;
+			if (damage >= status->hp)
+				damage = status->hp - 1;
+			damage += damage * sce->val3 / 100;
+
+			struct block_list* src = map_id2bl(sce->val1);
+
+			if (src) {
+				status_fix_damage(src, bl, damage, 1, 0);
+				//status_fix_damage(src, bl, damage, clif_damage(*bl, *bl, sce->val4, 0, 1, damage, 1, DMG_NORMAL, 0, false), 0);
+			}
+			else {
+				status_fix_damage(bl, bl, damage, 1, 0);
+				//status_fix_damage(bl, bl, damage, clif_damage(*bl, *bl, sce->val4, 0, 1, damage, 1, DMG_NORMAL, 0, false), 0);
+			//static int status_fix_damage( struct block_list *src, struct block_list *target, int64 hp, t_tick walkdelay, uint16 skill_id ){
+			}
+			clif_damage(*bl, *bl, tick, 0, 1, damage, 1, DMG_NORMAL, 0, false);
 		}
 		break;
 
 	case SC_BLEEDING:
 		if (sce->val4 >= 0) {
-			int64 damage = rnd() % 600 + 200;
+			/*int64 damage = rnd() % 600 + 200;
 			if (!sd && damage >= status->hp)
 				damage = status->hp - 1; // No deadly damage for monsters
 			freeLock.lock();
-			status_zap(bl, damage, 0);
+			status_zap(bl, damage, 0);*/
+			uint32 damage = 0;
+			damage += sce->val2;			
+
+			struct block_list* src = map_id2bl(sce->val1);
+
+			if (src) {				
+				status_fix_damage(src, bl, damage, 1, 0);
+				//status_fix_damage(src, bl, damage, clif_damage(*bl, *bl, sce->val4, 0, 1, damage, 1, DMG_NORMAL, 0, false), 0);
+			}			
+			else
+				status_fix_damage(bl, bl, damage, 1, 0);
+			clif_damage(*bl, *bl, tick, 0, 1, damage, 1, DMG_NORMAL, 0, false);
 		}
 		break;
 
@@ -14672,6 +14760,7 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 
+	case SC_BOSSFIND:
 	case SC_BOSSMAPINFO:
 		if( sd && sce->val4 >= 0 ){
 			mob_data* boss_md = map_id2boss( sce->val1 );

@@ -3116,7 +3116,7 @@ uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_S
 	pc_getzeny(sd, (int32)z, LOG_TYPE_NPC);
 
 	// custom merchant shop exp bonus
-	if( battle_config.shop_exp > 0 && z > 0 && ( skill = pc_checkskill(sd,MC_OVERCHARGE) ) > 0)
+	/*if (battle_config.shop_exp > 0 && z > 0 && (skill = pc_checkskill(sd, MC_OVERCHARGE)) > 0)
 	{
 		uint16 sk_idx = skill_get_index(MC_OVERCHARGE);
 		if( sd->status.skill[sk_idx].flag >= SKILL_FLAG_REPLACED_LV_0 )
@@ -3129,7 +3129,7 @@ uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_S
 				z = 1;
 			pc_gainexp(sd, nullptr, 0, (int32)z, 0);
 		}
-	}
+	}*/
 
 	return 0;
 }

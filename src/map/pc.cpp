@@ -4036,7 +4036,9 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.atk_rate += val;
 #else
-			ShowError( "pc_bonus: %s is not supported in Pre-Renewal mode.\n", QUOTE( SP_ATK_RATE ) );
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->bonus.atk_rate += val;
+			//ShowError( "pc_bonus: %s is not supported in Pre-Renewal mode.\n", QUOTE( SP_ATK_RATE ) );
 #endif
 			break;
 		case SP_MAGIC_ATK_DEF:
@@ -4466,10 +4468,11 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
 				sd->bonus.itemsphealrate2 += val;
 			break;
-
 		case SP_AMMO_EFFICIENCY:
-			if (sd->state.lr_flag != 2)
+			if (sd->state.lr_flag != 2 && sd->bonus.ammo_efficiency < 100) {
 				sd->bonus.ammo_efficiency += val;
+				sd->bonus.ammo_efficiency = min(sd->bonus.ammo_efficiency, 100);
+			}
 			break;
 		case SP_BUFF_DURATION:
 			if (sd->state.lr_flag != 2)
@@ -4498,6 +4501,14 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 		case SP_REVERBERATION_ELEMENT:
 			if (sd->state.lr_flag != 2)
 				sd->bonus.reverberation_element = val;
+			break;
+		case SP_PERFORM_BOW:
+			if (sd->bonus.perform_bow < val)
+				sd->bonus.perform_bow = val;
+			break;
+		case SP_BACKSTAP_TELEPORT:
+			if (sd->bonus.backstap_teleport < val)
+				sd->bonus.backstap_teleport = val;
 			break;
 		default:
 			if (current_equip_combo_pos > 0) {
@@ -5708,10 +5719,10 @@ int32 pc_identifyall(map_session_data *sd, bool identify_item)
 int32 pc_modifybuyvalue(map_session_data *sd,int32 orig_value)
 {
 	int32 skill,val = orig_value,rate1 = 0,rate2 = 0;
-	if((skill=pc_checkskill(sd,MC_DISCOUNT))>0)	// merchant discount
+	/*if ((skill = pc_checkskill(sd, MC_DISCOUNT))>0)	// merchant discount
 		rate1 = 5+skill*2-((skill==10)? 1:0);
 	if((skill=pc_checkskill(sd,RG_COMPULSION))>0)	 // rogue discount
-		rate2 = 5+skill*4;
+		rate2 = 5+skill*4;*/
 	if(rate1 < rate2) rate1 = rate2;
 	if(rate1)
 		val = (int32)((double)orig_value*(double)(100-rate1)/100.);
@@ -5727,8 +5738,8 @@ int32 pc_modifybuyvalue(map_session_data *sd,int32 orig_value)
 int32 pc_modifysellvalue(map_session_data *sd,int32 orig_value)
 {
 	int32 skill,val = orig_value,rate = 0;
-	if((skill=pc_checkskill(sd,MC_OVERCHARGE))>0)	//OverCharge
-		rate = 5+skill*2-((skill==10)? 1:0);
+	/*if ((skill = pc_checkskill(sd, MC_OVERCHARGE))>0)	//OverCharge
+		rate = 5+skill*2-((skill==10)? 1:0);*/
 	if(rate)
 		val = (int32)((double)orig_value*(double)(100+rate)/100.);
 	if (val < battle_config.min_shop_sell)
@@ -9525,8 +9536,8 @@ int32 pc_resetskill(map_session_data* sd, int32 flag)
 		}
 
 		// do not reset basic skill
-		if (skill_id == NV_BASIC && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
-			continue;
+		//if (skill_id == NV_BASIC && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
+		//	continue;
 
 		if( sd->status.skill[idx].flag == SKILL_FLAG_PERM_GRANTED )
 			continue;
@@ -10335,7 +10346,8 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 #ifdef RENEWAL
 			val = sd->bonus.atk_rate;
 #else
-			ShowError( "pc_readparam: %s is not supported in Pre-Renewal mode.\n", QUOTE( SP_ATK_RATE ) );
+			val = sd->bonus.atk_rate;
+			// ShowError("pc_readparam: %s is not supported in Pre-Renewal mode.\n", QUOTE(SP_ATK_RATE));
 #endif
 			break;
 		case SP_MAGIC_ATK_DEF:   val = sd->bonus.magic_def_rate; break;
@@ -10430,6 +10442,8 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_DOT_DAMAGE_RATE: val = sd->bonus.dot_damage_rate; break;
 		case SP_SUMMON_POWER: val = sd->bonus.summon_power; break;
 		case SP_REVERBERATION_ELEMENT: val = sd->bonus.reverberation_element; break;
+		case SP_PERFORM_BOW: val = sd->bonus.perform_bow; break;
+		case SP_BACKSTAP_TELEPORT: val = sd->bonus.backstap_teleport; break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
 			return -1;

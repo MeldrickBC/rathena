@@ -31465,6 +31465,46 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true    
+  - Id: 12125
+    AegisName: Outdoor_Cooking_Kits
+    Name: Outdoor Cooking Kit
+    Type: Etc
+    Buy: 500
+    Weight: 20
+    Flags:
+      BuyingStore: true
+  - Id: 12126
+    AegisName: Indoor_Cooking_Kits
+    Name: Home Cooking Kit
+    Type: Etc
+    Buy: 1000
+    Weight: 30
+    Flags:
+      BuyingStore: true
+  - Id: 12127
+    AegisName: High_end_Cooking_Kits
+    Name: Professional Cooking Kit
+    Type: Etc
+    Buy: 2000
+    Weight: 50
+    Flags:
+      BuyingStore: true
+  - Id: 12128
+    AegisName: Imperial_Cooking_Kits
+    Name: Royal Cooking Kit
+    Type: Etc
+    Buy: 5000
+    Weight: 70
+    Flags:
+      BuyingStore: true
+  - Id: 12129
+    AegisName: Fantastic_Cooking_Kits
+    Name: Fantastic Cooking Kit
+    Type: Etc
+    Buy: 10000
+    Weight: 70
+    Flags:
+      BuyingStore: true
   - Id: 13200
     AegisName: Bullet
     Name: Bullet

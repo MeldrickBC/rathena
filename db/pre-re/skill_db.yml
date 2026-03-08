@@ -2181,7 +2181,7 @@ Body:
     Range: -4
     Hit: Single
     HitCount: 1
-    Element: Weapon
+    Element: Weapon    
     Knockback: 6
     CopyFlags:
       Skill:
@@ -2414,7 +2414,7 @@ Body:
     HitCount: 1
     CastCancel: true
     AfterCastActDelay: 3000
-    Duration1: 60000
+    Duration1: 150000
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -2449,11 +2449,11 @@ Body:
     AfterCastActDelay: 2000
     Duration1:
       - Level: 1
-        Time: 60000
+        Time: 150000
       - Level: 2
-        Time: 60000
+        Time: 150000
       - Level: 3
-        Time: 60000
+        Time: 150000
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -4147,22 +4147,6 @@ Body:
           Amount: 29
         - Level: 5
           Amount: 32
-      Weapon:
-        Dagger: true
-        1hSword: true
-        2hSword: true
-        1hSpear: true
-        2hSpear: true
-        1hAxe: true
-        2hAxe: true
-        Mace: true
-        2hMace: true
-        Staff: true
-        Knuckle: true
-        Musical: true
-        Whip: true
-        Book: true
-        Katar: true
     Status: Adrenaline
   - Id: 112
     Name: BS_WEAPONPERFECT
@@ -5561,11 +5545,9 @@ Body:
   - Id: 156
     Name: AL_HOLYLIGHT
     Description: Holy Light
-    MaxLevel: 1
+    MaxLevel: 10
     Type: Magic
     TargetType: Attack
-    Flags:
-      IsQuest: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -5574,9 +5556,49 @@ Body:
       Skill:
         Plagiarism: true
     CastCancel: true
-    CastTime: 2000
+    CastTime:
+      - Level: 1
+        Time: 1100
+      - Level: 2
+        Time: 1200
+      - Level: 3
+        Time: 1300
+      - Level: 4
+        Time: 1400
+      - Level: 5
+        Time: 1500
+      - Level: 6
+        Time: 1600
+      - Level: 7
+        Time: 1700
+      - Level: 8
+        Time: 1800
+      - Level: 9
+        Time: 1900
+      - Level: 10
+        Time: 2000
     Requires:
-      SpCost: 15
+      SpCost:
+        - Level: 1
+          Amount: 15
+        - Level: 2
+          Amount: 16
+        - Level: 3
+          Amount: 17
+        - Level: 4
+          Amount: 18
+        - Level: 5
+          Amount: 19
+        - Level: 6
+          Amount: 20
+        - Level: 7
+          Amount: 21
+        - Level: 8
+          Amount: 22
+        - Level: 9
+          Amount: 23
+        - Level: 10
+          Amount: 24
   - Id: 157
     Name: MG_ENERGYCOAT
     Description: Energy Coat
@@ -5585,8 +5607,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Flags:
-      IsQuest: true
     Hit: Single
     HitCount: 1
     CastCancel: true
@@ -6530,15 +6550,15 @@ Body:
       AlterRangeVulture: true
     Element: Weapon
     Cooldown:
-        - Level: 1
+      - Level: 1
         Time: 150000
-        - Level: 2
+      - Level: 2
         Time: 120000
-        - Level: 3
+      - Level: 3
         Time: 90000
-        - Level: 4
+      - Level: 4
         Time: 60000
-        - Level: 5
+      - Level: 5
         Time: 30000
     Requires:
       SpCost: 25
@@ -8955,6 +8975,7 @@ Body:
         - Level: 10
           Amount: 60
       Weapon:
+        Bow: true
         Musical: true
         Whip: true
     Status: Whistle
@@ -9002,6 +9023,7 @@ Body:
         - Level: 10
           Amount: 65
       Weapon:
+        Bow: true
         Musical: true
         Whip: true
     Status: AssnCros
@@ -9049,6 +9071,7 @@ Body:
         - Level: 10
           Amount: 85
       Weapon:
+        Bow: true
         Musical: true
         Whip: true
     Status: PoemBragi   
@@ -9096,6 +9119,7 @@ Body:
         - Level: 10
           Amount: 85
       Weapon:
+        Bow: true
         Musical: true
         Whip: true
     Status: AppleIdun
@@ -9236,6 +9260,7 @@ Body:
         - Level: 10
           Amount: 40
       Weapon:
+        Bow: true
         Musical: true
         Whip: true
     Status: Humming
@@ -9285,6 +9310,7 @@ Body:
         - Level: 10
           Amount: 55
       Weapon:
+        Bow: true
         Musical: true
         Whip: true
     Status: DontForgetMe
@@ -9332,6 +9358,7 @@ Body:
         - Level: 10
           Amount: 70
       Weapon:
+        Bow: true
         Musical: true
         Whip: true
     Status: Fortune
@@ -9380,6 +9407,7 @@ Body:
         - Level: 10
           Amount: 85
       Weapon:
+        Bow: true
         Musical: true
         Whip: true
     Status: Service4U
@@ -10101,10 +10129,6 @@ Body:
         - Level: 5
           Amount: 120
       ItemCost:
-        - Item: Yellow_Gemstone
-          Amount: 1
-        - Item: Red_Gemstone
-          Amount: 1
         - Item: Blue_Gemstone
           Amount: 1
         - Item: Holy_Water
@@ -13965,7 +13989,7 @@ Body:
   - Id: 499
     Name: HT_POWER
     Description: Power Strafing
-    MaxLevel: 5 
+    MaxLevel: 10
     Type: Weapon
     TargetType: Attack
     Flags:
@@ -18696,8 +18720,6 @@ Body:
     DamageFlags:
       NoDamage: true
       Splash: true
-    Flags:
-      IsQuest: true
     Hit: Single
     Element: Holy
     SplashArea: 14
@@ -18857,6 +18879,63 @@ Body:
         Time: 500
     Requires:
       SpCost: 0
+  - Id: 1101
+    Name: AL_C_HOLYLIGHT_MELEE
+    Description: Holy Light Melee
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    Range: -1
+    Hit: Single
+    HitCount: 1
+    Element: Holy
+    Duration2: 5000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 15
+        - Level: 2
+          Amount: 16
+        - Level: 3
+          Amount: 17
+        - Level: 4
+          Amount: 18
+        - Level: 5
+          Amount: 19
+        - Level: 6
+          Amount: 20
+        - Level: 7
+          Amount: 21
+        - Level: 8
+          Amount: 22
+        - Level: 9
+          Amount: 23
+        - Level: 10
+          Amount: 24
+      Weapon:
+        Fist: true
+        Dagger: true
+        1hSword: true
+        2hSword: true
+        1hSpear: true
+        2hSpear: true
+        1hAxe: true
+        2hAxe: true
+        Mace: true
+        2hMace: true
+        Staff: true
+        Knuckle: true
+        Musical: true
+        Whip: true
+        Book: true
+        Katar: true
+        Revolver: true
+        Rifle: true
+        Gatling: true
+        Shotgun: true
+        Grenade: true
+        Huuma: true
+    Status: Blind
   - Id: 1110
     Name: AM_SLINGSLIMPOTION
     Description: Slim Potion Pitcher
@@ -18871,16 +18950,105 @@ Body:
     Hit: Single
     HitCount: 1
     CastTime: 1000
-    AfterCastActDelay: 1000
-  - Id: 1111
-    Name: AM_SPORE_EXPLOSION
-    Description: Spore Explosion
+    AfterCastActDelay: 1000  
+  - Id: 1112
+    Name: AM_C_CARTUPGRADE
+    Description: Upgrade Cart
+    MaxLevel: 10
+  - Id: 1113
+    Name: AM_C_CARTCANNON
+    Description: Cart Cannon
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Support
+    Range: 11
+    Hit: Single
+    HitCount: 1
+    CastTime: 1500
+    Requires:
+      SpCost: 15
+  - Id: 1114
+    Name: AM_C_CARTCANNON_APPLE
+    Description: Cart Cannon Attack
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Range: 11
+    Hit: Single
+    HitCount: 1
+    Requires:
+      SpCost: 0
+    ItemCost:
+        - Item: Apple_Bomb
+          Amount: 1
+  - Id: 1115
+    Name: AM_C_CARTCANNON_COCONUT
+    Description: Cart Cannon Attack
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Range: 11
+    Hit: Single
+    HitCount: 1
+    Requires:
+      SpCost: 0
+    ItemCost:
+        - Item: Coconut_Bomb
+          Amount: 1
+  - Id: 1116
+    Name: AM_C_CARTCANNON_MELON
+    Description: Cart Cannon Attack
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Range: 11
+    Hit: Single
+    HitCount: 1
+    Requires:
+      SpCost: 0
+    ItemCost:
+        - Item: Melon_Bomb
+          Amount: 1
+  - Id: 1117
+    Name: AM_C_CARTCANNON_PINEAPPLE
+    Description: Cart Cannon Attack
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Range: 11
+    Hit: Single
+    HitCount: 1
+    Requires:
+      SpCost: 0
+    ItemCost:
+        - Item: Pineapple_Bomb
+          Amount: 1
+  - Id: 1118
+    Name: AM_C_CARTCANNON_BANANA
+    Description: Cart Cannon Attack
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Range: 11
+    Hit: Single
+    HitCount: 1
+    Requires:
+      SpCost: 0
+    ItemCost:
+        - Item: Banana_Bomb
+          Amount: 1
+  - Id: 1119
+    Name: AM_C_CARTCANNON_SPORE
+    Description: Cart Cannon Attack
     MaxLevel: 10
     Type: Misc
     TargetType: Attack
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+    ItemCost:
+        - Item: Bomb_Mushroom_Spore
+          Amount: 1
     Range: 11
     Hit: Multi_Hit
     HitCount: 2
@@ -18888,10 +19056,163 @@ Body:
     CastCancel: false
     Requires:
       SpCost: 0
+  - Id: 1197
+    Name: PR_C_SACRUSIMPETUS
+    Description: Sacrus Impetus
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: -1
+    Element: Holy
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 1000
+    Duration1:
+      - Level: 1
+        Time: 180000
+      - Level: 2
+        Time: 180000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 180000
+      - Level: 5
+        Time: 180000
+      - Level: 6
+        Time: 180000
+      - Level: 7
+        Time: 180000
+      - Level: 8
+        Time: 180000
+      - Level: 9
+        Time: 180000
+      - Level: 10
+        Time: 180000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 55
+        - Level: 2
+          Amount: 60
+        - Level: 3
+          Amount: 65
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 75
+        - Level: 6
+          Amount: 80
+        - Level: 7
+          Amount: 85
+        - Level: 8
+          Amount: 90
+        - Level: 9
+          Amount: 95
+        - Level: 10
+          Amount: 100
+      ItemCost:
+        - Item: Holy_Water
+          Amount: 1
+    Status: SacrusImpetus
+  - Id: 1198
+    Name: PR_C_SACRUSIMPETUS_ATK
+    Description: Sacrus Impetus Attack
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Attack
+    Range: -2
+    Hit: Multi_Hit
+    HitCount: -2
+    Element: Holy
   - Id: 1120
     Name: ST_C_SHADOWSPELLCAST
     Description: Shadow Spell Cast
+    MaxLevel: 10  
+  - Id: 1200
+    Name: HP_C_RADIUSLUCIS
+    Description: Radius Lucis
     MaxLevel: 10
+    Type: Magic
+    TargetType: Attack
+    Range: 11
+    Hit: Multi_Hit
+    HitCount: -5
+    Element: Holy
+    CastCancel: true
+    CastTime:
+      - Level: 1
+        Time: 2100
+      - Level: 2
+        Time: 2200
+      - Level: 3
+        Time: 2300
+      - Level: 4
+        Time: 2400
+      - Level: 5
+        Time: 2500
+      - Level: 6
+        Time: 2600
+      - Level: 7
+        Time: 2700
+      - Level: 8
+        Time: 2800
+      - Level: 9
+        Time: 2900
+      - Level: 10
+        Time: 3000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 8000
+      - Level: 2
+        Time: 9000
+      - Level: 3
+        Time: 10000
+      - Level: 4
+        Time: 11000
+      - Level: 5
+        Time: 12000
+      - Level: 6
+        Time: 13000
+      - Level: 7
+        Time: 14000
+      - Level: 8
+        Time: 15000
+      - Level: 9
+        Time: 16000
+      - Level: 10
+        Time: 17000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 26
+        - Level: 2
+          Amount: 32
+        - Level: 3
+          Amount: 38
+        - Level: 4
+          Amount: 44
+        - Level: 5
+          Amount: 50
+        - Level: 6
+          Amount: 56
+        - Level: 7
+          Amount: 62
+        - Level: 8
+          Amount: 68
+        - Level: 9
+          Amount: 74
+        - Level: 10
+          Amount: 80
+    Status: DecreaseAgi
   - Id: 2001
     Name: RK_ENCHANTBLADE
     Description: Enchant Blade
@@ -21888,6 +22209,7 @@ Body:
           Amount: 75
       Weapon:
         Bow: true
+    Status: FearBreeze
   - Id: 2235
     Name: RA_RANGERMAIN
     Description: Ranger Main
