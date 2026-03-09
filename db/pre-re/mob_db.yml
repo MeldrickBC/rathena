@@ -100618,8 +100618,8 @@ Body:
     Element: Poison
     ElementLevel: 4
     WalkSpeed: 120
-    AttackDelay: 600
-    AttackMotion: 200
+    AttackDelay: 750
+    AttackMotion: 576
     DamageMotion: 432
     Ai: 09
     Drops:
@@ -100711,8 +100711,8 @@ Body:
     Element: Dark
     ElementLevel: 4
     WalkSpeed: 180
-    AttackDelay: 1300
-    AttackMotion: 250
+    AttackDelay: 1500
+    AttackMotion: 1000
     DamageMotion: 360
     Ai: 09
     Drops:
@@ -100757,8 +100757,8 @@ Body:
     Element: Ghost
     ElementLevel: 4
     WalkSpeed: 180
-    AttackDelay: 1300
-    AttackMotion: 768
+    AttackDelay: 1500
+    AttackMotion: 1000
     DamageMotion: 360
     Ai: 09
     Drops:
@@ -100847,8 +100847,8 @@ Body:
     Element: Undead
     ElementLevel: 4
     WalkSpeed: 180
-    AttackDelay: 1300
-    AttackMotion: 170
+    AttackDelay: 1500
+    AttackMotion: 350
     DamageMotion: 360
     Ai: 09
     Drops:
