@@ -225559,7 +225559,7 @@ Body:
       bonus bDelayrate,-5;
       bonus bUseSPrate,5;
   - Id: 490475
-    AegisName: aegis_490475
+    AegisName: Chemical_Glove_ROC
     Name: Chemical Glove
     Type: Armor
     Weight: 100
@@ -225581,15 +225581,11 @@ Body:
       bonus bBaseAtk,5*.@a;
       bonus bMaxHPrate,2*.@a;
       bonus2 bSkillUseSP,"CR_ACIDDEMONSTRATION",.@a;
-      bonus2 bAddItemHealRate,501,100;
-      bonus2 bAddItemHealRate,502,100;
-      bonus2 bAddItemHealRate,503,100;
-      bonus2 bAddItemHealRate,504,100;
-      bonus2 bAddItemHealRate,547,100;
+      bonus2 bAddItemGroupHealRate,IG_CHEMICAL_GLOVE_ROC,100;
       bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",20*(BaseLevel/20);
       bonus2 bSkillAtk,"AM_ACIDTERROR",30*(BaseLevel/20);
   - Id: 490476
-    AegisName: aegis_490476
+    AegisName: Comp_Chemical_Glove_ROC
     Name: "[Not For Sale] Chemical Glove"
     Type: Armor
     Weight: 100
@@ -225618,11 +225614,7 @@ Body:
       bonus bBaseAtk,5*.@a;
       bonus bMaxHPrate,2*.@a;
       bonus2 bSkillUseSP,"CR_ACIDDEMONSTRATION",.@a;
-      bonus2 bAddItemHealRate,501,100;
-      bonus2 bAddItemHealRate,502,100;
-      bonus2 bAddItemHealRate,503,100;
-      bonus2 bAddItemHealRate,504,100;
-      bonus2 bAddItemHealRate,547,100;
+      bonus2 bAddItemGroupHealRate,IG_CHEMICAL_GLOVE_ROC,100;
       bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",20*(BaseLevel/20);
       bonus2 bSkillAtk,"AM_ACIDTERROR",30*(BaseLevel/20);
   - Id: 490479
