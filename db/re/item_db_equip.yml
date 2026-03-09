@@ -184832,6 +184832,81 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2817
+  - Id: 410587
+    AegisName: aegis_410587
+    Name: Mermaid Headphones (Global Cooldown)    # !todo check english name
+    Type: Armor
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 1254
+    Script: |
+      bonus bDelayrate,-8;
+      bonus bBaseAtk,20;
+      bonus bMatk,20;
+  - Id: 410588
+    AegisName: aegis_410588
+    Name: Mermaid Headphones (Variable Casting)    # !todo check english name
+    Type: Armor
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 1254
+    Script: |
+      bonus bVariableCastrate,-8;
+      bonus bBaseAtk,20;
+      bonus bMatk,20;
+  - Id: 410589
+    AegisName: aegis_410589
+    Name: Mermaid Headphones (MAXHP)    # !todo check english name
+    Type: Armor
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 1254
+    Script: |
+      bonus bMaxHPrate,8;
+      bonus bBaseAtk,20;
+      bonus bMatk,20;
+  - Id: 410590
+    AegisName: 26_3_MidHat1_
+    Name: Mermaid Headphones (Global Cooldown)    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 1254
+    Script: |
+      bonus bDelayrate,-4;
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 410591
+    AegisName: 26_3_MidHat2_
+    Name: Mermaid Headphones (Variable Casting)    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 1254
+    Script: |
+      bonus bVariableCastrate,-4;
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 410592
+    AegisName: 26_3_MidHat3_
+    Name: Mermaid Headphones (MAXHP)    # !todo check english name
+    Type: Armor
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 1254
+    Script: |
+      bonus bMaxHPrate,4;
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
   - Id: 420000
     AegisName: Isabella_Carrot
     Name: Isabella Carrot
