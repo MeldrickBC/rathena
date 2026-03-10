@@ -5260,9 +5260,12 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	FreeBlockLock freeLock;
 
 	switch(skill_id) {
-	case ITM_TOMAHAWK:
+	case ITM_TOMAHAWK:	
 	case AM_C_CARTCANNON:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+		break;
+	case PR_C_SACRUSIMPETUS_ATK:
+		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 	case DK_DRAGONIC_AURA:
 	case WH_WILD_WALK:
