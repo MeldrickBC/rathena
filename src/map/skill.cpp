@@ -18484,7 +18484,7 @@ int32 skill_check_condition_char_sub (block_list *bl, va_list ap)
 	} else if (is_ensemble) {
 			if (tsd->status.party_id && sd->status.party_id &&
 				tsd->status.party_id == sd->status.party_id &&
-				(tsd->class_ & MAPID_UPPERMASK) == MAPID_BARDDANCER &&
+				(tsd->class_ & MAPID_SECONDMASK) == MAPID_BARDDANCER &&
 				tsd->status.sex != sd->status.sex &&
 				!tsd->duel_group) {
 				p_sd[(*c)++] = tsd->id;
