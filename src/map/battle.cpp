@@ -8459,6 +8459,9 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 							}
 						}
 						break;
+					case HP_C_RADIUSLUCIS:
+						skillratio += 400 + 100 * skill_lv;
+						break;
 					case WZ_FROSTNOVA:
 #ifndef RENEWAL
 						skillratio += -100 + (100 + skill_lv * 10) * 2 / 3;
