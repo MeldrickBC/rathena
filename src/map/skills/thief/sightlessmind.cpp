@@ -15,7 +15,7 @@ void SkillSightlessMind::calculateSkillRatio(const Damage *wd, const block_list 
 #ifdef RENEWAL
 	base_skillratio += -100 + 50 + skill_lv * 150;
 #else
-	base_skillratio += 40 * skill_lv;
+	base_skillratio += 100 + 20 * skill_lv;
 #endif
 }
 
