@@ -18,5 +18,7 @@ void SkillBeastStrafing::castendDamageId(block_list* src, block_list* target, ui
 void SkillBeastStrafing::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
-	base_skillratio += -50 + 8 * sstatus->str;
+	//base_skillratio += -50 + 8 * sstatus->str;
+	base_skillratio += 20 * skill_lv;
+	base_skillratio += (base_skillratio * sstatus->str) / 300;
 }
