@@ -18852,7 +18852,7 @@ Body:
           Amount: 1
     Status: ElementalChange
   - Id: 1100
-    Name: NV_COLLECT
+    Name: NV_C_COLLECT
     Description: Collect
     MaxLevel: 5
     Type: Weapon

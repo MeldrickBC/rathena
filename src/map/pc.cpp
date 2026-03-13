@@ -6221,7 +6221,7 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 	nullpo_ret(sd);
 	nullpo_ret(fitem);
 
-	if (!check_distance_bl(fitem, sd, 2) && (sd->ud.skill_id != BS_GREED && sd->ud.skill_id != NV_COLLECT))
+	if (!check_distance_bl(fitem, sd, 2) && (sd->ud.skill_id != BS_GREED && sd->ud.skill_id != NV_C_COLLECT))
 		return false;	// Distance is too far
 
 	if (sd->sc.cant.pickup)

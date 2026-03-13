@@ -1653,35 +1653,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case SO_CLOUD_KILL:
 		sc_start(src, bl, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
  		break;
-	case AM_C_CARTCANNON_COCONUT:
-	case AM_C_CARTCANNON_MELON:
-	case AM_C_CARTCANNON_PINEAPPLE:
-	case AM_C_CARTCANNON_BANANA: {
-		if (sd) {
-			switch (sd->itemid) {
-			case ITEMID_COCONUT_BOMB:
-				sc_start(src, bl, SC_STUN, 20, skill_lv, 2000);
-				break;
-			case ITEMID_PINEAPPLE_BOMB:
-				sc_start(src, bl, SC_BLEEDING, 1000, skill_lv, 100000);
-				break;
-			case ITEMID_MELON_BOMB:
-				if (sc_start4(src, bl, SC_MELON_BOMB, 100, skill_lv, 20, 20, 0, 3000)) {
-					clif_specialeffect(bl, EF_DECAGILITY, AREA);
-				}
-				break;
-			case ITEMID_BANANA_BOMB: {
-				//sc_start(src, bl, SC_BANANA_BOMB_SITDOWN, sd->status.job_level + sstatus->luk, skill_lv, 500);
-				sc_start(src, bl, SC_TRICKDEAD, 100, skill_lv, 1000);
-				break;
-			}
-								   sd->itemid = 0;
-			}
-			break;
-
-		}
-		break;
-	}
 	case EL_WIND_SLASH:	// Non confirmed rate.
 		sc_start2(src,bl, SC_BLEEDING, 25, skill_lv, src->id, skill_get_time(skill_id,skill_lv));
 		break;
@@ -4839,29 +4810,13 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 	FreeBlockLock freeLock;
 
-	switch(skill_id) {
-	case PR_C_SACRUSIMPETUS_ATK:
-		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-	case ITM_TOMAHAWK:	
-	case AM_C_CARTCANNON:
-		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
+	switch(skill_id) {	
+	case ITM_TOMAHAWK:		
 	case TR_ROSEBLOSSOM:
 	case TR_RHYTHMSHOOTING:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-	case HP_C_RADIUSLUCIS:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		if (skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag)) {
-			if (sd && pc_checkskill(sd, AL_DECAGI)) {
-				int32 DecAgiLv = pc_checkskill(sd, AL_DECAGI);
-				if (tsc && (!(tsc->getSCE(SC_DECREASEAGI))) && sc_start(src, bl, SC_DECREASEAGI, (50 + DecAgiLv * 3 + (status_get_lv(src) + sstatus->int_) / 5), DecAgiLv, skill_get_time(AL_DECAGI, DecAgiLv)))
-					clif_specialeffect(bl, EF_DECAGILITY, AREA);
-			}
-		}
-		break;
+		break;	
 	case KN_CHARGEATK:
 		{
 		bool path = path_search_long(nullptr, src->m, src->x, src->y, bl->x, bl->y,CELL_CHKWALL);
@@ -4919,8 +4874,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	//Splash attack skills.
 	case NPC_SPLASHATTACK:
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
-		[[fallthrough]];
-	case AM_C_CARTCANNON_SPORE:
+		[[fallthrough]];	
 	case MA_SHOWER:
 	case NPC_PULSESTRIKE:
 	case NPC_PULSESTRIKE2:
@@ -6078,39 +6032,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
-	case PR_C_SACRUSIMPETUS:
-		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
-
-			// Animations don't play when outside visible range
-			if (check_distance_bl(src, bl, AREA_SIZE) && src == bl)
-				clif_skill_nodamage(bl, *bl, skill_id, skill_lv);			
-
-			int32 mindmg = sstatus->matk_min + sstatus->batk;
-			int32 maxdmg = sstatus->matk_max + sstatus->batk;			
-
-			if (src->id != bl->id) {
-				mindmg /= 2;
-				maxdmg /= 2;								
-			}
-
-			mindmg += 50 + 5 * skill_lv;
-			maxdmg += 50 + 5 * skill_lv;
-
-			if (src->id != bl->id) {
-				if (dstsd) {
-					mindmg = mindmg * dstsd->status.base_level / 100;
-					maxdmg = maxdmg * dstsd->status.base_level / 100;
-				}
-			}	
-
-			if (maxdmg < mindmg)
-				maxdmg = mindmg;
-
-			sc_start4(src, bl, type, 100, skill_lv, mindmg, maxdmg, src->id, skill_get_time(skill_id, skill_lv));
-		}
-		else if (sd)
-			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 1, skill_castend_nodamage_id);
-		break;
 	case ST_PRESERVE: {
 		if (sc->getSCE(SC_PRESERVE))
 			status_change_end(src, SC_PRESERVE);
@@ -6640,13 +6561,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			int32 sp = skill_get_sp(sd->skill_id_old,sd->skill_lv_old);
 			sc_start4(src,src,type,100,skill_lv,sd->skill_id_old,sd->skill_lv_old,0,skill_get_time(skill_id,skill_lv));
 			sd->skill_id_old = sd->skill_lv_old = 0;
-		}
-		break;
-	case NV_COLLECT:
-		if (sd) {
-			if (map_foreachinallrange(skill_greed, bl,
-				skill_get_splash(skill_id, skill_lv), BL_ITEM, bl))
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		}
 		break;
 	case RG_PLAGIARISM:
@@ -7995,53 +7909,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			map_foreachinallrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
 			clif_skill_nodamage(src,*src,skill_id,skill_lv);
 		}
-		break;
-	case AM_C_CARTCANNON: {
-		if (sd) {
-			i = sd->equip_index[EQI_AMMO];
-			if (i < 0)
-				break; // No ammo.
-			t_itemid ammo_id = sd->inventory_data[i]->nameid;
-			if (ammo_id == 0)
-				break;
-			sd->itemid = ammo_id;
-			if (itemdb_group.item_exists(IG_BOMB, ammo_id)) {
-				if (battle_check_target(src, bl, BCT_ENEMY) > 0) {// Only attack if the target is an enemy.
-					switch (ammo_id) {
-					case ITEMID_APPLE_BOMB:
-						skill_attack(BF_WEAPON, src, src, bl, AM_C_CARTCANNON_APPLE, skill_lv, tick, flag);
-						battle_consume_ammo(sd, AM_C_CARTCANNON_APPLE, skill_lv);
-						break;
-					case ITEMID_COCONUT_BOMB:
-						skill_attack(BF_WEAPON, src, src, bl, AM_C_CARTCANNON_COCONUT, skill_lv, tick, flag);
-						battle_consume_ammo(sd, AM_C_CARTCANNON_COCONUT, skill_lv);
-						break;
-					case ITEMID_MELON_BOMB:
-						skill_attack(BF_WEAPON, src, src, bl, AM_C_CARTCANNON_MELON, skill_lv, tick, flag);
-						battle_consume_ammo(sd, AM_C_CARTCANNON_MELON, skill_lv);
-						break;
-					case ITEMID_PINEAPPLE_BOMB:
-						skill_attack(BF_WEAPON, src, src, bl, AM_C_CARTCANNON_PINEAPPLE, skill_lv, tick, flag);
-						battle_consume_ammo(sd, AM_C_CARTCANNON_PINEAPPLE, skill_lv);
-						break;
-					case ITEMID_BANANA_BOMB:
-						skill_attack(BF_WEAPON, src, src, bl, AM_C_CARTCANNON_BANANA, skill_lv, tick, flag);
-						battle_consume_ammo(sd, AM_C_CARTCANNON_BANANA, skill_lv);
-						break;
-					case ITEMID_BOMB_MUSHROOM_SPORE:
-						clif_soundeffect(*src, "explosion_attack.wav", 0, AREA);
-						clif_specialeffect(bl, EF_SPR_LIGHTPRINT2, AREA);
-						map_foreachinrange(skill_area_sub, bl, skill_get_splash(AM_C_CARTCANNON_SPORE, skill_lv), BL_CHAR | BL_SKILL, src, AM_C_CARTCANNON_SPORE, skill_lv, tick + (200 + status_get_amotion(src)), flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-						battle_consume_ammo(sd, AM_C_CARTCANNON_SPORE, skill_lv);
-						break;
-					}
-				}
-				else
-					clif_skill_fail(*sd, skill_id);
-			}
-		}
-		break;
-	}
+		break;	
 	case EL_CIRCLE_OF_FIRE:
 	case EL_PYROTECHNIC:
 	case EL_HEATER:

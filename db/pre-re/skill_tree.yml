@@ -45,7 +45,7 @@ Body:
     Tree:
       - Name: NV_FIRSTAID
         MaxLevel: 5
-      - Name: NV_COLLECT
+      - Name: NV_C_COLLECT
         MaxLevel: 5
       - Name: WE_CALLBABY
         MaxLevel: 1

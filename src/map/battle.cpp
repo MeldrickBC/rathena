@@ -5061,28 +5061,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 					skillratio *= 2;
 			}
 			RE_LVL_DMOD(100);
-			break;
-		case AM_C_CARTCANNON_APPLE:
-		case AM_C_CARTCANNON_COCONUT:
-		case AM_C_CARTCANNON_MELON:
-		case AM_C_CARTCANNON_PINEAPPLE:
-		case AM_C_CARTCANNON_BANANA:
-			if (sd) {
-				switch (sd->itemid) {
-				case ITEMID_APPLE_BOMB:
-					skillratio = 300 + 50 * skill_lv;
-					break;
-				case ITEMID_COCONUT_BOMB:
-				case ITEMID_PINEAPPLE_BOMB:
-				case ITEMID_MELON_BOMB:
-					skillratio = 200 + 30 * skill_lv;
-					break;
-				case ITEMID_BANANA_BOMB:
-					skillratio -= 100 + 10 * skill_lv;
-					break;
-				}
-			}
-			break;
+			break;		
 		// Physical Elemantal Spirits Attack Skills
 		case EL_CIRCLE_OF_FIRE:
 		case EL_FIRE_BOMB_ATK:
