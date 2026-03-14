@@ -4,30 +4,44 @@
 #include "skill_factory_custom.hpp"
 
 #include "../swordman/bash.hpp"
-//
+
+#pragma region Include Bard
+#include "../archer/melodystrike.hpp"
 #include "../archer/impressiveriff.hpp"
 #include "../archer/magicstrings.hpp"
 #include "../archer/perfecttablature.hpp"
 #include "../archer/songoflutie.hpp"
-//
+
+class SkillCustomMelodyStrike;
+class SkillCustomImpressiveRiff;
+class SkillCustomMagicStrings;
+class SkillCustomPerfectTablature;
+class SkillCustomSongofLutie;
+
+#pragma endregion
+
+#pragma region Include Dancer
+#include "../archer/slingingarrow.hpp"
+#include "../archer/focusballet.hpp"
+#include "../archer/ladyluck.hpp"
+#include "../archer/slowgrace.hpp"
+#include "../archer/gypsyskiss.hpp"
+
+class SkillCustomSlingingArrow;
+class SkillCustomFocusBallet;
+class SkillCustomLadyLuck;
+class SkillCustomSlowGrace;
+class SkillCustomGypsysKiss;
+
+#pragma endregion
+
+#pragma region Include Ensemble
 #include "../archer/harmoniclick.hpp"
 #include "../archer/lullaby.hpp"
 #include "../archer/powerchord.hpp"
 #include "../archer/battletheme.hpp"
 #include "../archer/classicalpluck.hpp"
 #include "../archer/downtempo.hpp"
-
-
-
-
-
-
-
-class SkillCustomBash;
-class SkillCustomImpressiveRiff;
-class SkillCustomMagicStrings;
-class SkillCustomPerfectTablature;
-class SkillCustomSongofLutie;
 
 class SkillCustomHarmonicLick;
 class SkillCustomLullaby;
@@ -38,8 +52,12 @@ class SkillCustomDownTempo;
 class SkillCustomAcousticRhythm;
 class SkillCustomMentalSensing;
 
+#pragma endregion
+
+class SkillCustomBash;
 
 #pragma region Custom Skills
+//Novice
 #pragma region NV_C_COLLECT
 
 class SkillCCollect : public SkillImpl {
@@ -64,6 +82,7 @@ void SkillCCollect::castendNoDamageId(block_list* src, block_list* target, uint1
 
 #pragma endregion
 
+//Alchemist
 #pragma region AM_C_CARTCANNON
 
 class SkillCCartCannonApple : public SkillImpl {
@@ -218,34 +237,7 @@ void SkillCCartCannon::castendNoDamageId(block_list* src, block_list* target, ui
 };
 #pragma endregion
 
-#pragma region HP_C_RADIUSLUCIS
-class SkillCRadiusLucis : public SkillImpl {
-public:
-	SkillCRadiusLucis();
-
-	void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
-	void calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const override;
-};
-SkillCRadiusLucis::SkillCRadiusLucis() : SkillImpl(HP_C_RADIUSLUCIS) {
-};
-void SkillCRadiusLucis::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	if (skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag)) {
-		map_session_data* sd = BL_CAST(BL_PC, src);
-		if (sd && pc_checkskill(sd, AL_DECAGI)) {
-			status_change* tsc = status_get_sc(target);
-			status_data* sstatus = status_get_status_data(*src);
-			int32 DecAgiLv = pc_checkskill(sd, AL_DECAGI);
-			if (tsc && (!tsc->getSCE(SC_DECREASEAGI)) && sc_start(src, target, SC_DECREASEAGI, (50 + DecAgiLv * 3 + (status_get_lv(src) + sstatus->int_) / 5), DecAgiLv, skill_get_time(AL_DECAGI, DecAgiLv)))
-				clif_specialeffect(target, EF_DECAGILITY, AREA);
-		}
-	}
-};
-void SkillCRadiusLucis::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	base_skillratio += 400 + 100 * skill_lv;
-};
-#pragma endregion
-
+//Priest
 #pragma region PR_C_SACRUSIMPETUS 
 class SkillCSacrusImpetus : public SkillImpl {
 public:
@@ -253,8 +245,10 @@ public:
 
 	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };
+
 SkillCSacrusImpetus::SkillCSacrusImpetus() : SkillImpl(PR_C_SACRUSIMPETUS) {
 }
+
 void SkillCSacrusImpetus::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data* sd = BL_CAST(BL_PC, src);
 
@@ -307,9 +301,48 @@ void SkillCSacrusImpetusAtk::castendDamageId(block_list* src, block_list* target
 };
 #pragma endregion
 
+//High Priest
+#pragma region HP_C_RADIUSLUCIS
+class SkillCRadiusLucis : public SkillImpl {
+public:
+	SkillCRadiusLucis();
+
+	void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
+	void calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const override;
+};
+SkillCRadiusLucis::SkillCRadiusLucis() : SkillImpl(HP_C_RADIUSLUCIS) {
+};
+void SkillCRadiusLucis::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	if (skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag)) {
+		map_session_data* sd = BL_CAST(BL_PC, src);
+		if (sd && pc_checkskill(sd, AL_DECAGI)) {
+			status_change* tsc = status_get_sc(target);
+			status_data* sstatus = status_get_status_data(*src);
+			int32 DecAgiLv = pc_checkskill(sd, AL_DECAGI);
+			if (tsc && (!tsc->getSCE(SC_DECREASEAGI)) && sc_start(src, target, SC_DECREASEAGI, (50 + DecAgiLv * 3 + (status_get_lv(src) + sstatus->int_) / 5), DecAgiLv, skill_get_time(AL_DECAGI, DecAgiLv)))
+				clif_specialeffect(target, EF_DECAGILITY, AREA);
+		}
+	}
+};
+void SkillCRadiusLucis::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+	base_skillratio += 400 + 100 * skill_lv;
+};
+#pragma endregion
+
 #pragma endregion
 
 #pragma region Official Skills with Custom Changes
+
+//Bard
+
+#pragma region BA_MUSICALSTRIKE
+class SkillCustomMelodyStrike : public SkillMelodyStrike {
+	void calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const override {
+		base_skillratio += 25 + 25 * skill_lv;
+	}
+};
+#pragma endregion
 
 #pragma region BA_ASSASSINCROSS
 class SkillCustomImpressiveRiff : public SkillImpressiveRiff {
@@ -355,7 +388,64 @@ class SkillCustomSongofLutie : public SkillSongofLutie {
 	}
 };
 #pragma endregion
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Dancer
+
+#pragma region DC_THROWARROW
+class SkillCustomSlingingArrow : public SkillSlingingArrow {
+	void calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const override {
+		base_skillratio += 25 + 25 * skill_lv;
+	}
+};
+#pragma endregion
+
+#pragma region DC_HUMMING
+class SkillCustomFocusBallet : public SkillFocusBallet {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region DC_FORTUNEKISS
+class SkillCustomLadyLuck : public SkillLadyLuck {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region DC_DONTFORGETME
+class SkillCustomSlowGrace : public SkillSlowGrace {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region DC_SERVICEFORYOU
+class SkillCustomGypsysKiss : public SkillGypsysKiss {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+		clif_soundeffect(*src, "whistle.wav", 0, AREA);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+
+//Ensembles
 
 #pragma region BD_RINGNIBELUNGEN
 class SkillCustomHarmonicLick : public SkillHarmonicLick {
@@ -465,6 +555,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryCustom::create(const e_skill skill_
 	switch (skill_id) {
 		//case SM_BASH:
 			//return std::make_unique<SkillCustomBash>();
+		case BA_MUSICALSTRIKE:
+			return std::make_unique<SkillCustomMelodyStrike>();		
 		case BA_ASSASSINCROSS:
 			return std::make_unique<SkillCustomImpressiveRiff>();
 		case BA_POEMBRAGI:
@@ -473,6 +565,16 @@ std::unique_ptr<const SkillImpl> SkillFactoryCustom::create(const e_skill skill_
 			return std::make_unique<SkillCustomPerfectTablature>();
 		case BA_APPLEIDUN:
 			return std::make_unique<SkillCustomSongofLutie>();
+		case DC_THROWARROW:
+			return std::make_unique<SkillCustomSlingingArrow>();
+		case DC_HUMMING:
+			return std::make_unique<SkillCustomFocusBallet>();
+		case DC_FORTUNEKISS:
+			return std::make_unique<SkillCustomLadyLuck>();
+		case DC_DONTFORGETME:
+			return std::make_unique<SkillCustomSlowGrace>();
+		case DC_SERVICEFORYOU:
+			return std::make_unique<SkillCustomGypsysKiss>();
 		case BD_RINGNIBELUNGEN:
 			return std::make_unique<SkillCustomHarmonicLick>();
 		case BD_LULLABY:
