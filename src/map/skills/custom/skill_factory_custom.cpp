@@ -4,10 +4,42 @@
 #include "skill_factory_custom.hpp"
 
 #include "../swordman/bash.hpp"
+//
+#include "../archer/impressiveriff.hpp"
+#include "../archer/magicstrings.hpp"
+#include "../archer/perfecttablature.hpp"
+#include "../archer/songoflutie.hpp"
+//
+#include "../archer/harmoniclick.hpp"
+#include "../archer/lullaby.hpp"
+#include "../archer/powerchord.hpp"
+#include "../archer/battletheme.hpp"
+#include "../archer/classicalpluck.hpp"
+#include "../archer/downtempo.hpp"
+
+
+
+
+
+
 
 class SkillCustomBash;
+class SkillCustomImpressiveRiff;
+class SkillCustomMagicStrings;
+class SkillCustomPerfectTablature;
+class SkillCustomSongofLutie;
+
+class SkillCustomHarmonicLick;
+class SkillCustomLullaby;
+class SkillCustomPowerChord;
+class SkillCustomBattleTheme;
+class SkillCustomClassicalPluck;
+class SkillCustomDownTempo;
+class SkillCustomAcousticRhythm;
+class SkillCustomMentalSensing;
 
 
+#pragma region Custom Skills
 #pragma region NV_C_COLLECT
 
 class SkillCCollect : public SkillImpl {
@@ -275,42 +307,149 @@ void SkillCSacrusImpetusAtk::castendDamageId(block_list* src, block_list* target
 };
 #pragma endregion
 
-std::unique_ptr<const SkillImpl> SkillFactoryCustom::create(const e_skill skill_id) const {
-#if 1
-	switch (skill_id) {
-		//case SM_BASH:
-		// return std::make_unique<SkillCustomBash
-	case NV_C_COLLECT:
-		return std::make_unique<SkillCCollect>();
-	case PR_C_SACRUSIMPETUS:
-		return std::make_unique<SkillCSacrusImpetus>();
-	case PR_C_SACRUSIMPETUS_ATK:
-		return std::make_unique<SkillCSacrusImpetusAtk>();
-	case HP_C_RADIUSLUCIS:
-		return std::make_unique<SkillCRadiusLucis>();
-	case AM_C_CARTCANNON:
-		return std::make_unique<SkillCCartCannon>();
-	case AM_C_CARTCANNON_APPLE:
-		return std::make_unique<SkillCCartCannonApple>();
-	case AM_C_CARTCANNON_COCONUT:
-		return std::make_unique<SkillCCartCannonCoconut>();
-	case AM_C_CARTCANNON_MELON:
-		return std::make_unique<SkillCCartCannonMelon>();
-	case AM_C_CARTCANNON_PINEAPPLE:
-		return std::make_unique<SkillCCartCannonPineapple>();
-	case AM_C_CARTCANNON_BANANA:
-		return std::make_unique<SkillCCartCannonBanana>();
-	case AM_C_CARTCANNON_SPORE:
-		return std::make_unique<SkillCCartCannonSpore>();
-	default:
-		return nullptr;
-	}
-#endif	
-	return nullptr;
-}
+#pragma endregion
 
-class SkillCustomBash : public SkillBash{
-	void calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const override{
+#pragma region Official Skills with Custom Changes
+
+#pragma region BA_ASSASSINCROSS
+class SkillCustomImpressiveRiff : public SkillImpressiveRiff {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region BA_POEMBRAGI
+class SkillCustomMagicStrings : public SkillMagicStrings {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region BA_WHISTLE
+class SkillCustomPerfectTablature : public SkillPerfectTablature {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+		clif_soundeffect(*src, "whistle.wav", 0, AREA);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region BA_APPLEIDUN
+class SkillCustomSongofLutie : public SkillSongofLutie {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#pragma region BD_RINGNIBELUNGEN
+class SkillCustomHarmonicLick : public SkillHarmonicLick {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region BD_LULLABY
+class SkillCustomLullaby : public SkillLullaby {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region BD_INTOABYSS
+class SkillCustomPowerChord : public SkillPowerChord {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region BD_DRUMBATTLEFIELD
+class SkillCustomBattleTheme : public SkillBattleTheme {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region BD_ROKISWEIL
+class SkillCustomClassicalPluck : public SkillClassicalPluck {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region BD_ETERNALCHAOS
+class SkillCustomDownTempo : public SkillDownTempo {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region BD_SIEGFRIED
+class SkillCustomAcousticRhythm : public SkillAcousticRhythm {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+#pragma region BD_RICHMANKIM
+class SkillCustomMentalSensing : public SkillMentalSensing {
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		skill_castend_song(src, getSkillId(), skill_lv, tick);
+	}
+	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override {
+		//does nothing
+	}
+};
+#pragma endregion
+
+
+#pragma endregion
+
+class SkillCustomBash : public SkillBash {
+	void calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const override {
 		// Normal Bash:
 		// Base 100% + 30% per level
 		// base_skillratio += 30 * skill_lv;
@@ -320,3 +459,61 @@ class SkillCustomBash : public SkillBash{
 		base_skillratio += 300 * skill_lv;
 	}
 };
+
+std::unique_ptr<const SkillImpl> SkillFactoryCustom::create(const e_skill skill_id) const {
+#if 1
+	switch (skill_id) {
+		//case SM_BASH:
+			//return std::make_unique<SkillCustomBash>();
+		case BA_ASSASSINCROSS:
+			return std::make_unique<SkillCustomImpressiveRiff>();
+		case BA_POEMBRAGI:
+			return std::make_unique<SkillCustomMagicStrings>();
+		case BA_WHISTLE:
+			return std::make_unique<SkillCustomPerfectTablature>();
+		case BA_APPLEIDUN:
+			return std::make_unique<SkillCustomSongofLutie>();
+		case BD_RINGNIBELUNGEN:
+			return std::make_unique<SkillCustomHarmonicLick>();
+		case BD_LULLABY:
+			return std::make_unique<SkillCustomLullaby>();
+		case BD_INTOABYSS:
+			return std::make_unique<SkillCustomPowerChord>();
+		case BD_DRUMBATTLEFIELD:
+			return std::make_unique<SkillCustomBattleTheme>();
+		case BD_ROKISWEIL:
+			return std::make_unique<SkillCustomClassicalPluck>();
+		case BD_ETERNALCHAOS:
+			return std::make_unique<SkillCustomDownTempo>();
+		case BD_SIEGFRIED:
+			return std::make_unique<SkillCustomAcousticRhythm>();
+		case BD_RICHMANKIM:
+			return std::make_unique<SkillCustomMentalSensing>();
+		case NV_C_COLLECT:
+			return std::make_unique<SkillCCollect>();
+		case PR_C_SACRUSIMPETUS:
+			return std::make_unique<SkillCSacrusImpetus>();
+		case PR_C_SACRUSIMPETUS_ATK:
+			return std::make_unique<SkillCSacrusImpetusAtk>();
+		case HP_C_RADIUSLUCIS:
+			return std::make_unique<SkillCRadiusLucis>();
+		case AM_C_CARTCANNON:
+			return std::make_unique<SkillCCartCannon>();
+		case AM_C_CARTCANNON_APPLE:
+			return std::make_unique<SkillCCartCannonApple>();
+		case AM_C_CARTCANNON_COCONUT:
+			return std::make_unique<SkillCCartCannonCoconut>();
+		case AM_C_CARTCANNON_MELON:
+			return std::make_unique<SkillCCartCannonMelon>();
+		case AM_C_CARTCANNON_PINEAPPLE:
+			return std::make_unique<SkillCCartCannonPineapple>();
+		case AM_C_CARTCANNON_BANANA:
+			return std::make_unique<SkillCCartCannonBanana>();
+		case AM_C_CARTCANNON_SPORE:
+			return std::make_unique<SkillCCartCannonSpore>();
+		default:
+			return nullptr;
+	}
+#endif	
+	return nullptr;
+}

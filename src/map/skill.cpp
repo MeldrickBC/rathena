@@ -6370,7 +6370,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
-#ifdef RENEWAL
 	case DC_UGLYDANCE:
 	case DC_HUMMING:
 		skill_castend_song(src, skill_id, skill_lv, tick);
@@ -9983,7 +9982,6 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(block_list *src, uint16 sk
 		}
 		break;
 	}
-
 	case BA_WHISTLE:
 		val1 = skill_lv + status->agi / 10; // Flee increase
 		val2 = (skill_lv + 1) / 2 + status->luk / 30; // Perfect dodge increase
