@@ -3513,6 +3513,7 @@
 	export_constant(EFST_GANGSTER);
 	export_constant(EFST_SACRUSIMPETUS);
 	export_constant(EFST_WELLFED);
+	export_constant(EFST_FALCONTACTICS);	
 	export_constant(EFST_MAX);
 
 	/* elements */

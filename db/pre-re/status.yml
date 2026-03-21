@@ -775,7 +775,7 @@ Body:
     Flags:
       Debuff: true
   - Status: FalconTactics
-    Icon: EFST_POISONREACT
+    Icon: EFST_FALCONTACTICS
     DurationLookup: HT_FALCON
     CalcFlags:
       All: true

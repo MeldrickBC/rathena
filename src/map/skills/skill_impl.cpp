@@ -94,6 +94,17 @@ void SkillImplRecursiveDamageSplash::castendDamageId(block_list* src, block_list
 
 		this->splashDamage(src, target, skill_lv, tick, sflag);
 	}else{
+		map_session_data* sd = BL_CAST(BL_PC, src);
+		if (sd) {
+			if (getSkillId() == HT_BLITZBEAT) {
+				status_change* sc = status_get_sc(src);
+				if (sc && sc->getSCE(SC_FALCONTACTICS)) {
+					skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
+					return;
+				}
+			}
+		}
+
 		skill_area_temp[0] = 0;
 		skill_area_temp[1] = target->id;
 		skill_area_temp[2] = 0;
