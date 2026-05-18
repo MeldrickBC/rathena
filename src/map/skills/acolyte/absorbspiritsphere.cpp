@@ -28,14 +28,18 @@ void SkillAbsorbSpiritSphere::castendNoDamageId(block_list* src, block_list* tar
 			i += dstsd->spiritcharm * 7;
 			pc_delspiritcharm(dstsd,dstsd->spiritcharm,dstsd->spiritcharm_type);
 		}
-	} else if (dstmd && !status_has_mode(tstatus,MD_STATUSIMMUNE) && rnd() % 100 < 20) { // check if target is a monster and not status immune, for the 20% chance to absorb 2 SP per monster's level [Reddozen]
-		i = 2 * dstmd->level;
+	} else if (dstmd && !status_has_mode(tstatus,MD_STATUSIMMUNE) && (!(dstmd->state.absorb_sphere_flag)) && rnd() % 100 < 50) { // check if target is a monster and not status immune, for the 50% chance to absorb 1 SP per monster's level [Reddozen]
+		i = dstmd->level;
 		mob_target(dstmd,src,0);
 	} else {
 		if (sd)
 			clif_skill_fail( *sd, getSkillId() );
 		return;
 	}
-	if (i) status_heal(src, 0, i, 3);
-	clif_skill_nodamage(src,*target,getSkillId(),skill_lv,i != 0);
+	if (i) status_heal(src, 0, i, 3); {
+		if (dstmd) {
+			dstmd->state.absorb_sphere_flag = 1;
+		}
+		clif_skill_nodamage(src,*target,getSkillId(),skill_lv,i != 0);
+	}
 }

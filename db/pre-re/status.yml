@@ -8995,6 +8995,13 @@ Body:
     Flags:
       RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
+  - Status: ComboExtend
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapIgnoreLevel: true
   - Status: WellFed
     Icon: EFST_WELLFED
     Flags:

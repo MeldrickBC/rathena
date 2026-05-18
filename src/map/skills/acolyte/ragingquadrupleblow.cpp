@@ -23,6 +23,10 @@ void SkillRagingQuadrupleBlow::calculateSkillRatio(const Damage* wd, const block
 	if (sd && sd->status.weapon == W_KNUCKLE)
 		base_skillratio *= 2;
 #else
-	base_skillratio += 50 + 50 * skill_lv;
+	base_skillratio += 150 + 50 * skill_lv;
+	const status_change* sc = status_get_sc(src);
+	if (sc && sc->getSCE(SC_COMBOEXTEND) && sc->getSCE(SC_COMBOEXTEND)->val2)
+		base_skillratio += (base_skillratio * sc->getSCE(SC_COMBOEXTEND)->val2 * 5) / 100;
+	
 #endif
 }

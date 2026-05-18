@@ -2343,11 +2343,6 @@ static int32 skill_magic_reflect(block_list* src, block_list* bl, int32 type)
  */
 int32 skill_is_combo(uint16 skill_id) {
 	switch(skill_id) {
-		case MO_CHAINCOMBO:
-		case MO_COMBOFINISH:
-		case CH_TIGERFIST:
-		case CH_CHAINCRUSH:
-		case MO_EXTREMITYFIST:
 		case TK_TURNKICK:
 		case TK_STORMKICK:
 		case TK_DOWNKICK:
@@ -2356,6 +2351,11 @@ int32 skill_is_combo(uint16 skill_id) {
 		case HT_POWER:
 		case SR_DRAGONCOMBO:
 			return 1;
+		case MO_CHAINCOMBO:
+		case MO_COMBOFINISH:
+		case CH_TIGERFIST:
+		case CH_CHAINCRUSH:
+		case MO_EXTREMITYFIST:
 		case SR_FALLENEMPIRE:
 		case SR_TIGERCANNON:
 		case SR_GATEOFHELL:
@@ -2416,11 +2416,19 @@ void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_
 	TBL_PC *sd = BL_CAST(BL_PC,src);
 	TBL_HOM *hd = BL_CAST(BL_HOM,src);
 	status_change *sc = status_get_sc(src);
+	int16 comboextend = 0;
+	int16 chaincomboused = 0;
 
 	if(sc == nullptr) return;
 
+	if (sc->getSCE(SC_COMBOEXTEND) != nullptr) {
+		comboextend = sc->getSCE(SC_COMBOEXTEND)->val2;
+	}
 	//End previous combo state after skill is invoked
 	if ((sce = sc->getSCE(SC_COMBO)) != nullptr) {
+		if (sce->val1 == MO_CHAINCOMBO) {
+			chaincomboused = 1;
+		}
 		switch (skill_id) {
 		case TK_TURNKICK:
 		case TK_STORMKICK:
@@ -2446,40 +2454,44 @@ void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_
 	if (sd) { //player only
 		switch (skill_id) {
 		case MO_TRIPLEATTACK:
-			if (pc_checkskill(sd, MO_CHAINCOMBO) > 0 || pc_checkskill(sd, SR_DRAGONCOMBO) > 0) {
+			comboextend = 0;
+			if (pc_checkskill(sd, MO_CHAINCOMBO) > 0 || pc_checkskill(sd, CH_TIGERFIST) > 0 || pc_checkskill(sd, SR_DRAGONCOMBO) > 0) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
 		case MO_CHAINCOMBO:
-			if (pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball >= 1) {
+			if ((pc_checkskill(sd, MO_COMBOFINISH) > 0 || pc_checkskill(sd, CH_CHAINCRUSH) > 0 || pc_checkskill(sd, CH_TIGERFIST) > 0) && sd->spiritball >= 1) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
 		case MO_COMBOFINISH:
+			comboextend = -1;
 			if (sd->status.party_id > 0) //bonus from SG_FRIEND [Komurka]
 				party_skill_check(sd, sd->status.party_id, skill_id, skill_lv);
-			if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball >= 1) {
-				duration = 1;
-				target_id = 0; // Will target current auto-target instead
-			}
-			else if (pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball >= 2) {
-				duration = 1;
-				target_id = 0; // Will target current auto-target instead
-			}
-			else if (pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 4 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS) != nullptr) {
+			if (pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 1 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS) != nullptr) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
 		case CH_TIGERFIST:
+			if (chaincomboused) {
+				comboextend += pc_checkskill(sd, CH_TIGERFIST);
+			}
+			if ((pc_checkskill(sd, CH_CHAINCRUSH) > 0 || pc_checkskill(sd, MO_COMBOFINISH) > 0) && sd->spiritball >= 1) {
+				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
+			else
+				if (pc_checkskill(sd, MO_CHAINCOMBO) > 0) {
 			if (pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball >= 2) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
 		case CH_CHAINCRUSH:
+			comboextend = -1;
 			if (pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 1 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS) != nullptr) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
@@ -2533,6 +2545,18 @@ void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_
 		if(sd && duration==1) duration = DIFF_TICK(sd->ud.canact_tick, tick); //Auto calc duration
 		duration = i64max(status_get_amotion(src),duration); //Never less than aMotion
 		sc_start4(src,src,SC_COMBO,100,skill_id,target_id,nodelay,0,duration);
+
+		if (comboextend > 0) {
+			if (sc->getSCE(SC_COMBOEXTEND) != nullptr)
+				if (sc->getSCE(SC_COMBOEXTEND)->val1 != skill_id) {
+					sc_start4(src, src, SC_COMBOEXTEND, 100, skill_id, comboextend, 0, 0, 3000);
+				}
+		}
+		else if (comboextend == 0)
+			sc_start4(src, src, SC_COMBOEXTEND, 100, skill_id, 0, 0, 0, 3000);
+		else
+			status_change_end(src, SC_COMBOEXTEND);
+		
 		clif_combo_delay( *src, duration );
 	}
 }
@@ -3055,6 +3079,13 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 			break;
 		case GN_FIRE_EXPANSION_ACID:
 			clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, CR_ACIDDEMONSTRATION, skill_lv, DMG_MULTI_HIT );
+			break;
+		case MO_COMBOFINISH:
+		case CH_TIGERFIST:
+			if (flag & SD_SPLASH)
+				clif_skill_damage(*src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, -1, -1, DMG_SPLASH);
+			else
+				clif_skill_damage(*src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, DMG_SINGLE);
 			break;
 		case AM_C_CARTCANNON_APPLE:
 			clif_soundeffect(*src, "explosion_attack.wav", 0, AREA);
@@ -8602,18 +8633,18 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			if(sc->getSCE(SC_BLADESTOP))
 				break;
-			if(sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == MO_TRIPLEATTACK)
+			if(sc->getSCE(SC_COMBO) && (sc->getSCE(SC_COMBO)->val1 == MO_TRIPLEATTACK || sc->getSCE(SC_COMBO)->val1 == CH_TIGERFIST))
 				break;
 			return false;
 		case MO_COMBOFINISH:
-			if(!(sc && sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == MO_CHAINCOMBO))
+			if(!(sc && sc->getSCE(SC_COMBO) && (sc->getSCE(SC_COMBO)->val1 == MO_CHAINCOMBO || sc->getSCE(SC_COMBO)->val1 == CH_TIGERFIST)))
 				return false;
 			break;
 		case CH_TIGERFIST:
-			if (sc == nullptr || sc->getSCE(SC_COMBO) == nullptr)
+			if (!sc)
 				return false;
-#ifdef RENEWAL
-			// In Renewal Tiger Fist can only be used after Combo Finish
+			if (sc->getSCE(SC_COMBO) && (sc->getSCE(SC_COMBO)->val1 == MO_TRIPLEATTACK || sc->getSCE(SC_COMBO)->val1 == MO_CHAINCOMBO))
+				break;
 			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH)
 				return false;
 #else
@@ -8623,7 +8654,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 #endif
 			break;
 		case CH_CHAINCRUSH:
-			if(!(sc && sc->getSCE(SC_COMBO)))
+			if (!(sc && sc->getSCE(SC_COMBO) && (sc->getSCE(SC_COMBO)->val1 == MO_CHAINCOMBO || sc->getSCE(SC_COMBO)->val1 == CH_TIGERFIST)))
 				return false;
 			if(sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH && sc->getSCE(SC_COMBO)->val1 != CH_TIGERFIST)
 				return false;
@@ -10174,9 +10205,9 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 #ifndef RENEWAL
 					switch( sc->getSCE(SC_COMBO)->val1 ) {
 						case MO_COMBOFINISH:
-							req.spiritball = 4;
+							req.spiritball = sd->spiritball ? sd->spiritball : 1;
 							break;
-						case CH_CHAINCRUSH: //It should consume whatever is left as long as it's at least 1.
+						case CH_CHAINCRUSH:
 							req.spiritball = sd->spiritball?sd->spiritball:1;
 							break;
 					}

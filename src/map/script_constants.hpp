@@ -2012,6 +2012,7 @@
 	export_constant(SC_MULTIHITSHOT);
 	export_constant(SC_SACRUSIMPETUS);
 	export_constant(SC_WELLFED);
+	export_constant(SC_COMBOEXTEND);
 	export_constant(SC_WELLFED_STR);
 	export_constant(SC_WELLFED_AGI);
 	export_constant(SC_WELLFED_VIT);

@@ -13,14 +13,19 @@ SkillRagingThrust::SkillRagingThrust() : WeaponSkillImpl(MO_COMBOFINISH) {
 void SkillRagingThrust::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	status_change* sc = status_get_sc(src);
 
-	if (!(flag&1) && sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_MONK)
-	{	//Becomes a splash attack when Soul Linked.
+	if (!(flag & 1)) {	
+		skill_area_temp[1] = target->id;
+
 		map_foreachinshootrange(skill_area_sub, target,
 			skill_get_splash(getSkillId(), skill_lv),BL_CHAR|BL_SKILL,
 			src,getSkillId(),skill_lv,tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
+
+		skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
+
 	} else
-		WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
+		if (skill_area_temp[1] != target->id)			
+			skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_SPLASH);
 }
 
 void SkillRagingThrust::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
@@ -29,7 +34,10 @@ void SkillRagingThrust::calculateSkillRatio(const Damage* wd, const block_list* 
 
 	base_skillratio += 450 + 50 * skill_lv + sstatus->str; // !TODO: How does STR play a role?
 #else
-	base_skillratio += 140 + 60 * skill_lv;
+	base_skillratio += 400 + 50 * skill_lv;
+	const status_change* sc = status_get_sc(src);
+	if (sc && sc->getSCE(SC_COMBOEXTEND) && sc->getSCE(SC_COMBOEXTEND)->val2)
+		base_skillratio += (base_skillratio * sc->getSCE(SC_COMBOEXTEND)->val2 * 5) / 100;
 #endif
 
 	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->getSCE(SC_GT_ENERGYGAIN))

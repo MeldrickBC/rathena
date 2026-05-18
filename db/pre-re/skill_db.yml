@@ -7442,13 +7442,35 @@ Body:
     Description: Raging Trifecta Blow
     MaxLevel: 10
     Type: Weapon
+    TargetType: Attack
     Flags:
       TargetTrap: true
       TargetEmperium: true
-    Range: -1
+    Range: 1
     Hit: Multi_Hit
     HitCount: -3
     Element: Weapon
+    Cooldown:
+        - Level: 1
+          Time: 14000
+        - Level: 2
+          Time: 13000
+        - Level: 3
+          Time: 12000
+        - Level: 4
+          Time: 11000
+        - Level: 5
+          Time: 10000
+        - Level: 6
+          Time: 9000
+        - Level: 7
+          Time: 8000
+        - Level: 8
+          Time: 7000
+        - Level: 9
+          Time: 6000
+        - Level: 10
+          Time: 5000
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -7749,7 +7771,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -4
     Element: Weapon
-    SplashArea: 1
+    SplashArea: 2
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -7760,15 +7782,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 11
+          Amount: 5
         - Level: 2
-          Amount: 12
+          Amount: 6
         - Level: 3
-          Amount: 13
+          Amount: 7
         - Level: 4
-          Amount: 14
+          Amount: 8
         - Level: 5
-          Amount: 15
+          Amount: 9
       Weapon:
         Fist: true
         Dagger: true
@@ -7796,7 +7818,7 @@ Body:
   - Id: 273
     Name: MO_COMBOFINISH
     Description: Raging Thrust
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Weapon
     TargetType: Self
     DamageFlags:
@@ -7806,9 +7828,9 @@ Body:
       TargetTrap: true
     Range: -2
     Hit: Single
-    HitCount: 1
+    HitCount: -1
     Element: Weapon
-    SplashArea: 1
+    SplashArea: 2
     CastDelayFlags:
       IgnoreStatus: true
     CopyFlags:
@@ -7828,6 +7850,16 @@ Body:
           Amount: 14
         - Level: 5
           Amount: 15
+        - Level: 6
+          Amount: 16
+        - Level: 7
+          Amount: 17
+        - Level: 8
+          Amount: 18
+        - Level: 9
+          Amount: 19
+        - Level: 10
+          Amount: 20
       Weapon:
         Fist: true
         Dagger: true
@@ -10365,9 +10397,10 @@ Body:
     Flags:
       NoTargetSelf: true
     Range: -2
-    Hit: Multi_Hit
+    Hit: Single
     HitCount: 1
     Element: Weapon
+    SplashArea: 1
     Duration1:
       - Level: 1
         Time: 2000

@@ -1938,6 +1938,8 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 		if( tsc->getSCE(SC_STEELBODY) )
 			damage = damage > 10 ? damage / 10 : 1;
 #endif
+		if (tsc->getSCE(SC_STEELBODY) && skill_id != MO_INVESTIGATE)
+			damage = damage > 10 ? damage / 10 : 1;
 
 		//Finally added to remove the status of immobile when Aimed Bolt is used. [Jobbie]
 		if( skill_id == RA_AIMEDBOLT && (tsc->getSCE(SC_BITE) || tsc->getSCE(SC_ANKLE) || tsc->getSCE(SC_ELECTRICSHOCKER)) ) {
@@ -7758,11 +7760,7 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
 	}
 
 	if(sd && (skillv = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0) {
-#ifdef RENEWAL
-		int32 triple_rate = 30; //Base Rate
-#else
-		int32 triple_rate = 30 - skillv; //Base Rate
-#endif
+		int32 triple_rate = 30;
 
 		if (sc && sc->getSCE(SC_SKILLRATE_UP) && sc->getSCE(SC_SKILLRATE_UP)->val1 == MO_TRIPLEATTACK) {
 			triple_rate+= triple_rate*(sc->getSCE(SC_SKILLRATE_UP)->val2)/100;

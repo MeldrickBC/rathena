@@ -11,12 +11,11 @@ SkillChainCrushCombo::SkillChainCrushCombo() : WeaponSkillImpl(CH_CHAINCRUSH) {
 }
 
 void SkillChainCrushCombo::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
-#ifdef RENEWAL
-	skillratio += -100 + 200 * skill_lv;
-	RE_LVL_DMOD(100);
-#else
-	skillratio += 300 + 100 * skill_lv;
-#endif
+	skillratio += 400 + 100 * skill_lv;
+	const status_change* sc = status_get_sc(src);
+	if (sc && sc->getSCE(SC_COMBOEXTEND) && sc->getSCE(SC_COMBOEXTEND)->val2)
+		skillratio += (skillratio * sc->getSCE(SC_COMBOEXTEND)->val2 * 5) / 100;
+
 	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->getSCE(SC_GT_ENERGYGAIN))
 		skillratio += skillratio * 50 / 100;
 }
