@@ -2457,13 +2457,11 @@ void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_
 			comboextend = 0;
 			if (pc_checkskill(sd, MO_CHAINCOMBO) > 0 || pc_checkskill(sd, CH_TIGERFIST) > 0 || pc_checkskill(sd, SR_DRAGONCOMBO) > 0) {
 				duration = 1;
-				target_id = 0; // Will target current auto-target instead
 			}
 			break;
 		case MO_CHAINCOMBO:
 			if ((pc_checkskill(sd, MO_COMBOFINISH) > 0 || pc_checkskill(sd, CH_CHAINCRUSH) > 0 || pc_checkskill(sd, CH_TIGERFIST) > 0) && sd->spiritball >= 1) {
 				duration = 1;
-				target_id = 0; // Will target current auto-target instead
 			}
 			break;
 		case MO_COMBOFINISH:
@@ -2472,7 +2470,6 @@ void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_
 				party_skill_check(sd, sd->status.party_id, skill_id, skill_lv);
 			if (pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 1 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS) != nullptr) {
 				duration = 1;
-				target_id = 0; // Will target current auto-target instead
 			}
 			break;
 		case CH_TIGERFIST:
@@ -2481,27 +2478,17 @@ void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_
 			}
 			if ((pc_checkskill(sd, CH_CHAINCRUSH) > 0 || pc_checkskill(sd, MO_COMBOFINISH) > 0) && sd->spiritball >= 1) {
 				duration = 1;
-				target_id = 0; // Will target current auto-target instead
 			}
 			else
 				if (pc_checkskill(sd, MO_CHAINCOMBO) > 0) {
-			if (pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball >= 2) {
 				duration = 1;
-				target_id = 0; // Will target current auto-target instead
 			}
 			break;
 		case CH_CHAINCRUSH:
 			comboextend = -1;
 			if (pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball >= 1 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS) != nullptr) {
 				duration = 1;
-				target_id = 0; // Will target current auto-target instead
 			}
-#ifndef RENEWAL
-			else if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball >= 1) {
-				duration = 1;
-				target_id = 0; // Will target current auto-target instead
-			}
-#endif
 			break;
 		case AC_DOUBLE:
 			if (pc_checkskill(sd, HT_POWER)) {
