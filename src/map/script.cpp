@@ -12448,11 +12448,11 @@ BUILDIN_FUNC(sc_start)
 
 	switch(start_type) {
 		case 1:
-			status_change_start(bl, bl, type, rate, val1, 0, 0, val4, tick, flag);
+			status_change_start(bl, bl, type, rate, val1, 0, 0, 0, tick, flag);
 			break;
 		case 2:
 			val2 = script_getnum(st,5);
-			status_change_start(bl, bl, type, rate, val1, val2, 0, val4, tick, flag);
+			status_change_start(bl, bl, type, rate, val1, val2, 0, 0, tick, flag);
 			break;
 		case 4:
 			val2 = script_getnum(st,5);

@@ -23,3 +23,8 @@ prontera,183,214,3	script	Hat Craftsman#custom	10485,{
 	disable_items;
 	callshop "official_hat_trader",1;
 }
+
+izlude,130,140,5	script	Temporal Boots Merchant#custom	1_F_04,{
+	disable_items;
+	callshop "temporal_boots_shop",1;
+}

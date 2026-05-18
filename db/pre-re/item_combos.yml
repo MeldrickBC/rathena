@@ -9837,7 +9837,7 @@ Body:
           - FaceWorm_Skin_    # 20718
           - Modify_Luk_Boots_    # 22118
     Script: |
-      bonus bMaxHPrate,15;
+      bonus bMaxHPrate,10;
       bonus bMaxSPrate,5;
   - Combos:
       - Combo:

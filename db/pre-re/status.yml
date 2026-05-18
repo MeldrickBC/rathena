@@ -696,6 +696,9 @@ Body:
     Flags:
       NoClearance: true
       OverlapIgnoreLevel: true
+    EndOnStart:
+      Aspdpotion1: true
+      Aspdpotion2: true
   - Status: Aspdpotion1
     Icon: EFST_ATTHASTE_POTION2
     CalcFlags:
@@ -704,6 +707,9 @@ Body:
       NoClearance: true
       OverlapIgnoreLevel: true
       RemoveOnHermode: true
+    EndOnStart:
+      Aspdpotion0: true
+      Aspdpotion2: true
   - Status: Aspdpotion2
     Icon: EFST_ATTHASTE_POTION3
     CalcFlags:
@@ -711,6 +717,9 @@ Body:
     Flags:
       OverlapIgnoreLevel: true
       RemoveOnHermode: true
+    EndOnStart:
+      Aspdpotion0: true
+      Aspdpotion1: true
   - Status: Aspdpotion3
     Icon: EFST_ATTHASTE_INFINITY
     CalcFlags:
@@ -6063,29 +6072,16 @@ Body:
       NoClearance: true
       NoForcedEnd: true
   - Status: 2011rwc_Scroll
-    Icon: EFST_2011RWC_SCROLL
-    CalcFlags:
-      Str: true
-      Agi: true
-      Vit: true
-      Int: true
-      Dex: true
-      Luk: true
-      Batk: true
-      Matk: true
+    Icon: EFST_PERFUME_ATK
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    EndOnStart:
-      Food_Str_Cash: true
-      Food_Agi_Cash: true
-      Food_Vit_Cash: true
-      Food_Int_Cash: true
-      Food_Dex_Cash: true
-      Food_Luk_Cash: true
+    Script: |
+      bonus bBaseAtk,20;
+      bonus2 bHPRegenRate,10,5000;
   - Status: Jp_Event04
     Icon: EFST_JP_EVENT04
     Flags:
@@ -8192,14 +8188,16 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Infinity_Drink
-    Icon: EFST_INFINITY_DRINK
-    CalcFlags:
-      All: true
+    Icon: EFST_PERFUME_CAST
     Flags:
+      NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bCastrate,-10; 
+      bonus bNoCastCancel;
   - Status: Mental_Potion
     Icon: EFST_TARGET_ASPD
     CalcFlags:
@@ -8210,20 +8208,21 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Limit_Power_Booster
-    Icon: EFST_LIMIT_POWER_BOOSTER
-    CalcFlags:
-      All: true
+    Icon: EFST_PERFUME_MATK
     Flags:
+      NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    Script: |
+      bonus bMatk, 20;
+      bonus2 bSPRegenRate,5,5000;
   - Status: Combat_Pill
     Icon: EFST_GM_BATTLE
     CalcFlags:
       All: true
     Flags:
-      NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true

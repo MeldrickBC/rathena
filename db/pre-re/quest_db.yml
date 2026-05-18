@@ -5235,13 +5235,27 @@ Body:
     Title: Revisiting Etran
   - Id: 12301
     Title: Two remaining friends
+  - Id: 12316
+    Title: Meeting Hugin
   - Id: 12317
-    Title: Fake Keyblade
-    TimeLimit: +23h
+    Title: Trace of Time Travel
+    TimeLimit: 7h
   - Id: 12318
-    Title: "Upper Cats: annoying guy"
+    Title: Corrupted Soul Hunt
+    Targets:
+      - Mob: MG_CORRUPTION_ROOT
+        Count: 1
   - Id: 12319
-    Title: "Upper Cats: annoying guy"
+    Title: Amdarais Hunt
+    Targets:
+      - Mob: MG_AMDARAIS
+        Count: 1
+  - Id: 12320
+    Title: Time Traveler
+  - Id: 12321
+    Title: Time Conqueror
+  - Id: 12322
+    Title: Space Distortion
   - Id: 12363
     Title: ?????? ?? ??
   - Id: 13000

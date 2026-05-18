@@ -3515,6 +3515,10 @@
 	export_constant(EFST_SACRUSIMPETUS);
 	export_constant(EFST_WELLFED);
 	export_constant(EFST_FALCONTACTICS);	
+	export_constant(EFST_PERFUME_ATK);
+	export_constant(EFST_PERFUME_MATK);
+	export_constant(EFST_PERFUME_CAST);
+	export_constant(EFST_PERFUME_ASPD);
 	export_constant(EFST_MAX);
 
 	/* elements */

@@ -58171,6 +58171,7 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
+      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -58178,7 +58179,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      sc_start SC_LIMIT_POWER_BOOSTER,1800000,30;
+      sc_start SC_LIMIT_POWER_BOOSTER,1800000,0;
   - Id: 23727
     AegisName: E_Unlimited_Drink
     Name: "[Event] Unlimited Drink"

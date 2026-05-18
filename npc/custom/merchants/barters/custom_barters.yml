@@ -60,7 +60,7 @@ Body:
             Amount: 1
       - Index: 1
         Item: Banana_Juice
-        Zeny: 3
+        Zeny: 0
         RequiredItems:
           - Index: 0
             Item: Banana
@@ -80,7 +80,7 @@ Body:
             Amount: 1
       - Index: 3
         Item: Grape_Juice
-        Zeny: 3
+        Zeny: 0
         RequiredItems:
           - Index: 0
             Item: Grape
@@ -100,7 +100,7 @@ Body:
             Amount: 1
       - Index: 5
         Item: Melon_Juice
-        Zeny: 3
+        Zeny: 0
         RequiredItems:
           - Index: 0
             Item: Melon
@@ -110,7 +110,7 @@ Body:
             Amount: 1
       - Index: 5
         Item: Lemon_Juice
-        Zeny: 3
+        Zeny: 0
         RequiredItems:
           - Index: 0
             Item: Lemon
@@ -196,3 +196,162 @@ Body:
           - Index: 0
             Item: Tiger_Footskin
             Amount: 10
+  - Name: temporal_boots_shop
+    Items:
+      - Index: 0
+        Item: Temporal_Boots
+        Zeny: 1000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Crystal
+            Amount: 1
+      - Index: 1
+        Item: Temporal_Str_Boots
+        Zeny: 1000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+      - Index: 2
+        Item: Temporal_Str_Boots_
+        Zeny: 10000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Str_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+          - Index: 2
+            Item: Coagulated_Blood
+            Amount: 5
+      - Index: 3
+        Item: Temporal_Int_Boots
+        Zeny: 1000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+      - Index: 4
+        Item: Temporal_Int_Boots_
+        Zeny: 10000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Int_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+          - Index: 2
+            Item: Coagulated_Blood
+            Amount: 5
+      - Index: 5
+        Item: Temporal_Agi_Boots
+        Zeny: 1000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+      - Index: 6
+        Item: Temporal_Agi_Boots_
+        Zeny: 10000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Agi_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+          - Index: 2
+            Item: Coagulated_Blood
+            Amount: 5
+      - Index: 7
+        Item: Temporal_Vit_Boots
+        Zeny: 1000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+      - Index: 8
+        Item: Temporal_Vit_Boots_
+        Zeny: 10000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Vit_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+          - Index: 2
+            Item: Coagulated_Blood
+            Amount: 5
+      - Index: 9
+        Item: Temporal_Dex_Boots
+        Zeny: 1000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+      - Index: 10
+        Item: Temporal_Dex_Boots_
+        Zeny: 10000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Dex_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+          - Index: 2
+            Item: Coagulated_Blood
+            Amount: 5
+      - Index: 11
+        Item: Temporal_Luk_Boots
+        Zeny: 1000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+      - Index: 12
+        Item: Temporal_Luk_Boots_
+        Zeny: 10000
+        RequiredItems:
+          - Index: 0
+            Item: Temporal_Luk_Boots
+            Amount: 1
+            Refine: 7
+          - Index: 1
+            Item: Temporal_Crystal
+            Amount: 5
+          - Index: 2
+            Item: Coagulated_Blood
+            Amount: 5

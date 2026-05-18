@@ -4360,7 +4360,7 @@ Body:
         Rate: 30
       - Item: Rainbow_Carrot
         Rate: 50
-      - Item: Angels_Protection
+      - Item: Angel's_Protection
         Rate: 1000
       - Item: Eclipse_Card
         Rate: 1
@@ -29146,7 +29146,7 @@ Body:
         Rate: 10000
       - Item: Old_Card_Album
         Rate: 10
-      - Item: Goibnes_Armor
+      - Item: Goibne's_Armor
         Rate: 1000
       - Item: Tha_Maero_Card
         Rate: 1
@@ -30958,7 +30958,7 @@ Body:
         Rate: 1000
       - Item: Silk_Robe_
         Rate: 100
-      - Item: Odins_Blessing
+      - Item: Odin's_Blessing
         Rate: 100
       - Item: Skeggiold_Card
         Rate: 1
@@ -31007,7 +31007,7 @@ Body:
         Rate: 1000
       - Item: Silk_Robe_
         Rate: 100
-      - Item: Odins_Blessing
+      - Item: Odin's_Blessing
         Rate: 100
       - Item: Skeggiold_Card
         Rate: 1
@@ -86621,7 +86621,7 @@ Body:
         Rate: 1
       - Item: Rainbow_Carrot
         Rate: 25
-      - Item: Angels_Protection
+      - Item: Angel's_Protection
         Rate: 500
       - Item: IFN_Eclipse_Card
         Rate: 1
@@ -95974,7 +95974,7 @@ Body:
 #  - Id: 20254
 #    AegisName: VH_MIMIC
   - Id: 3910
-    AegisName: MD_POPORING
+    AegisName: E_EMPEL_1
     Name: Enriched Poporing
     Level: 36
     Hp: 1167
@@ -96002,6 +96002,7 @@ Body:
     AttackDelay: 1872
     AttackMotion: 672
     DamageMotion: 480
+    Title: 0
     Ai: 02
     Drops:
       - Item: Sticky_Mucus
@@ -96804,7 +96805,7 @@ Body:
         Rate: 500
       - Item: Runstone_Rare
         Rate: 100
-      - Item: Goibnes_Armor
+      - Item: Goibne's_Armor
         Rate: 100
       - Item: Goibne's_Shoulder_Arms
         Rate: 100
@@ -104845,7 +104846,7 @@ Body:
         Rate: 10000
       - Item: Old_Card_Album
         Rate: 10
-      - Item: Goibnes_Armor
+      - Item: Goibne's_Armor
         Rate: 1000
       - Item: Tha_Maero_Card
         Rate: 1
@@ -104891,7 +104892,7 @@ Body:
         Rate: 10000
       - Item: Old_Card_Album
         Rate: 10
-      - Item: Goibnes_Armor
+      - Item: Goibne's_Armor
         Rate: 1000
       - Item: Tha_Maero_Card
         Rate: 1
@@ -119219,6 +119220,7 @@ Body:
     AttackDelay: 1500
     AttackMotion: 500
     DamageMotion: 1000
+    Title: 0
     Ai: 09
     Modes:
       Detector: true
@@ -119235,7 +119237,294 @@ Body:
         Rate: 180
       - Item: Iron
         Rate: 300
-      - Item: Venomstalker_Card
+  - Id: 31020
+    AegisName: BLOOD_ORC
+    Name: Blood Orc
+    Level: 77
+    Hp: 585700
+    BaseExp: 58630
+    JobExp: 32890
+    Attack: 2257
+    Attack2: 2542
+    Defense: 40
+    MagicDefense: 45
+    Agi: 91
+    Vit: 30
+    Int: 70
+    Dex: 105
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1678
+    AttackMotion: 780
+    DamageMotion: 648
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Voucher_Of_Orcish_Hero
+        Rate: 9700
+      - Item: Monkey_Circlet
+        Rate: 500
+      - Item: Right_Epsilon
+        Rate: 150
+      - Item: Shield_
+        Rate: 250
+      - Item: Orcish_Sword
+        Rate: 1000
+      - Item: Elunium
+        Rate: 4559
+      - Item: Giant_Axe
+        Rate: 100
+      - Item: Orc_Hero_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 31021
+    AegisName: BLOOD_ORC_GHOUL
+    Name: Blood Orc Ghoul
+    Level: 77
+    Hp: 585700
+    BaseExp: 58630
+    JobExp: 32890
+    Attack: 2257
+    Attack2: 2542
+    Defense: 40
+    MagicDefense: 45
+    Agi: 91
+    Vit: 30
+    Int: 70
+    Dex: 105
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1678
+    AttackMotion: 780
+    DamageMotion: 648
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Voucher_Of_Orcish_Hero
+        Rate: 9700
+      - Item: Monkey_Circlet
+        Rate: 500
+      - Item: Right_Epsilon
+        Rate: 150
+      - Item: Shield_
+        Rate: 250
+      - Item: Orcish_Sword
+        Rate: 1000
+      - Item: Elunium
+        Rate: 4559
+      - Item: Giant_Axe
+        Rate: 100
+      - Item: Orc_Hero_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 31022
+    AegisName: BLOOD_ORC_ARCHER
+    Name: Blood Orc Archer
+    Level: 77
+    Hp: 585700
+    BaseExp: 58630
+    JobExp: 32890
+    Attack: 2257
+    Attack2: 2542
+    Defense: 40
+    MagicDefense: 45
+    Agi: 91
+    Vit: 30
+    Int: 70
+    Dex: 105
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1678
+    AttackMotion: 780
+    DamageMotion: 648
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Voucher_Of_Orcish_Hero
+        Rate: 9700
+      - Item: Monkey_Circlet
+        Rate: 500
+      - Item: Right_Epsilon
+        Rate: 150
+      - Item: Shield_
+        Rate: 250
+      - Item: Orcish_Sword
+        Rate: 1000
+      - Item: Elunium
+        Rate: 4559
+      - Item: Giant_Axe
+        Rate: 100
+      - Item: Orc_Hero_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 31023
+    AegisName: BLOOD_ORC_LADY
+    Name: Blood Orc Lady
+    Level: 77
+    Hp: 585700
+    BaseExp: 58630
+    JobExp: 32890
+    Attack: 2257
+    Attack2: 2542
+    Defense: 40
+    MagicDefense: 45
+    Agi: 91
+    Vit: 30
+    Int: 70
+    Dex: 105
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1678
+    AttackMotion: 780
+    DamageMotion: 648
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Voucher_Of_Orcish_Hero
+        Rate: 9700
+      - Item: Monkey_Circlet
+        Rate: 500
+      - Item: Right_Epsilon
+        Rate: 150
+      - Item: Shield_
+        Rate: 250
+      - Item: Orcish_Sword
+        Rate: 1000
+      - Item: Elunium
+        Rate: 4559
+      - Item: Giant_Axe
+        Rate: 100
+      - Item: Orc_Hero_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 31024
+    AegisName: BLOOD_ORC_BABY
+    Name: Blood Orc Baby
+    Level: 77
+    Hp: 585700
+    BaseExp: 58630
+    JobExp: 32890
+    Attack: 2257
+    Attack2: 2542
+    Defense: 40
+    MagicDefense: 45
+    Agi: 91
+    Vit: 30
+    Int: 70
+    Dex: 105
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1678
+    AttackMotion: 780
+    DamageMotion: 648
+    Ai: 25
+    Class: Boss
+    Modes:
+      CastSensorChase: true
+      CastSensorIdle: true
+      ChangeChase: true
+      ChangeTargetMelee: true
+      ChangeTargetChase: true
+    Drops:
+      - Item: Voucher_Of_Orcish_Hero
+        Rate: 9700
+      - Item: Monkey_Circlet
+        Rate: 500
+      - Item: Right_Epsilon
+        Rate: 150
+      - Item: Shield_
+        Rate: 250
+      - Item: Orcish_Sword
+        Rate: 1000
+      - Item: Elunium
+        Rate: 4559
+      - Item: Giant_Axe
+        Rate: 100
+      - Item: Orc_Hero_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 31025
+    AegisName: BLOOD_ORC_CHIEFTAIN
+    Name: Blood Orc Chieftain
+    Level: 77
+    Hp: 585700
+    BaseExp: 58630
+    JobExp: 32890
+    Attack: 2257
+    Attack2: 2542
+    Defense: 40
+    MagicDefense: 45
+    Agi: 91
+    Vit: 30
+    Int: 70
+    Dex: 105
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1678
+    AttackMotion: 780
+    DamageMotion: 648
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Voucher_Of_Orcish_Hero
+        Rate: 9700
+      - Item: Monkey_Circlet
+        Rate: 500
+      - Item: Right_Epsilon
+        Rate: 150
+      - Item: Shield_
+        Rate: 250
+      - Item: Orcish_Sword
+        Rate: 1000
+      - Item: Elunium
+        Rate: 4559
+      - Item: Giant_Axe
+        Rate: 100
+      - Item: Orc_Hero_Card
         Rate: 1
         StealProtected: true
 #  - Id: 21396
