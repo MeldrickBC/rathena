@@ -315,6 +315,7 @@ SkillCRadiusLucis::SkillCRadiusLucis() : SkillImpl(HP_C_RADIUSLUCIS) {
 void SkillCRadiusLucis::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	if (skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag)) {
+		clif_specialeffect_remove(src, EF_BASH, AREA, src);
 		map_session_data* sd = BL_CAST(BL_PC, src);
 		if (sd && pc_checkskill(sd, AL_DECAGI)) {
 			status_change* tsc = status_get_sc(target);
