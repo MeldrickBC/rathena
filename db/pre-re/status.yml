@@ -1527,8 +1527,6 @@ Body:
   - Status: Steelbody
     Icon: EFST_STEELBODY
     DurationLookup: MO_STEELBODY
-    States:
-      NoCast: true
     CalcFlags:
       Def: true
       Mdef: true
