@@ -2103,7 +2103,24 @@ bool status_check_skilluse(const block_list* src, const block_list* target, uint
 				clif_skill_fail( *((map_session_data*)src), skill_id );
 			return false;
 		}
-
+		if (sc->getSCE(SC_STEELBODY)) {
+			switch (skill_id) {
+				case AL_HEAL:
+				case AL_INCAGI:
+				case AL_BLESSING:
+				case AL_ANGELUS:
+				case AL_CURE:
+				case AL_RUWACH:
+				case AL_TELEPORT
+				case AL_PNEUMA:
+				case AL_CRUCIS:
+				case AL_HOLYWATER:
+				case AL_DECAGI:
+					break;
+				default:
+					return false;
+			}
+		}
 		if (skill_id > 0 && sc->opt1 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && skill_id != RK_REFRESH && skill_id != SU_GROOMING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
 				return false;
@@ -7832,10 +7849,6 @@ static defType status_calc_def(block_list *bl, status_change *sc, int32 def)
 #endif
 	if(sc->getSCE(SC_KEEPING))
 		return 90;
-#ifndef RENEWAL /// Steel Body does not provide 90 DEF in [RENEWAL]
-	if(sc->getSCE(SC_STEELBODY))
-		return 90;
-#endif
 	if (sc->getSCE(SC_NYANGGRASS)) {
 		if (bl->type == BL_PC)
 			return 0;
@@ -8002,10 +8015,6 @@ static defType status_calc_mdef(block_list *bl, status_change *sc, int32 mdef)
 	if(sc->getSCE(SC_BERSERK))
 		return 0;
 
-#ifndef RENEWAL /// Steel Body does not provide 90 MDEF in [RENEWAL]
-	if(sc->getSCE(SC_STEELBODY))
-		return 90;
-#endif
 	if (sc->getSCE(SC_NYANGGRASS)) {
 		if (bl->type == BL_PC)
 			return 0;
@@ -8286,8 +8295,8 @@ static uint16 status_calc_speed(block_list *bl, status_change *sc, int32 speed)
 		speed += speed * 50 / 100;
 	if( speed_rate != 100 )
 		speed = speed * speed_rate / 100;
-	if( sc->getSCE(SC_STEELBODY) )
-		speed = 200;
+	if (sc->getSCE(SC_STEELBODY))
+		speed += speed * 2 / 3;
 	if( sc->getSCE(SC_DEFENDER) )
 		speed = max(speed, 200);
 	if (sc->getSCE(SC_ARMOR))

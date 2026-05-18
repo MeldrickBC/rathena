@@ -1933,11 +1933,6 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 				damage -= damage * tsc->getSCE(SC_GVG_GOLEM)->val4 / 100;
 		}
 
-#ifdef RENEWAL
-		// Renewal: steel body reduces all incoming damage to 1/10 [helvetica]
-		if( tsc->getSCE(SC_STEELBODY) )
-			damage = damage > 10 ? damage / 10 : 1;
-#endif
 		if (tsc->getSCE(SC_STEELBODY) && skill_id != MO_INVESTIGATE)
 			damage = damage > 10 ? damage / 10 : 1;
 
