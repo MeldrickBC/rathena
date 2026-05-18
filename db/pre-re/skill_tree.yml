@@ -156,7 +156,7 @@ Body:
       - Name: AC_MAKINGARROW
         MaxLevel: 5
       - Name: AC_CHARGEARROW
-        MaxLevel: 5
+        MaxLevel: 10
         Requires:
           - Name: AC_DOUBLE
             Level: 5

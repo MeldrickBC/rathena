@@ -15,8 +15,11 @@ void SkillChargeArrow::calculateSkillRatio(const Damage* wd, const block_list* s
 	base_skillratio += 50;
 
 	if (sd) {
-		base_skillratio += -50 + 80 * skill_lv;
-		if (sd->status.weapon != W_BOW)
+		const status_data* sstatus = status_get_status_data(*src);
+
+		base_skillratio += -50 + 50 * skill_lv;
+		if (sd->status.weapon == W_MUSICAL || sd->status.weapon == W_WHIP)
 			base_skillratio = base_skillratio * 0.5;
+		base_skillratio += (base_skillratio * sstatus->str) / 300;
 	}
 }

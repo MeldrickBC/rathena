@@ -5370,7 +5370,7 @@ Body:
   - Id: 148
     Name: AC_CHARGEARROW
     Description: Arrow Repel
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Weapon
     TargetType: Attack
     DamageFlags:
