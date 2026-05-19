@@ -1484,7 +1484,7 @@ bool battle_status_block_damage(block_list *src, block_list *target, status_chan
 
 	if ((sc->getSCE(SC_PNEUMA) && (flag&(BF_MAGIC | BF_LONG)) == BF_LONG) ||
 #ifndef RENEWAL
-		(sc->getSCE(SC_BASILICA) != nullptr && !status_bl_has_mode(src, MD_STATUSIMMUNE)) ||
+		//(sc->getSCE(SC_BASILICA) != nullptr && !status_bl_has_mode(src, MD_STATUSIMMUNE)) ||
 #endif
 		(sc->getSCE(SC_ZEPHYR) && !(flag&BF_MAGIC && skill_id) && !(skill_get_inf(skill_id)&(INF_GROUND_SKILL | INF_SELF_SKILL))) ||
 		sc->getSCE(SC__MANHOLE) ||

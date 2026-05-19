@@ -6793,10 +6793,10 @@ static int32 skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick)
 			{
 				int32 i = battle_check_target(bl, bl, BCT_ENEMY);
 
-				/*if (i > 0) {
+				if (i > 0) {
 					skill_blown(ss, bl, skill_get_blewcount(skill_id, sg->skill_lv), unit_getdir(bl), BLOWN_NONE);
 					break;
-				}*/
+				}
 				if (!sce && i <= 0)
 					sc_start4(ss, bl, type, 100, 0, 0, sg->group_id, ss->id, sg->limit);
 			}
@@ -7488,10 +7488,10 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 			{
 				int32 i = battle_check_target(unit, bl, BCT_ENEMY);
 
-				/*if (i > 0) {
+				if (i > 0) {
 					skill_blown(unit, bl, skill_get_blewcount(skill_id, sg->skill_lv), unit_getdir(bl), BLOWN_NONE);
 					break;
-				}*/
+				}
 				if (i <= 0 && (!tsc || !tsc->getSCE(SC_BASILICA)))
 					sc_start4(ss, bl, type, 100, 0, 0, sg->group_id, ss->id, sg->limit);
 			}

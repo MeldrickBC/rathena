@@ -1295,10 +1295,7 @@ Body:
     Flags:
       RemoveOnHermode: true
   - Status: Basilica
-    DurationLookup: HP_BASILICA
-    States:
-      NoMoveCond: true
-      NoAttack: true
+    Icon: EFST_BASILICA
     Flags:
       NoSave: true
       NoClearance: true
@@ -6897,9 +6894,9 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Basilica_Cell
-    States:
-      NoCast: true
+    Icon: EFST_BASILICA_CELL
     Flags:
+      NoSave: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true

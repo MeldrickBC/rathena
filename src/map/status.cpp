@@ -2190,7 +2190,7 @@ bool status_check_skilluse(const block_list* src, const block_list* target, uint
 			if (!flag && ( // Blocked only from using the skill (stuff like autospell may still go through
 				( sc->cant.cast && skill_id != RK_REFRESH && skill_id != SU_GROOMING && skill_id != SR_GENTLETOUCH_CURE ) ||
 #ifndef RENEWAL
-				(sc->getSCE(SC_BASILICA) && (sc->getSCE(SC_BASILICA)->val4 != src->id || skill_id != HP_BASILICA)) || // Only Basilica caster that can cast, and only Basilica to cancel it
+				//(sc->getSCE(SC_BASILICA) && (sc->getSCE(SC_BASILICA)->val4 != src->id || skill_id != HP_BASILICA)) || // Only Basilica caster that can cast, and only Basilica to cancel it
 #endif
 				(sc->getSCE(SC_MARIONETTE) && skill_id != CG_MARIONETTE) || // Only skill you can use is marionette again to cancel it
 				(sc->getSCE(SC_MARIONETTE2) && skill_id == CG_MARIONETTE) || // Cannot use marionette if you are being buffed by another

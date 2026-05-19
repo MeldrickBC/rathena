@@ -10095,10 +10095,8 @@ Body:
     Description: Basilica
     MaxLevel: 5
     Type: Magic
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Range: 4
+    TargetType: Ground
+    Range: 9
     Hit: Single
     HitCount: 1
     ActiveInstance: 1

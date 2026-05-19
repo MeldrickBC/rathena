@@ -12904,10 +12904,10 @@ static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, map_session_da
 		return;
 	}
 
-#ifndef RENEWAL
+/*#ifndef RENEWAL
 	if (hd->sc.getSCE(SC_BASILICA))
 		return;
-#endif
+#endif*/
 	lv = hom_checkskill(hd, skill_id);
 	if( skill_lv > lv )
 		skill_lv = lv;
@@ -12955,10 +12955,10 @@ static void clif_parse_UseSkillToPos_mercenary(s_mercenary_data *md, map_session
 		return;
 	}
 
-#ifndef RENEWAL
+/*#ifndef RENEWAL
 	if (md->sc.getSCE(SC_BASILICA))
 		return;
-#endif
+#endif*/
 	lv = mercenary_checkskill(md, skill_id);
 	if( skill_lv > lv )
 		skill_lv = lv;
@@ -13043,10 +13043,10 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 	if( sd->sc.option&OPTION_COSTUME )
 		return;
 
-#ifndef RENEWAL
+/*#ifndef RENEWAL
 	if( sd->sc.getSCE(SC_BASILICA) && (skill_id != HP_BASILICA || sd->sc.getSCE(SC_BASILICA)->val4 != sd->id) )
 		return; // On basilica only caster can use Basilica again to stop it.
-#endif
+#endif*/
 
 	if( sd->menuskill_id ) {
 		if( sd->menuskill_id == SA_TAMINGMONSTER ) {
@@ -13159,10 +13159,10 @@ static void clif_parse_UseSkillToPosSub( int32 fd, map_session_data& sd, uint16 
 	if( sd.sc.option&OPTION_COSTUME )
 		return;
 
-#ifndef RENEWAL
+/*#ifndef RENEWAL
 	if( sd.sc.getSCE(SC_BASILICA) && (skill_id != HP_BASILICA || sd.sc.getSCE(SC_BASILICA)->val4 != sd.id) )
 		return; // On basilica only caster can use Basilica again to stop it.
-#endif
+#endif*/
 
 	if( sd.menuskill_id ) {
 		if( sd.menuskill_id == SA_TAMINGMONSTER ) {

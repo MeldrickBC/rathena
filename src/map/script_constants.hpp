@@ -3515,6 +3515,7 @@
 	export_constant(EFST_SACRUSIMPETUS);
 	export_constant(EFST_WELLFED);
 	export_constant(EFST_FALCONTACTICS);	
+	export_constant(EFST_BASILICA_CELL);
 	export_constant(EFST_PERFUME_ATK);
 	export_constant(EFST_PERFUME_MATK);
 	export_constant(EFST_PERFUME_CAST);
