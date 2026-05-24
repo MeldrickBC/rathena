@@ -2758,6 +2758,74 @@ void status_calc_misc(block_list *bl, struct status_data *status, int32 level)
 
 	status->batk += status_base_atk(bl, status, level);
 
+	map_session_data* sd = BL_CAST(BL_PC, bl);
+	if (sd) {
+		int32 skill = 0;
+		switch (sd->status.weapon) {
+			case W_1HSWORD:
+			case W_DAGGER:
+				if ((skill = pc_checkskill(sd, SM_SWORD)) > 0)
+					status->batk += skill * 2;
+				if ((skill = pc_checkskill(sd, GN_TRAINING_SWORD)) > 0)
+					status->batk += skill * 5;
+				break;
+			case W_2HSWORD:
+				if ((skill = pc_checkskill(sd, SM_TWOHAND)) > 0)
+					status->batk += skill * 2;
+				break;
+			case W_1HSPEAR:
+			case W_2HSPEAR:
+				if ((skill = pc_checkskill(sd, KN_SPEARMASTERY)) > 0) {
+					if (!pc_isriding(sd) && !pc_isridingdragon(sd))
+						status->batk += skill * 2;
+					else
+						status->batk += skill * 3;
+					// Increase damage by level of KN_SPEARMASTERY * 10
+					if (pc_checkskill(sd, RK_DRAGONTRAINING) > 0)
+						status->batk += skill * 5;
+				}
+				break;
+			case W_1HAXE:
+			case W_2HAXE:
+				if ((skill = pc_checkskill(sd, AM_AXEMASTERY)) > 0)
+					status->batk += skill * 2;
+				if ((skill = pc_checkskill(sd, NC_TRAININGAXE)) > 0)
+					status->batk += skill * 5;
+				break;
+			case W_MACE:
+			case W_2HMACE:
+				if ((skill = pc_checkskill(sd, PR_MACEMASTERY)) > 0)
+					status->batk += skill * 2;
+				if ((skill = pc_checkskill(sd, NC_TRAININGAXE)) > 0)
+					status->batk += skill * 2;
+				break;
+			case W_FIST:
+				if ((skill = pc_checkskill(sd, TK_RUN)) > 0)
+					status->batk += skill * 10;
+				[[fallthrough]];
+			case W_KNUCKLE:
+				if ((skill = pc_checkskill(sd, MO_IRONHAND)) > 0)
+					status->batk += skill * 2;
+				break;
+			case W_MUSICAL:
+				if ((skill = pc_checkskill(sd, BA_MUSICALLESSON)) > 0)
+					status->batk += skill * 2;
+				break;
+			case W_WHIP:
+				if ((skill = pc_checkskill(sd, DC_DANCINGLESSON)) > 0)
+					status->batk += skill * 2;
+				break;
+			case W_BOOK:
+				if ((skill = pc_checkskill(sd, SA_ADVANCEDBOOK)) > 0)
+					status->batk += skill * 2;
+				break;
+			case W_KATAR:
+				if ((skill = pc_checkskill(sd, AS_KATAR)) > 0)
+					status->batk += skill * 2;
+				break;
+		}
+	}
+
 	if (status->cri) {
 		switch (bl->type) {
 			case BL_MOB:
