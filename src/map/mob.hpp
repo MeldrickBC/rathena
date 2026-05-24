@@ -360,6 +360,7 @@ struct mob_data : public block_list {
 		unsigned char steal_flag; //number of steal tries (to prevent steal exploit on mobs with few items) [Lupus]
 		unsigned char attacked_count; //For rude attacked.
 		int32 provoke_flag; // Celest
+		int16 cleancut_value;
 		int16 absorb_sphere_flag;
 	} state;
 	struct guardian_data* guardian_data;

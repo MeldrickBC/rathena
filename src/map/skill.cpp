@@ -1415,6 +1415,20 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 					if ((sce = sc->getSCE(SC_LUXANIMA)) && rnd() % 100 < sce->val2)
 						skill_castend_nodamage_id(src, bl, RK_STORMBLAST, 1, tick, 0);
 				}
+			}		
+			break;
+		case HT_C_CLEANCUT:
+			if (sd && pc_checkskill(sd, HT_C_FALCONERSMARK)) {
+				// Automatic trigger of Blitz Beat
+				int skill = pc_checkskill(sd, HT_BLITZBEAT);
+				int rate = 5;
+				if (pc_isfalcon(sd) && (skill > 0)) {
+					int blitzrand = rnd() % (1000 - 50 * pc_checkskill(sd, HT_C_FALCONERSMARK));
+					int skillm = pc_checkskill(sd, HT_FALCON);
+					if (sd->status.weapon == W_DAGGER && (blitzrand <= sstatus->luk * 10 / 2 + 1 + (skillm * 10))) {
+						skill_castend_damage_id(src, bl, HT_BLITZBEAT, (skill < rate) ? skill : rate, tick, SD_LEVEL);
+					}
+				}
 			}
 			break;
 	} //end switch skill_id
@@ -2344,7 +2358,7 @@ static int32 skill_magic_reflect(block_list* src, block_list* bl, int32 type)
  * @author Panikon
  */
 int32 skill_is_combo(uint16 skill_id) {
-	switch(skill_id) {
+	switch(skill_id) {		
 		case TK_TURNKICK:
 		case TK_STORMKICK:
 		case TK_DOWNKICK:
@@ -2483,8 +2497,8 @@ void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_
 			}
 			else
 				if (pc_checkskill(sd, MO_CHAINCOMBO) > 0) {
-				duration = 1;
-			}
+					duration = 1;
+				}
 			break;
 		case CH_CHAINCRUSH:
 			comboextend = -1;
@@ -2532,7 +2546,7 @@ void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_
 
 	if (duration) { //Possible to chain
 		if(sd && duration==1) duration = DIFF_TICK(sd->ud.canact_tick, tick); //Auto calc duration
-		duration = i64max(status_get_amotion(src),duration); //Never less than aMotion
+		duration = i64max(status_get_amotion(src),duration); //Never less than aMotion		
 		sc_start4(src,src,SC_COMBO,100,skill_id,target_id,nodelay,0,duration);
 
 		if (comboextend > 0) {
@@ -6795,8 +6809,8 @@ static int32 skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick)
 			break;
 
 		case UNT_BASILICA:
-				sc_start4(ss, bl, SC_BASILICA_CELL, 100, 0, 0, sg->group_id, ss->id, INFINITE_TICK);
-					break;
+			sc_start4(ss, bl, SC_BASILICA_CELL, 100, 0, 0, sg->group_id, ss->id, INFINITE_TICK);
+			break;
 #endif
 
 		case UNT_MOONLIT:
@@ -7890,7 +7904,7 @@ int32 skill_unit_onleft(uint16 skill_id, block_list *bl, t_tick tick)
 		case SA_VIOLENTGALE:
 		case CG_HERMODE:
 #ifndef RENEWAL
-		case HW_GRAVITATION:
+		case HW_GRAVITATION:		
 #endif
 		case NJ_SUITON:
 		case SC_MAELSTROM:
@@ -8606,7 +8620,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			if (sc->getSCE(SC_COMBO) && (sc->getSCE(SC_COMBO)->val1 == MO_TRIPLEATTACK || sc->getSCE(SC_COMBO)->val1 == MO_CHAINCOMBO))
 				break;
-				return false;
+			return false;
 		case CH_CHAINCRUSH:
 			if (!(sc && sc->getSCE(SC_COMBO) && (sc->getSCE(SC_COMBO)->val1 == MO_CHAINCOMBO || sc->getSCE(SC_COMBO)->val1 == CH_TIGERFIST)))
 				return false;

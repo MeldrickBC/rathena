@@ -685,6 +685,18 @@ Body:
             Level: 1
       - Name: HT_BEASTBANE
         MaxLevel: 10
+      - Name: HT_C_CLEANCUT
+        MaxLevel: 10
+        Requires:
+          - Name: HT_BEASTBANE
+            Level: 3
+      - Name: HT_C_FALCONERSMARK
+        MaxLevel: 5
+        Requires:
+          - Name: HT_C_CLEANCUT
+            Level: 5
+          - Name: HT_BLITZBEAT
+            Level: 3
       - Name: HT_FALCON
         MaxLevel: 5
         Requires:

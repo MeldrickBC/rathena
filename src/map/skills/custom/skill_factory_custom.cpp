@@ -82,6 +82,33 @@ void SkillCCollect::castendNoDamageId(block_list* src, block_list* target, uint1
 
 #pragma endregion
 
+//Hunter
+#pragma region HT_C_CLEANCUT
+class SkillCCleanCut : public SkillImpl {
+public:
+	SkillCCleanCut();
+	void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
+	void calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const override;	
+};
+SkillCCleanCut::SkillCCleanCut() : SkillImpl(HT_C_CLEANCUT) {};
+
+void SkillCCleanCut::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	if (target->type == BL_MOB) {
+		mob_data* md = (mob_data*)target;
+		if (!(md->state.cleancut_value) || md->state.cleancut_value < skill_lv)
+			md->state.cleancut_value = skill_lv;
+	}
+	if (skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag))
+		clif_skill_damage(*src, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, 0, skill_lv, DMG_SINGLE);
+		clif_specialeffect_remove(src, EF_BASH, AREA, src);
+};
+void SkillCCleanCut::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+	const status_data* sstatus = status_get_status_data(*src);
+
+	base_skillratio = 50 + 25 * skill_lv;
+	base_skillratio += sstatus->dex * 4;
+};
+#pragma endregion
 //Alchemist
 #pragma region AM_C_CARTCANNON
 

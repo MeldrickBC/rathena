@@ -2946,6 +2946,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 	map_session_data *sd = nullptr, *tmpsd[DAMAGELOG_SIZE];
 	map_session_data *first_sd = nullptr, *second_sd = nullptr, *third_sd = nullptr;
 
+	int16 cleancut_value = md->state.cleancut_value;
 	struct {
 		struct party_data *p;
 		int32 id,zeny;
@@ -3341,8 +3342,32 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 			drop_rate = mob_getdroprate(src, md->db, entry->rate, drop_modifier, md);
 
 			// attempt to drop the item
-			if (rnd() % 10000 >= drop_rate)
+			uint16 random_attempt = rnd() % 100000;
+			if (random_attempt >= drop_rate * 10) {
+				// Attempt to grant a pity ticket
+				// pity ticket
+
+				if ((it->type == IT_WEAPON || it->type == IT_ARMOR || it->type == IT_CARD) && entry->rate < 1000 && abs(random_attempt - drop_rate) < drop_rate * 10) {
+					struct item item_tmp = {};
+
+					item_tmp.nameid = 2500001;
+					item_tmp.identify = 1;
+					item_tmp.refine = 0;
+					item_tmp.attribute = 0;
+					item_tmp.card[0] = 0;
+					item_tmp.card[1] = 0;
+					item_tmp.card[2] = 0;
+					item_tmp.card[3] = entry->nameid;
+
+					map_addflooritem(&item_tmp, 1, md->m, md->x, md->y, first_sd != nullptr ? first_sd->status.char_id : 0,
+															second_sd ? second_sd->status.char_id : 0,
+															third_sd ? third_sd->status.char_id : 0,
+															4,
+															0,
+															true);
+				}
 				continue;
+			}
 
 			if (first_sd != nullptr && it->type == IT_PETEGG) {
 				pet_create_egg(first_sd, entry->nameid);
@@ -3361,6 +3386,42 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 			// Announce first, or else ditem will be freed. [Lance]
 			// By popular demand, use base drop rate for autoloot code. [Skotlex]
 			mob_item_drop(md, dlist, ditem, 0, battle_config.autoloot_adjust ? drop_rate : entry->rate, homkillonly || merckillonly);
+		}
+		
+		if (cleancut_value) {
+			for (const std::shared_ptr<s_mob_drop>& entry : md->db->dropitem) {
+				if (entry->nameid == 0)
+					continue;
+
+				std::shared_ptr<item_data> it = item_db.find(entry->nameid);
+
+				if (it == nullptr)
+					continue;
+
+				drop_rate = mob_getdroprate(src, md->db, entry->rate, drop_modifier, md);
+
+				// attempt to drop the item
+				if (rnd() % 10000 >= drop_rate * cleancut_value / 20)
+					continue;
+
+				if (first_sd != nullptr && it->type == IT_PETEGG) {
+					pet_create_egg(first_sd, entry->nameid);
+					continue;
+				}
+
+				std::shared_ptr<s_item_drop> ditem = mob_setdropitem(entry, 1, md->mob_id);
+
+				//A Rare Drop Global Announce by Lupus
+				if (first_sd != nullptr && entry->rate <= battle_config.rare_drop_announce) {
+					char message[128];
+					sprintf(message, msg_txt(nullptr, 541), first_sd->status.name, md->name, it->ename.c_str(), (float)drop_rate / 100);
+					//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
+					intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
+				}
+				// Announce first, or else ditem will be freed. [Lance]
+				// By popular demand, use base drop rate for autoloot code. [Skotlex]
+				mob_item_drop(md, dlist, ditem, 0, battle_config.autoloot_adjust ? drop_rate : entry->rate, homkillonly || merckillonly);
+			}
 		}
 
 		// Ore Discovery (triggers if owner has loot priority, does not require to be the killer)
@@ -3447,7 +3508,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 						// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
 						int32 map_drops_rate = max(1, (final_rate / 10));
 						std::shared_ptr<s_item_drop> ditem = mob_setdropitem( it.second, 1, md->mob_id );
-						mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
+						mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );						
 					}
 				}
 			}

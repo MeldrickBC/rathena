@@ -19048,6 +19048,31 @@ Body:
     CastCancel: false
     Requires:
       SpCost: 0
+  - Id: 1195
+    Name: HT_C_CLEANCUT
+    Description: Clean Cut
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    Range: -2
+    Hit: Single
+    HitCount: -2
+    Element: Weapon
+    CastTime: 500
+    CopyFlags:
+      Skill:
+        Plagiarism: true
+      RemoveRequirement:
+        Weapon: true
+    Requires:
+      SpCost: 10
+      Weapon:
+        Dagger: true
+    Status: CleanCut
+  - Id: 1196
+    Name: HT_C_FALCONERSMARK
+    Description: Falconer's Mark
+    MaxLevel: 5
   - Id: 1197
     Name: PR_C_SACRUSIMPETUS
     Description: Sacrus Impetus
