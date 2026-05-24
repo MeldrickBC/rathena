@@ -4064,12 +4064,12 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 				wd = &sd->right_weapon;
 				wa = &base_status->rhw;
 			}
-			wa->atk += sd->inventory_data[index]->atk;
+			wa->atk += sd->inventory_data[index]->atk;			
 			if( info != nullptr ){
-				wa->atk2 += info->bonus / 100;
+				wa->atk += info->bonus / 100;
 				if (sd->inventory.u.items_inventory[index].enchantgrade > 0) {
 					int32 grade = sd->inventory.u.items_inventory[index].enchantgrade;
-					wa->atk2 += (grade * info->bonus / 200) / 2;
+					wa->atk += (grade * info->bonus / 200) / 2;
 				}
 
 #ifdef RENEWAL
@@ -6752,7 +6752,7 @@ void status_calc_bl_(block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt)
 #ifdef RENEWAL
 			b_status.watk != status->watk || b_status.watk2 != status->watk2 || b_status.eatk != status->eatk
 #else
-			b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2
+			b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk
 #endif
 			)
 			clif_updatestatus(*sd,SP_ATK2);
@@ -10394,9 +10394,9 @@ bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 ra
 
 	if (type == SC_WELLFED) {
 		clif_specialeffect(bl, EF_LAMADAN, SELF);
-	}
+	}	
 
-	if (s_sd && s_sd->bonus.buff_duration != 0) {
+	if (s_sd) {
 		switch (type) {
 			//Swordsman
 		case SC_ENDURE:
@@ -10490,7 +10490,13 @@ bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 ra
 			//Champion			
 			//Stalker
 			//Creator
-			tick += tick * s_sd->bonus.buff_duration / 100;
+			if (s_sd->bonus.buff_duration != 0)
+				tick += tick * s_sd->bonus.buff_duration / 100;
+			if (s_sd->status.skill[s_sd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED) {
+				sc_type s_sd_sc = skill_db.find(s_sd->status.skill[sd->cloneskill_idx].id)->sc;
+				if (s_sd_sc == type)
+					tick -= ((int32)duration) / 2;
+			}
 		}
 	}
 
@@ -10825,7 +10831,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_SPIRIT:
 			if( sd ){
 				uint64 target_class = 0;
-				uint64 mask = MAPID_SECONDMASK;
+				uint64 mask = MAPID_SECONDMASK;				
 
 				switch( val2 ){
 					case SL_ALCHEMIST:
@@ -10899,7 +10905,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 						ShowError( "Unknown skill id %d for SC_SPIRIT.\n", val2 );
 						return false;
 				}
-
+				
 				if( ( sd->class_ & mask ) != target_class ){
 					return false;
 				}
@@ -11089,6 +11095,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_FALCONTACTICS:
 		case SC_GANGSTER:
 		case SC_PRESERVE:
+		case SC_CLEANCUT:
 			tick = INFINITE_TICK;
 			break;
 
@@ -11140,7 +11147,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			if (bl->type & (BL_PC))
 				tick = 30000;
 			else
-			tick = INFINITE_TICK;
+				tick = INFINITE_TICK;
 			clif_emotion( *bl, ET_SWEAT );
 			break;
 		case SC_MAXIMIZEPOWER:
