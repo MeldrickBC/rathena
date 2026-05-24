@@ -16,7 +16,7 @@ void SkillCrucis::castendNoDamageId(block_list *src, block_list *bl, uint16 skil
 	sc_type type = skill_get_sc(getSkillId());
 
 	if (flag & 1)
-		sc_start(src, bl, type, 25 + skill_lv * 4 + status_get_lv(src) - status_get_lv(bl), skill_lv, skill_get_time(getSkillId(), skill_lv));
+		sc_start(src, bl, type, 1000, skill_lv, skill_get_time(getSkillId(), skill_lv));
 	else
 	{
 		map_foreachinallrange(skill_area_sub, src, skill_get_splash(getSkillId(), skill_lv), BL_CHAR, src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_nodamage_id);

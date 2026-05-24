@@ -2105,17 +2105,20 @@ bool status_check_skilluse(const block_list* src, const block_list* target, uint
 		}
 		if (sc->getSCE(SC_STEELBODY)) {
 			switch (skill_id) {
+				case 0:
 				case AL_HEAL:
 				case AL_INCAGI:
 				case AL_BLESSING:
 				case AL_ANGELUS:
 				case AL_CURE:
 				case AL_RUWACH:
-				case AL_TELEPORT
+				case AL_TELEPORT:
 				case AL_PNEUMA:
 				case AL_CRUCIS:
 				case AL_HOLYWATER:
 				case AL_DECAGI:
+				case AL_HOLYLIGHT:
+				case AL_WARP:
 					break;
 				default:
 					return false;
@@ -2189,9 +2192,6 @@ bool status_check_skilluse(const block_list* src, const block_list* target, uint
 		) {	// Skills blocked through status changes...
 			if (!flag && ( // Blocked only from using the skill (stuff like autospell may still go through
 				( sc->cant.cast && skill_id != RK_REFRESH && skill_id != SU_GROOMING && skill_id != SR_GENTLETOUCH_CURE ) ||
-#ifndef RENEWAL
-				//(sc->getSCE(SC_BASILICA) && (sc->getSCE(SC_BASILICA)->val4 != src->id || skill_id != HP_BASILICA)) || // Only Basilica caster that can cast, and only Basilica to cancel it
-#endif
 				(sc->getSCE(SC_MARIONETTE) && skill_id != CG_MARIONETTE) || // Only skill you can use is marionette again to cancel it
 				(sc->getSCE(SC_MARIONETTE2) && skill_id == CG_MARIONETTE) || // Cannot use marionette if you are being buffed by another
 				(sc->getSCE(SC_ANKLE) && skill_block_check(src, SC_ANKLE, skill_id)) ||
@@ -3227,10 +3227,8 @@ static int32 status_get_hpbonus(block_list *bl, enum e_status_bonus type) {
 				bonus += 30;
 			if(sc->getSCE(SC_CROSSBOWCLAN))
 				bonus += 30;
-#ifdef RENEWAL
 			if (sc->getSCE(SC_ANGELUS))
 				bonus += sc->getSCE(SC_ANGELUS)->val1 * 50;
-#endif
 			if (sc->getSCE(SC_OVERCOMING_CRISIS))
 				bonus += sc->getSCE(SC_OVERCOMING_CRISIS)->val3;
 		}
@@ -4898,6 +4896,9 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			sd->indexed_bonus.subele[ELE_HOLY] += sc->getSCE(SC_PROVIDENCE)->val2;
 			sd->indexed_bonus.subrace[RC_DEMON] += sc->getSCE(SC_PROVIDENCE)->val2;
 		}
+		if (sc->getSCE(SC_SIGNUMCRUCIS)) {
+			sd->indexed_bonus.subele[ELE_HOLY] -= sc->getSCE(SC_SIGNUMCRUCIS)->val3;
+		}
 		if( sc->getSCE(SC_FIRE_CLOAK_OPTION) ) {
 			i = sc->getSCE(SC_FIRE_CLOAK_OPTION)->val2;
 			sd->indexed_bonus.subele[ELE_FIRE] += i;
@@ -5661,12 +5662,6 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 					break;
 
 #ifndef RENEWAL
-				case SC_BASILICA:
-					if( sce.val4 == bl.id ){
-						// Basilica caster cannot move
-						restriction = true;
-					}
-					break;
 
 				case SC_GRAVITATION:
 					if( sce.val3 == BCT_SELF ){
@@ -8028,6 +8023,8 @@ static defType status_calc_mdef(block_list *bl, status_change *sc, int32 mdef)
 		mdef += 50;
 	if(sc->getSCE(SC_ENDURE) && !sc->getSCE(SC_ENDURE)->val3) // It has been confirmed that Eddga card grants 1 MDEF, not 0, not 10, but 1.
 		mdef += (sc->getSCE(SC_ENDURE)->val4 == 0) ? sc->getSCE(SC_ENDURE)->val1 : 1;
+	if (sc->getSCE(SC_SIGNUMCRUCIS))
+		mdef -= mdef * sc->getSCE(SC_SIGNUMCRUCIS)->val2 / 100;
 	if(sc->getSCE(SC_STONEHARDSKIN))
 		mdef += sc->getSCE(SC_STONEHARDSKIN)->val1;
 	if(sc->getSCE(SC_STONE))
@@ -8899,8 +8896,6 @@ static unsigned char status_calc_element_lv(block_list *bl, status_change *sc, i
 	if(sc->getSCE(SC_STONE))
 		return 1;
 	//if(sc->getSCE(SC_BENEDICTIO))
-	if (sc->getSCE(SC_BASILICA))
-		return 1;
 	if(sc->getSCE(SC_CHANGEUNDEAD))
 		return 1;
 	if(sc->getSCE(SC_ELEMENTALCHANGE))
@@ -10524,8 +10519,8 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				return false;
 			break;
 		case SC_SIGNUMCRUCIS:
-			// Only affects demons and undead element (but not players)
-			if((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC)
+			// Only affects demons and undead element
+			if((!undead_flag && status->race!=RC_DEMON))
 				return false;
 			break;
 		case SC_KYRIE:
@@ -11008,7 +11003,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 	switch(type)
 	{
 		/* Permanent effects */
-		case SC_AETERNA:
 		case SC_MODECHANGE:
 		case SC_WEIGHT50:
 		case SC_WEIGHT90:
@@ -11073,7 +11067,11 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			tick = INFINITE_TICK;
 			break;
 		case SC_SIGNUMCRUCIS:
-			val2 = 10 + 4*val1; // Def reduction
+			val2 = 10 * val1; // Def/Mdef reduction
+			val3 = 5 * val1;
+			if (bl->type & (BL_PC))
+				tick = 30000;
+			else
 			tick = INFINITE_TICK;
 			clif_emotion( *bl, ET_SWEAT );
 			break;
@@ -11120,6 +11118,8 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			break;
 		case SC_ASSUMPTIO:
 			val2 = 30;
+			if (s_sd->bonus.buff_efficiency > 0)
+				val2 = (val2 * 30 * s_sd->bonus.buff_efficiency) / 100;
 			break;
 		case SC_MAGICPOWER:
 			val3 = 5 * val1; // Matk% increase
@@ -14127,7 +14127,7 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 				skill_clear_unitgroup(bl);
 			break;
 		case SC_BASILICA: // Clear the skill area. [Skotlex]
-				if (val3 && val4 == bl->id) {
+				if (val3) {
 					std::shared_ptr<s_skill_unit_group> group = skill_id2group(val3);
 
 					if (group)

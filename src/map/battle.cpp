@@ -631,6 +631,8 @@ int64 battle_attr_fix(block_list *src, block_list *target, int64 damage,int32 at
 #else
 					damage += (int64)(damage * (tsc->getSCE(SC_ORATIO)->val1 * 2) / 100);
 #endif
+				if (tsc->getSCE(SC_SIGNUMCRUCIS) && target->type == BL_MOB)
+					ratio += tsc->getSCE(SC_SIGNUMCRUCIS)->val3;
 				break;
 			case ELE_POISON:
 				if (tsc->getSCE(SC_VENOMIMPRESS))
@@ -1758,15 +1760,8 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 		if (tsc->getSCE(SC_SHIELDCHAINRUSH))
 			damage += damage / 10;
 
-		if (tsc->getSCE(SC_AETERNA) && skill_id != PF_SOULBURN) {
-			if (src->type != BL_MER || !skill_id)
-				damage *= 2; // Lex Aeterna only doubles damage of regular attacks from mercenaries
-
-#ifndef RENEWAL
-			if( skill_id != ASC_BREAKER || !(flag&BF_WEAPON) )
-#endif
-				status_change_end(bl, SC_AETERNA); //Shouldn't end until Breaker's non-weapon part connects.
-		}
+		if (tsc->getSCE(SC_AETERNA))
+			damage += damage / 10;
 
 #ifdef RENEWAL
 		if( tsc->getSCE(SC_RAID) ) {
@@ -1835,9 +1830,17 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
 		// Damage reductions
 		// Assumptio increases DEF on RE mode, otherwise gives a reduction on the final damage. [Igniz]
 #ifndef RENEWAL
+		int16 reduction = 0;
+		
 		if( tsc->getSCE(SC_ASSUMPTIO) ) {
-			damage -= ((int64)damage * tsc->getSCE(SC_ASSUMPTIO)->val2) / 100; // -30% - 30 * buff efficiency
+			reduction = tsc->getSCE(SC_ASSUMPTIO)->val2; // -30% - 30 * buff efficiency
 		}
+		if (tsc->getSCE(SC_BASILICA_CELL)) {
+			reduction += 20; // -20%
+		}
+
+		if (reduction > 0)
+			damage -= ((int64)damage * reduction) / 100;
 #endif
 
 		if( tsc->getSCE( SC_SHADOW_CLOCK ) != nullptr && ( flag&(BF_WEAPON|BF_MAGIC) ) ){

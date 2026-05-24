@@ -688,6 +688,8 @@ int32 skill_calc_heal(block_list *src, block_list *target, uint16 skill_id, uint
 			if (tsc->getSCE(SC_ASSUMPTIO))
 				hp_bonus += tsc->getSCE(SC_ASSUMPTIO)->val1 * 2;
 #endif
+			if (tsc->getSCE(SC_BASILICA_CELL))
+				hp += (hp * 10) / 100;
 		}
 	}
 
@@ -6507,6 +6509,9 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(block_list *src, uint16 sk
 			group->limit = unit->limit;
 		}
 
+		if (skill_id == HP_BASILICA)
+			sc_start4(src, src, SC_BASILICA, 100, skill_id, 0, group->group_id, 0, skill_get_time2(skill_id, skill_lv));
+
 		// Execute on all targets standing on this cell
 		if (range == 0 && active_flag)
 			map_foreachincell(skill_unit_effect,unit->m,unit->x,unit->y,group->bl_flag,unit,gettick(),1);
@@ -6790,17 +6795,8 @@ static int32 skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick)
 			break;
 
 		case UNT_BASILICA:
-			{
-				int32 i = battle_check_target(bl, bl, BCT_ENEMY);
-
-				if (i > 0) {
-					skill_blown(ss, bl, skill_get_blewcount(skill_id, sg->skill_lv), unit_getdir(bl), BLOWN_NONE);
+				sc_start4(ss, bl, SC_BASILICA_CELL, 100, 0, 0, sg->group_id, ss->id, INFINITE_TICK);
 					break;
-				}
-				if (!sce && i <= 0)
-					sc_start4(ss, bl, type, 100, 0, 0, sg->group_id, ss->id, sg->limit);
-			}
-			break;
 #endif
 
 		case UNT_MOONLIT:
@@ -7151,10 +7147,6 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 			break;
 
 		case UNT_MAGNUS:
-#ifndef RENEWAL
-			if (!battle_check_undead(tstatus->race,tstatus->def_ele) && tstatus->race!=RC_DEMON)
-				break;
-#endif
 			skill_attack(BF_MAGIC,ss,unit,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
@@ -7482,22 +7474,6 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 				}
 			}
 			break;
-
-#ifndef RENEWAL
-		case UNT_BASILICA:
-			{
-				int32 i = battle_check_target(unit, bl, BCT_ENEMY);
-
-				if (i > 0) {
-					skill_blown(unit, bl, skill_get_blewcount(skill_id, sg->skill_lv), unit_getdir(bl), BLOWN_NONE);
-					break;
-				}
-				if (i <= 0 && (!tsc || !tsc->getSCE(SC_BASILICA)))
-					sc_start4(ss, bl, type, 100, 0, 0, sg->group_id, ss->id, sg->limit);
-			}
-			break;
-#endif
-
 		case UNT_GROUNDDRIFT_WIND:
 		case UNT_GROUNDDRIFT_DARK:
 		case UNT_GROUNDDRIFT_POISON:
@@ -7832,8 +7808,7 @@ int32 skill_unit_onout(skill_unit *src, block_list *bl, t_tick tick)
 
 #ifndef RENEWAL
 		case UNT_BASILICA:
-			if (sce && sce->val4 != bl->id)
-				status_change_end(bl, type);
+			status_change_end(bl, SC_BASILICA_CELL);
 			break;
 #endif
 
@@ -7916,7 +7891,6 @@ int32 skill_unit_onleft(uint16 skill_id, block_list *bl, t_tick tick)
 		case CG_HERMODE:
 #ifndef RENEWAL
 		case HW_GRAVITATION:
-		case HP_BASILICA:
 #endif
 		case NJ_SUITON:
 		case SC_MAELSTROM:
@@ -8632,18 +8606,9 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			if (sc->getSCE(SC_COMBO) && (sc->getSCE(SC_COMBO)->val1 == MO_TRIPLEATTACK || sc->getSCE(SC_COMBO)->val1 == MO_CHAINCOMBO))
 				break;
-			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH)
 				return false;
-#else
-			// In Pre-Renewal Tiger Fist can be used after Combo Finish or after Chain Crush Combo
-			if (sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH && sc->getSCE(SC_COMBO)->val1 != CH_CHAINCRUSH)
-				return false;
-#endif
-			break;
 		case CH_CHAINCRUSH:
 			if (!(sc && sc->getSCE(SC_COMBO) && (sc->getSCE(SC_COMBO)->val1 == MO_CHAINCOMBO || sc->getSCE(SC_COMBO)->val1 == CH_TIGERFIST)))
-				return false;
-			if(sc->getSCE(SC_COMBO)->val1 != MO_COMBOFINISH && sc->getSCE(SC_COMBO)->val1 != CH_TIGERFIST)
 				return false;
 			break;
 		case SJ_SOLARBURST:
@@ -8786,23 +8751,8 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				break;
 			}
 		case HP_BASILICA:
-			if( !sc || (sc && !sc->getSCE(SC_BASILICA))) {
-				// When castbegin, needs 7x7 clear area
-				int32 s,range = skill_get_unit_layout_type(skill_id,skill_lv)+1;
-				int32 size = range*2+1;
-				for( s=0;s<size*size;s++ ) {
-					int32 x = sd.x+(s%size-range);
-					int32 y = sd.y+(s/size-range);
-					if( map_getcell(sd.m,x,y,CELL_CHKWALL) ) {
-						clif_skill_fail( sd, skill_id, USESKILL_FAIL );
-						return false;
-					}
-				}
-				if( map_foreachinallrange(skill_count_wos, &sd, range, BL_MOB|BL_PC, &sd) ) {
-					clif_skill_fail( sd, skill_id, USESKILL_FAIL );
-					return false;
-				}
-			}
+			if (sc && sc->getSCE(SC_BASILICA))
+				return false;
 			break;
 #endif
 		case AM_TWILIGHT2:
@@ -10599,12 +10549,6 @@ int32 skill_delayfix(block_list *bl, uint16 skill_id, uint16 skill_lv)
 				time = 1000;
 			time -= (4 * status_get_agi(bl) + 2 * status_get_dex(bl));
 			break;
-#ifndef RENEWAL
-		case HP_BASILICA:
-			if (sc && !sc->getSCE(SC_BASILICA))
-				time = 0; // There is no Delay on Basilica creation, only on cancel
-			break;
-#endif
 		default:
 			if (battle_config.delay_dependon_dex && !(delaynodex&1)) { // if skill delay is allowed to be reduced by dex
 				int32 scale = battle_config.castrate_dex_scale - status_get_dex(bl);
@@ -12154,9 +12098,7 @@ int32 skill_delunitgroup_(std::shared_ptr<s_skill_unit_group> group, const char*
 	i = SC_NONE;
 	switch (group->unit_id) {
 		case UNT_GOSPEL:	i = SC_GOSPEL;		break;
-#ifndef RENEWAL
 		case UNT_BASILICA:	i = SC_BASILICA;	break;
-#endif
 	}
 	if (i != SC_NONE) {
 		status_change *sc = status_get_sc(src);
@@ -12701,7 +12643,7 @@ int32 skill_unit_move_sub(block_list* bl, va_list ap)
 	//Necessary in case the group is deleted after calling on_place/on_out [Skotlex]
 	skill_id = group->skill_id;
 
-	if( group->interval != -1 && !skill_get_unit_flag(skill_id, UF_DUALMODE) && skill_id != BD_LULLABY ) //Lullaby is the exception, bugreport:411
+	if( group->interval != -1 && !skill_get_unit_flag(skill_id, UF_DUALMODE) && skill_id != BD_LULLABY && skill_id != HP_BASILICA ) //Lullaby is the exception, bugreport:411
 	{	//Non-dualmode unit skills with a timer don't trigger when walking, so just return
 		if( dissonance ) {
 			skill_dance_switch(unit, true);

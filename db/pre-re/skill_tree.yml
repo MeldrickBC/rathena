@@ -203,7 +203,7 @@ Body:
       - Name: AL_HOLYWATER
         MaxLevel: 1
       - Name: AL_CRUCIS
-        MaxLevel: 10
+        MaxLevel: 5
         Requires:
           - Name: AL_DEMONBANE
             Level: 3
@@ -1583,7 +1583,7 @@ Body:
       - Name: AL_HOLYWATER
         MaxLevel: 1
       - Name: AL_CRUCIS
-        MaxLevel: 10
+        MaxLevel: 5
         Requires:
           - Name: AL_DEMONBANE
             Level: 3
@@ -2811,7 +2811,7 @@ Body:
       - Name: AL_HOLYWATER
         MaxLevel: 1
       - Name: AL_CRUCIS
-        MaxLevel: 10
+        MaxLevel: 5
         Requires:
           - Name: AL_DEMONBANE
             Level: 3

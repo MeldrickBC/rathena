@@ -422,6 +422,7 @@ Body:
     DurationLookup: AL_ANGELUS
     CalcFlags:
       Def2: true
+      MaxHp: true
     Opt2:
       Angelus: true
     Flags:
@@ -442,11 +443,9 @@ Body:
     Icon: EFST_CRUCIS
     DurationLookup: AL_CRUCIS
     CalcFlags:
-      Def: true
+      All: true
     Flags:
       Debuff: true
-    Fail:
-      Signumcrucis: true
   - Status: Increaseagi
     Icon: EFST_INC_AGI
     DurationLookup: AL_INCAGI
@@ -571,9 +570,6 @@ Body:
     Flags:
       NoSave: true
       RemoveOnHermode: true
-    Fail:
-      Stone: true
-      Freeze: true
   - Status: Adrenaline
     Icon: EFST_ADRENALINE
     DurationLookup: BS_ADRENALINE
@@ -1052,6 +1048,7 @@ Body:
       Debuff: true
       NoClearance: true
       NoSave: true
+      RemoveOnChangeMap: true
       RemoveOnHermode: true
   - Status: Combo
     Flags:
@@ -1531,6 +1528,7 @@ Body:
       Speed: true
     Flags:
       NoSave: true
+      RemoveOnChangeMap: true
       RemoveOnHermode: true
     Opt3:
       SteelBody: true

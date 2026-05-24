@@ -2862,7 +2862,7 @@ Body:
     Hit: Single
     CastCancel: true
     AfterCastActDelay: 3000
-    Duration1: 600000
+    Duration1: 60000
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -2879,23 +2879,23 @@ Body:
     Hit: Multi_Hit
     HitCount:
       - Level: 1
-        Count: 6
+        Count: 1
       - Level: 2
-        Count: 6
+        Count: 2
       - Level: 3
-        Count: 7
+        Count: 3
       - Level: 4
-        Count: 7
+        Count: 4
       - Level: 5
-        Count: 8
+        Count: 5
       - Level: 6
-        Count: 8
+        Count: 6
       - Level: 7
-        Count: 9
+        Count: 7
       - Level: 8
-        Count: 9
+        Count: 8
       - Level: 9
-        Count: 10
+        Count: 9
       - Level: 10
         Count: 10
     Element: Holy
@@ -2904,28 +2904,8 @@ Body:
         Plagiarism: true
     CastCancel: true
     CastTime: 15000
-    AfterCastActDelay: 2000
-    Duration1:
-      - Level: 1
-        Time: 5000
-      - Level: 2
-        Time: 6000
-      - Level: 3
-        Time: 7000
-      - Level: 4
-        Time: 8000
-      - Level: 5
-        Time: 9000
-      - Level: 6
-        Time: 10000
-      - Level: 7
-        Time: 11000
-      - Level: 8
-        Time: 12000
-      - Level: 9
-        Time: 13000
-      - Level: 10
-        Time: 14000
+    AfterCastActDelay: 4000
+    Duration1: 14000
     Requires:
       SpCost:
         - Level: 1
@@ -5556,27 +5536,7 @@ Body:
       Skill:
         Plagiarism: true
     CastCancel: true
-    CastTime:
-      - Level: 1
-        Time: 1100
-      - Level: 2
-        Time: 1200
-      - Level: 3
-        Time: 1300
-      - Level: 4
-        Time: 1400
-      - Level: 5
-        Time: 1500
-      - Level: 6
-        Time: 1600
-      - Level: 7
-        Time: 1700
-      - Level: 8
-        Time: 1800
-      - Level: 9
-        Time: 1900
-      - Level: 10
-        Time: 2000
+    CastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -10102,39 +10062,20 @@ Body:
     ActiveInstance: 1
     Knockback: 2
     CastCancel: true
+    Cooldown: 40000
     CastTime:
       - Level: 1
-        Time: 5000
-      - Level: 2
-        Time: 6000
-      - Level: 3
-        Time: 7000
-      - Level: 4
-        Time: 8000
-      - Level: 5
-        Time: 9000
-    AfterCastActDelay:
-      - Level: 1
-        Time: 2000
-      - Level: 2
         Time: 3000
+      - Level: 2
+        Time: 3500
       - Level: 3
         Time: 4000
       - Level: 4
+        Time: 4500
+      - Level: 5
         Time: 5000
-      - Level: 5
-        Time: 6000
-    Duration1:
-      - Level: 1
-        Time: 20000
-      - Level: 2
-        Time: 25000
-      - Level: 3
-        Time: 30000
-      - Level: 4
-        Time: 35000
-      - Level: 5
-        Time: 40000
+    AfterCastActDelay: 2000
+    Duration1: 600000
     Duration2:
       - Level: 1
         Time: 20000
@@ -19202,25 +19143,25 @@ Body:
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
-        Time: 8000
+        Time: 6000
       - Level: 2
-        Time: 9000
+        Time: 7000
       - Level: 3
-        Time: 10000
+        Time: 8000
       - Level: 4
-        Time: 11000
+        Time: 9000
       - Level: 5
-        Time: 12000
+        Time: 10000
       - Level: 6
-        Time: 13000
+        Time: 11000
       - Level: 7
-        Time: 14000
+        Time: 12000
       - Level: 8
-        Time: 15000
+        Time: 13000
       - Level: 9
-        Time: 16000
+        Time: 14000
       - Level: 10
-        Time: 17000
+        Time: 15000
     Requires:
       SpCost:
         - Level: 1

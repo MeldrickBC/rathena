@@ -7233,7 +7233,6 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 		sd->ed->ud.dir = sd->ud.dir;
 	}
 
-	pc_cell_basilica(sd);
 
 	//check if we gonna be rewarped [lighta]
 	if(npc_check_areanpc(1,m,x,y,0)){
@@ -12420,9 +12419,6 @@ static void pc_unequipitem_sub(map_session_data *sd, int32 n, int32 flag) {
 		status_calc_pc(sd, SCO_FORCE);
 	}
 
-	if (sd->sc.getSCE(SC_SIGNUMCRUCIS) && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
-		status_change_end(sd, SC_SIGNUMCRUCIS);
-
 	//OnUnEquip script [Skotlex]
 	if (sd->inventory_data[n]) {
 		current_equip_item_index = n;
@@ -15245,14 +15241,12 @@ void pc_cell_basilica(map_session_data *sd) {
 #ifndef RENEWAL
 	nullpo_retv(sd);
 
-	enum sc_type type = SC_BASILICA;
-
 	if (!map_getcell(sd->m,sd->x,sd->y,CELL_CHKBASILICA)) {
-		if (sd->sc.getSCE(type))
-			status_change_end(sd, type);
+		if (sd->sc.getSCE(SC_BASILICA_CELL))
+			status_change_end(sd, SC_BASILICA_CELL);
 	}
-	else if (!sd->sc.getSCE(type))
-		sc_start(sd,sd, type,100,0,INFINITE_TICK);
+	else if (!sd->sc.getSCE(SC_BASILICA_CELL))
+		sc_start(sd,sd, SC_BASILICA_CELL,100,0,INFINITE_TICK);
 #endif
 }
 

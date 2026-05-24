@@ -687,7 +687,6 @@ static TIMER_FUNC(unit_walktoxy_timer)
 					return 0;
 			} else
 				sd->areanpc.clear();
-			pc_cell_basilica(sd);
 			break;
 		case BL_MOB:
 			//Movement was successful, reset walktoxy_fail_count
@@ -1391,8 +1390,8 @@ enum e_unit_blown unit_blown_immune(const block_list* bl, uint8 flag)
 				const map_session_data* sd = static_cast<const map_session_data*>(bl);
 
 #ifndef RENEWAL
-				// Basilica caster can't be knocked-back by normal monsters.
-				if( !(flag&0x4) && sd->sc.getSCE(SC_BASILICA) && sd->sc.getSCE(SC_BASILICA)->val4 == sd->id)
+				// Basilica caster can't be knocked-back.
+				if (sd->sc.getSCE(SC_BASILICA) && sd->sc.getSCE(SC_BASILICA_CELL) && sd->sc.getSCE(SC_BASILICA_CELL)->val4 == sd->id)
 					return UB_TARGET_BASILICA;
 #endif
 				// Target has special_state.no_knockback (equip)
@@ -2443,12 +2442,6 @@ int32 unit_skilluse_id2(block_list *src, int32 target_id, uint16 skill_id, uint1
 			if (sc && sc->getSCE(SC_RUN))
 				casttime = -1;
 		break;
-#ifndef RENEWAL
-		case HP_BASILICA:
-			if( sc && sc->getSCE(SC_BASILICA) )
-				casttime = -1; // No Casting time on basilica cancel
-		break;
-#endif
 #ifndef RENEWAL_CAST
 		case KN_CHARGEATK:
 		{
